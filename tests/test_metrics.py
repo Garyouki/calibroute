@@ -1,12 +1,12 @@
 import unittest
 
-from trustgate.metrics import (
+from calibroute.metrics import (
     audit_records,
     expected_calibration_error,
     risk_coverage,
     roc_auc,
 )
-from trustgate.models import PredictionRecord
+from calibroute.models import PredictionRecord
 
 
 class MetricsTests(unittest.TestCase):
@@ -48,4 +48,3 @@ class MetricsTests(unittest.TestCase):
 
 if __name__ == "__main__":
     unittest.main()
-

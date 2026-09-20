@@ -3,8 +3,8 @@ import tempfile
 import unittest
 from pathlib import Path
 
-from trustgate.io import read_records, write_decisions
-from trustgate.models import Action, Decision
+from calibroute.io import read_records, write_decisions
+from calibroute.models import Action, Decision
 
 
 class IOTests(unittest.TestCase):
@@ -34,4 +34,3 @@ class IOTests(unittest.TestCase):
 
 if __name__ == "__main__":
     unittest.main()
-

@@ -1,4 +1,4 @@
-"""TrustGate: uncertainty-aware evaluation and decision control."""
+"""CalibRoute: uncertainty-aware evaluation and decision control."""
 
 from .metrics import audit_records
 from .models import Action, Decision, PredictionRecord
@@ -18,4 +18,3 @@ __all__ = [
 ]
 
 __version__ = "0.1.0"
-

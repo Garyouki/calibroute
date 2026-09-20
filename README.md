@@ -1,6 +1,6 @@
-# TrustGate
+# CalibRoute
 
-TrustGate is a lightweight Python toolkit for confidence evaluation and
+CalibRoute is a lightweight Python toolkit for confidence evaluation and
 uncertainty-aware routing. It converts model predictions into three actions:
 `accept`, `human_review`, or `abstain`.
 
@@ -25,19 +25,19 @@ python -m pip install -e .
 
 ```bash
 # Audit labeled predictions
-trustgate audit \
+calibroute audit \
   --input examples/validation.csv \
   --output examples/audit.md
 
 # Fit an acceptance policy on validation data
-trustgate fit \
+calibroute fit \
   --input examples/validation.csv \
   --max-risk 0.20 \
   --min-coverage 0.25 \
   --output examples/policy.json
 
 # Route a new prediction batch
-trustgate route \
+calibroute route \
   --input examples/production_batch.csv \
   --policy examples/policy.json \
   --output examples/decisions.csv \
@@ -58,7 +58,7 @@ Additional columns are preserved as metadata.
 ## Python API
 
 ```python
-from trustgate import PredictionRecord, fit_policy, route_batch
+from calibroute import PredictionRecord, fit_policy, route_batch
 
 validation = [
     PredictionRecord("a", 0.98, True),
@@ -75,7 +75,7 @@ decisions, summary = route_batch(
 
 ## Limitations
 
-TrustGate is an evaluation and routing tool, not a safety certification.
+CalibRoute is an evaluation and routing tool, not a safety certification.
 Thresholds should be revalidated after changes to the model, task, prompt, or
 deployment distribution. See [design principles](docs/design.md) for details.
 

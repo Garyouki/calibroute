@@ -1,7 +1,7 @@
 import math
 import unittest
 
-from trustgate.shift import confidence_histogram, js_divergence
+from calibroute.shift import confidence_histogram, js_divergence
 
 
 class ShiftTests(unittest.TestCase):
@@ -22,4 +22,3 @@ class ShiftTests(unittest.TestCase):
 
 if __name__ == "__main__":
     unittest.main()
-

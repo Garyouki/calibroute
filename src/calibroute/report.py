@@ -14,7 +14,7 @@ def _format(value: object) -> str:
 def render_markdown(report: dict[str, object]) -> str:
     overall = report["overall"]
     lines = [
-        "# TrustGate audit",
+        "# CalibRoute audit",
         "",
         "## Overall",
         "",
@@ -46,4 +46,3 @@ def render_markdown(report: dict[str, object]) -> str:
         ]
     )
     return "\n".join(lines)
-

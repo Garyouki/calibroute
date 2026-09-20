@@ -1,4 +1,4 @@
-"""CSV/JSONL adapters for model-agnostic TrustGate records."""
+"""CSV/JSONL adapters for model-agnostic CalibRoute records."""
 
 from __future__ import annotations
 
@@ -70,4 +70,3 @@ def write_decisions(path: str | Path, decisions: Iterable[Decision]) -> None:
 
 def read_policy(path: str | Path) -> GatePolicy:
     return GatePolicy.from_dict(json.loads(Path(path).read_text(encoding="utf-8")))
-

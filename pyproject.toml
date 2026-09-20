@@ -3,7 +3,7 @@ requires = ["hatchling>=1.26"]
 build-backend = "hatchling.build"
 
 [project]
-name = "trustgate-ai"
+name = "calibroute-ai"
 version = "0.1.0"
 description = "Uncertainty-aware evaluation and decision control for AI systems."
 readme = "README.md"
@@ -34,10 +34,10 @@ dependencies = []
 dev = ["pytest>=8", "ruff>=0.8"]
 
 [project.scripts]
-trustgate = "trustgate.cli:main"
+calibroute = "calibroute.cli:main"
 
 [tool.hatch.build.targets.wheel]
-packages = ["src/trustgate"]
+packages = ["src/calibroute"]
 
 [tool.pytest.ini_options]
 testpaths = ["tests"]

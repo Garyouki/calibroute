@@ -1,7 +1,7 @@
 import unittest
 
-from trustgate.models import Action, PredictionRecord
-from trustgate.policy import GatePolicy, fit_policy, route_batch
+from calibroute.models import Action, PredictionRecord
+from calibroute.policy import GatePolicy, fit_policy, route_batch
 
 
 class PolicyTests(unittest.TestCase):
@@ -69,4 +69,3 @@ class PolicyTests(unittest.TestCase):
 
 if __name__ == "__main__":
     unittest.main()
-

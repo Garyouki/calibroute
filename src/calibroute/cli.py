@@ -1,4 +1,4 @@
-"""Command-line interface for TrustGate."""
+"""Command-line interface for CalibRoute."""
 
 from __future__ import annotations
 
@@ -14,7 +14,7 @@ from .report import render_markdown
 
 def build_parser() -> argparse.ArgumentParser:
     parser = argparse.ArgumentParser(
-        prog="trustgate",
+        prog="calibroute",
         description="Evaluate confidence, fit a selective policy, and route uncertain AI outputs.",
     )
     subparsers = parser.add_subparsers(dest="command", required=True)
@@ -88,4 +88,3 @@ def main(argv: list[str] | None = None) -> int:
 
 if __name__ == "__main__":
     raise SystemExit(main())
-

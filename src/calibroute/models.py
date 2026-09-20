@@ -1,4 +1,4 @@
-"""Small, model-agnostic data structures used by TrustGate."""
+"""Small, model-agnostic data structures used by CalibRoute."""
 
 from __future__ import annotations
 
@@ -54,4 +54,3 @@ class Decision:
             "reason": self.reason,
             "shift_score": self.shift_score,
         }
-

@@ -3,7 +3,7 @@
 ## Shift first, confidence second
 
 A model can be confidently wrong when deployment inputs differ from validation
-data. TrustGate therefore performs a batch-level shift check before applying an
+data. CalibRoute therefore performs a batch-level shift check before applying an
 instance-level confidence threshold. Severe shift results in human review rather
 than silently trusting a threshold learned under a different regime.
 
@@ -15,13 +15,13 @@ achieved validation risk and coverage so an operating point can be audited.
 
 ## Bounded actions
 
-TrustGate emits one of three explicit actions:
+CalibRoute emits one of three explicit actions:
 
 - `accept`: permit the configured downstream automation;
 - `human_review`: pause automation and request qualified review;
 - `abstain`: withhold the output when confidence is below the review band.
 
-TrustGate itself does not execute downstream actions. The calling application
+CalibRoute itself does not execute downstream actions. The calling application
 decides what each action is allowed to do.
 
 ## Observable reasons
@@ -35,4 +35,3 @@ Version 0.1 uses the Jensen-Shannon divergence between validation and deployment
 confidence histograms as a transparent baseline. A confidence distribution is
 not a complete representation of input shift. Planned adapters will add feature,
 embedding, and task-specific shift detectors without changing the control API.
-
