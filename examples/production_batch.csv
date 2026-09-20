@@ -1,0 +1,7 @@
+id,confidence,domain,text
+p001,0.96,financial_news,Acme Corp. reported quarterly revenue.
+p002,0.88,financial_news,Jordan Lee joined the board.
+p003,0.73,financial_news,Markets reacted to the filing.
+p004,0.58,financial_news,The fund disclosed a new position.
+p005,0.31,financial_news,Unstructured commentary with ambiguous entities.
+
