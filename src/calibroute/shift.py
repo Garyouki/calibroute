@@ -3,6 +3,7 @@
 from __future__ import annotations
 
 import math
+import random
 from collections.abc import Iterable, Sequence
 
 
@@ -43,3 +44,33 @@ def js_divergence(p: Sequence[float], q: Sequence[float]) -> float:
 
     return 0.5 * kl_divergence(pn, midpoint) + 0.5 * kl_divergence(qn, midpoint)
 
+
+def calibrate_js_threshold(
+    reference: Sequence[float],
+    batch_size: int,
+    *,
+    confidence_level: float = 0.95,
+    resamples: int = 500,
+    seed: int = 0,
+) -> float:
+    """Calibrate a batch-size-aware JSD threshold by multinomial resampling."""
+
+    if batch_size <= 0:
+        raise ValueError("batch_size must be positive")
+    if not 0 < confidence_level < 1:
+        raise ValueError("confidence_level must be in (0, 1)")
+    if resamples < 20:
+        raise ValueError("resamples must be at least 20")
+    if not reference or any(value < 0 for value in reference) or sum(reference) <= 0:
+        raise ValueError("reference must be a non-empty distribution")
+    normalized = [value / sum(reference) for value in reference]
+    rng = random.Random(seed)
+    scores = []
+    population = list(range(len(normalized)))
+    for _ in range(resamples):
+        sampled = rng.choices(population, weights=normalized, k=batch_size)
+        counts = [sampled.count(index) / batch_size for index in population]
+        scores.append(js_divergence(normalized, counts))
+    scores.sort()
+    index = min(resamples - 1, math.ceil(confidence_level * resamples) - 1)
+    return scores[index]

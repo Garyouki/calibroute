@@ -1,7 +1,7 @@
 import math
 import unittest
 
-from calibroute.shift import confidence_histogram, js_divergence
+from calibroute.shift import calibrate_js_threshold, confidence_histogram, js_divergence
 
 
 class ShiftTests(unittest.TestCase):
@@ -18,6 +18,16 @@ class ShiftTests(unittest.TestCase):
     def test_empty_histogram_input_fails(self):
         with self.assertRaises(ValueError):
             confidence_histogram([], bins=10)
+
+    def test_calibration_is_deterministic(self):
+        first = calibrate_js_threshold([0.2, 0.8], 50, resamples=100, seed=7)
+        second = calibrate_js_threshold([0.2, 0.8], 50, resamples=100, seed=7)
+        self.assertEqual(first, second)
+
+    def test_larger_batch_has_tighter_threshold(self):
+        small = calibrate_js_threshold([0.5, 0.5], 20, resamples=500, seed=7)
+        large = calibrate_js_threshold([0.5, 0.5], 200, resamples=500, seed=7)
+        self.assertLess(large, small)
 
 
 if __name__ == "__main__":

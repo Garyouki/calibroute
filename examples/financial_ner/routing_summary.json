@@ -1,0 +1,41 @@
+{
+  "fin_test": {
+    "actions": {
+      "abstain": 5,
+      "accept": 278,
+      "human_review": 16
+    },
+    "count": 299,
+    "max_js_divergence": 0.02,
+    "severe_shift": false,
+    "shift_evaluable": true,
+    "shift_score": 0.014149820444428451,
+    "shift_status": "within_reference_range"
+  },
+  "finer_ord_test": {
+    "actions": {
+      "abstain": 0,
+      "accept": 0,
+      "human_review": 300
+    },
+    "count": 300,
+    "max_js_divergence": 0.02,
+    "severe_shift": true,
+    "shift_evaluable": true,
+    "shift_score": 0.1170491327993495,
+    "shift_status": "severe_shift"
+  },
+  "tweetner7_test": {
+    "actions": {
+      "abstain": 0,
+      "accept": 0,
+      "human_review": 300
+    },
+    "count": 300,
+    "max_js_divergence": 0.02,
+    "severe_shift": true,
+    "shift_evaluable": true,
+    "shift_score": 0.2152788916002584,
+    "shift_status": "severe_shift"
+  }
+}

@@ -18,9 +18,7 @@ def _labeled(records: Iterable[PredictionRecord]) -> list[PredictionRecord]:
     return rows
 
 
-def expected_calibration_error(
-    records: Iterable[PredictionRecord], bins: int = 10
-) -> float:
+def expected_calibration_error(records: Iterable[PredictionRecord], bins: int = 10) -> float:
     rows = _labeled(records)
     if bins < 2:
         raise ValueError("bins must be at least 2")
@@ -134,4 +132,3 @@ def audit_records(
         },
         "domains": {name: summarize(group) for name, group in sorted(by_domain.items())},
     }
-

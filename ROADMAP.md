@@ -10,16 +10,18 @@
 
 ## 0.2 - Financial NER reference adapter
 
-- convert encoder and generative NER outputs into the common schema
-- reproduce domain-shift risk-coverage analyses
-- add entity- and sentence-level policies
-- publish data acquisition manifests without redistributing restricted data
+- [x] convert encoder and generative sentence outputs into the common schema
+- [x] reproduce multi-domain confidence and risk analyses
+- [x] add exact one-sided binomial risk bounds
+- [x] calibrate shift thresholds by batch size and handle small batches
+- [ ] add entity-level policies
+- [ ] publish a complete external data acquisition manifest
 
 ## 0.3 - Stronger uncertainty monitoring
 
 - pluggable embedding and feature-shift detectors
 - bootstrap uncertainty for audit metrics
-- optional conservative risk bounds
+- additional bootstrap uncertainty for audit metrics
 - drift alerts over time windows
 
 ## 0.4 - Agent and language-system adapters
@@ -35,4 +37,3 @@
 - expanded documentation and examples
 - independent reproducibility report
 - PyPI release and archival DOI
-

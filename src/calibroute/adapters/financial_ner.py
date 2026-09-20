@@ -1,0 +1,77 @@
+"""Adapter for sentence-level outputs from the Financial NER experiments."""
+
+from __future__ import annotations
+
+import csv
+import json
+from collections.abc import Iterable
+from pathlib import Path
+
+from ..models import PredictionRecord
+
+ENCODER_SIGNALS = {"sent_conf_msp"}
+GENERATIVE_SIGNALS = {"conf_seq", "conf_tokens", "conf_min_span", "conf_min_sc"}
+
+
+def read_financial_ner_records(
+    path: str | Path,
+    *,
+    model: str,
+    signal: str | None = None,
+    seed: int | None = None,
+) -> list[PredictionRecord]:
+    """Convert sentence-level encoder or generative JSONL output."""
+
+    if model not in {"encoder", "generative"}:
+        raise ValueError("model must be encoder or generative")
+    allowed = ENCODER_SIGNALS if model == "encoder" else GENERATIVE_SIGNALS
+    signal = signal or ("sent_conf_msp" if model == "encoder" else "conf_min_sc")
+    if signal not in allowed:
+        raise ValueError(f"unsupported {model} confidence signal: {signal}")
+    records = []
+    with Path(path).open(encoding="utf-8") as handle:
+        for line_number, line in enumerate(handle, start=1):
+            if not line.strip():
+                continue
+            row = json.loads(line)
+            if seed is not None and int(row.get("seed", seed)) != seed:
+                continue
+            if signal not in row or row[signal] is None:
+                continue
+            record_id = str(row.get("sent_id") or f"row-{line_number}")
+            row_seed = row.get("seed")
+            records.append(
+                PredictionRecord(
+                    record_id=f"{model}-{row_seed}-{record_id}",
+                    confidence=float(row[signal]),
+                    correct=not bool(int(row["sent_error"])),
+                    domain=str(row.get("domain") or "default"),
+                    metadata={"model": model, "seed": row_seed, "signal": signal},
+                )
+            )
+    if not records:
+        raise ValueError("no compatible records found")
+    return records
+
+
+def write_records_csv(path: str | Path, records: Iterable[PredictionRecord]) -> None:
+    """Write common-schema records while retaining adapter provenance."""
+
+    with Path(path).open("w", newline="", encoding="utf-8") as handle:
+        writer = csv.DictWriter(
+            handle,
+            fieldnames=["id", "confidence", "correct", "domain", "model", "seed", "signal"],
+        )
+        writer.writeheader()
+        for record in records:
+            writer.writerow(
+                {
+                    "id": record.record_id,
+                    "confidence": record.confidence,
+                    "correct": int(bool(record.correct)),
+                    "domain": record.domain,
+                    "model": record.metadata.get("model"),
+                    "seed": record.metadata.get("seed"),
+                    "signal": record.metadata.get("signal"),
+                }
+            )

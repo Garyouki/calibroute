@@ -9,7 +9,9 @@ uncertainty-aware routing. It converts model predictions into three actions:
 - Confidence calibration and error-ranking metrics
 - Risk-coverage analysis
 - Validation-only threshold fitting
-- Batch confidence-shift detection
+- Exact one-sided risk bounds for conservative acceptance
+- Batch-size-aware confidence-shift detection
+- Financial NER encoder and generative-output adapter
 - CSV and JSONL support
 - Dependency-free Python API and CLI
 
@@ -34,6 +36,7 @@ calibroute fit \
   --input examples/validation.csv \
   --max-risk 0.20 \
   --min-coverage 0.25 \
+  --risk-method empirical \
   --output examples/policy.json
 
 # Route a new prediction batch
@@ -54,6 +57,10 @@ calibroute route \
 | `domain` | no | Evaluation slice or deployment domain |
 
 Additional columns are preserved as metadata.
+
+The default policy fit uses a 95% one-sided Clopper-Pearson upper bound. This
+is intentionally conservative and requires enough validation evidence. Use
+`--risk-method empirical` only for exploratory or very small examples.
 
 ## Python API
 
@@ -86,6 +93,8 @@ python -m unittest discover -s tests -v
 ```
 
 See [CONTRIBUTING.md](CONTRIBUTING.md) and [ROADMAP.md](ROADMAP.md).
+The [Financial NER case study](examples/financial_ner/README.md) demonstrates
+the adapter and cross-domain failure pattern on 2,098 derived prediction rows.
 
 ## License
 
