@@ -19,7 +19,9 @@ uncertainty-aware routing. It converts model predictions into three actions:
 
 Requires Python 3.10 or newer.
 
-Install from this repository (PyPI publication is pending):
+Install with `python -m pip install calibroute-ai`.
+
+To run the checked-in examples or contribute, clone the repository:
 
 ```bash
 git clone https://github.com/Garyouki/calibroute.git
@@ -28,8 +30,7 @@ python -m pip install -e .
 ```
 
 The distribution name is `calibroute-ai`; the Python import and command are
-`calibroute`. After a PyPI release, installation will be
-`python -m pip install calibroute-ai`. No API key or model service is needed.
+`calibroute`. No API key or model service is needed.
 
 ## Quick start
 

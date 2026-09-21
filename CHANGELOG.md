@@ -1,6 +1,6 @@
 # Changelog
 
-## 0.3.0 - Unreleased on PyPI
+## 0.3.0 - 2026-09-20
 
 - Fix tie groups in threshold fitting, risk-coverage curves, and selective reports.
 - Add independent holdout validation with CLI pass/fail exit codes.

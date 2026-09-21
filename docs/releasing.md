@@ -1,6 +1,6 @@
 # Release workflow
 
-0.3.0 is prepared in source; PyPI publication is pending. Do not publish 0.2.0.
+0.3.0 is the first intended PyPI release. Do not publish 0.2.0.
 Public Git history preserves the earlier defect and its correction.
 
 ## Trusted Publishing setup
