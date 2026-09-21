@@ -26,6 +26,21 @@ def render_markdown(report: dict[str, object]) -> str:
     lines.extend(
         [
             "",
+            "## By domain",
+            "",
+            "| Domain | Count | Accuracy | ECE | AUROC |",
+            "|---|---:|---:|---:|---:|",
+        ]
+    )
+    for name, domain in report.get("domains", {}).items():
+        name = name.replace("|", "\\|").replace("\n", " ")
+        lines.append(
+            f"| {name} | {domain['count']} | {_format(domain['accuracy'])} | "
+            f"{_format(domain['ece'])} | {_format(domain['auroc'])} |"
+        )
+    lines.extend(
+        [
+            "",
             "## Selective operating points",
             "",
             "| Coverage | Risk | Accuracy | Confidence threshold |",

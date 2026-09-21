@@ -26,13 +26,20 @@ def _binomial_cdf(errors: int, total: int, probability: float) -> float:
 def clopper_pearson_upper(errors: int, total: int, confidence_level: float = 0.95) -> float:
     """Return an exact one-sided upper confidence bound on error probability."""
 
-    if total <= 0 or not 0 <= errors <= total:
+    if (
+        not isinstance(total, int)
+        or not isinstance(errors, int)
+        or total <= 0
+        or not 0 <= errors <= total
+    ):
         raise ValueError("require total > 0 and 0 <= errors <= total")
     if not 0 < confidence_level < 1:
         raise ValueError("confidence_level must be in (0, 1)")
     if errors == total:
         return 1.0
     alpha = 1.0 - confidence_level
+    if errors == 0:
+        return -math.expm1(math.log(alpha) / total)
     low, high = errors / total, 1.0
     for _ in range(70):
         midpoint = (low + high) / 2

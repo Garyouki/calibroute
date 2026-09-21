@@ -4,7 +4,7 @@ build-backend = "hatchling.build"
 
 [project]
 name = "calibroute-ai"
-version = "0.2.0"
+version = "0.3.0"
 description = "Uncertainty-aware evaluation and decision control for AI systems."
 readme = "README.md"
 requires-python = ">=3.10"
@@ -31,7 +31,12 @@ classifiers = [
 dependencies = []
 
 [project.optional-dependencies]
-dev = ["pytest>=8", "ruff>=0.8"]
+dev = ["pytest>=8", "ruff>=0.8", "build>=1.2", "twine>=6"]
+
+[project.urls]
+Repository = "https://github.com/Garyouki/calibroute"
+Issues = "https://github.com/Garyouki/calibroute/issues"
+Documentation = "https://github.com/Garyouki/calibroute/blob/main/README.md"
 
 [project.scripts]
 calibroute = "calibroute.cli:main"

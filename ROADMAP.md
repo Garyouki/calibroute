@@ -17,11 +17,17 @@
 - [ ] add entity-level policies
 - [ ] publish a complete external data acquisition manifest
 
-## 0.3 - Stronger uncertainty monitoring
+## 0.3 - Correctness and reproducible evaluation
+
+- [x] tie-aware fitting and audit operating points
+- [x] independent frozen-policy holdout assessment
+- [x] O(n log n) tie-aware AUROC
+- [x] input validation, package metadata, provenance, and build checks
+
+## Future uncertainty monitoring
 
 - pluggable embedding and feature-shift detectors
 - bootstrap uncertainty for audit metrics
-- additional bootstrap uncertainty for audit metrics
 - drift alerts over time windows
 
 ## 0.4 - Agent and language-system adapters

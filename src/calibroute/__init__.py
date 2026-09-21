@@ -5,6 +5,7 @@ from .metrics import audit_records
 from .models import Action, Decision, PredictionRecord
 from .policy import GatePolicy, fit_policy, route_batch
 from .shift import calibrate_js_threshold, confidence_histogram, js_divergence
+from .validation import validate_policy
 
 __all__ = [
     "Action",
@@ -18,6 +19,7 @@ __all__ = [
     "fit_policy",
     "js_divergence",
     "route_batch",
+    "validate_policy",
 ]
 
-__version__ = "0.2.0"
+__version__ = "0.3.0"

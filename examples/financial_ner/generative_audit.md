@@ -10,15 +10,24 @@
 | mean_confidence | 0.7827 |
 | ece | 0.4051 |
 | auroc | 0.6865 |
-| aurc | 0.4397 |
+| aurc | 0.5119 |
+
+## By domain
+
+| Domain | Count | Accuracy | ECE | AUROC |
+|---|---:|---:|---:|---:|
+| fin_test | 299 | 0.6555 | 0.2247 | 0.7287 |
+| fin_valid | 150 | 0.4667 | 0.4987 | 0.5548 |
+| finer_ord_test | 300 | 0.4067 | 0.4180 | 0.6723 |
+| tweetner7_test | 300 | 0.0667 | 0.5280 | 0.4406 |
 
 ## Selective operating points
 
 | Coverage | Risk | Accuracy | Confidence threshold |
 |---:|---:|---:|---:|
-| 0.2507 | 0.3916 | 0.6084 | 1.0000 |
-| 0.5005 | 0.3714 | 0.6286 | 1.0000 |
-| 0.7502 | 0.5070 | 0.4930 | 0.6000 |
+| 0.7112 | 0.4893 | 0.5107 | 1.0000 |
+| 0.7112 | 0.4893 | 0.5107 | 1.0000 |
+| 0.7598 | 0.5107 | 0.4893 | 0.6000 |
 | 1.0000 | 0.6111 | 0.3889 | 0.0000 |
 
 > These measurements describe the supplied data. They are not a safety guarantee,

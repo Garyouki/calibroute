@@ -30,6 +30,8 @@ class PredictionRecord:
     metadata: dict[str, Any] = field(default_factory=dict)
 
     def __post_init__(self) -> None:
+        if self.correct is not None and not isinstance(self.correct, bool):
+            raise ValueError("correct must be a bool or None")
         if not 0.0 <= self.confidence <= 1.0:
             raise ValueError("confidence must be between 0 and 1")
         if not self.record_id:

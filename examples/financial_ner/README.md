@@ -26,10 +26,30 @@ can become badly miscalibrated after a domain change. A trustworthy system must
 measure that change and escalate or abstain instead of silently treating every
 high-confidence output as reliable.
 
-Fitting the default 95% risk-bound policy on FIN validation gives 99.3%
-validation coverage, 5.4% observed risk, and a 9.5% upper risk bound. The
+Fitting on FIN validation gives 99.3% validation coverage, 5.4% observed risk,
+and a 9.5% pointwise upper bound used during selection. This is not a
+selection-adjusted 95% guarantee. The
 batch-aware shift gate allows the closely matched FIN test batch to proceed,
 while routing all FiNER-ORD and TweetNER7 outputs to human review.
+
+The generated `routing_summary.json` also reports accepted-set empirical risk
+and fixed-threshold binomial bounds. The shifted domains have no automatically
+accepted outputs, so accepted risk is null, not zero. Human-review capacity and
+the accuracy of reviewers are not measured. See [provenance](PROVENANCE.md) for
+the distinction between replaying these predictions and reproducing the models.
+
+| Test slice | Threshold-only accepted | Errors among them | Final automatic accepts | Final review |
+|---|---:|---:|---:|---:|
+| FIN | 278 / 299 | 19 / 278 (6.8%) | 278 | 16 |
+| FiNER-ORD | 222 / 300 | 90 / 222 (40.5%) | 0 | 300 |
+| TweetNER7 | 160 / 300 | 145 / 160 (90.6%) | 0 | 300 |
+
+The shift gate trades automation coverage for review workload. It does not
+improve the underlying NER predictions. FIN additionally has five abstentions.
+
+The 0.02 shift effect floor was inspected against these test batches during
+development. This example is retrospective; fresh held-out data is required
+before making a deployment reliability claim.
 
 Reproduce the reports from the repository root:
 

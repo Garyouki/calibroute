@@ -9,7 +9,7 @@ uncertainty-aware routing. It converts model predictions into three actions:
 - Confidence calibration and error-ranking metrics
 - Risk-coverage analysis
 - Validation-only threshold fitting
-- Exact one-sided risk bounds for conservative acceptance
+- Tie-aware threshold fitting and independent holdout risk assessment
 - Batch-size-aware confidence-shift detection
 - Financial NER encoder and generative-output adapter
 - CSV and JSONL support
@@ -19,9 +19,17 @@ uncertainty-aware routing. It converts model predictions into three actions:
 
 Requires Python 3.10 or newer.
 
+Install from this repository (PyPI publication is pending):
+
 ```bash
+git clone https://github.com/Garyouki/calibroute.git
+cd calibroute
 python -m pip install -e .
 ```
+
+The distribution name is `calibroute-ai`; the Python import and command are
+`calibroute`. After a PyPI release, installation will be
+`python -m pip install calibroute-ai`. No API key or model service is needed.
 
 ## Quick start
 
@@ -58,9 +66,18 @@ calibroute route \
 
 Additional columns are preserved as metadata.
 
-The default policy fit uses a 95% one-sided Clopper-Pearson upper bound. This
-is intentionally conservative and requires enough validation evidence. Use
-`--risk-method empirical` only for exploratory or very small examples.
+The default fit searches thresholds using pointwise 95% Clopper-Pearson bounds.
+Threshold selection on the same labels does **not** provide a 95% guarantee for
+the selected policy. Freeze the policy, then assess it on a separate IID holdout:
+
+```bash
+calibroute validate --input holdout.csv --policy examples/policy.json --output holdout-report.json
+```
+
+Exit code 0 means the holdout upper bound meets the declared risk limit; 1 means
+it does not (including zero accepted samples); 2 means invalid input. Never tune
+against this holdout or reuse it to select among multiple policies. A pass does
+not cover distribution shift. See [statistical scope](docs/design.md).
 
 ## Python API
 
@@ -73,7 +90,8 @@ validation = [
     PredictionRecord("c", 0.55, False),
 ]
 
-policy = fit_policy(validation, max_risk=0.10, min_coverage=0.50)
+policy = fit_policy(validation, max_risk=0.10, min_coverage=0.50,
+                    risk_method="empirical")  # Tiny illustrative sample only.
 decisions, summary = route_batch(
     [PredictionRecord("new", 0.74)],
     policy,
@@ -93,6 +111,7 @@ python -m unittest discover -s tests -v
 ```
 
 See [CONTRIBUTING.md](CONTRIBUTING.md) and [ROADMAP.md](ROADMAP.md).
+Release preparation is documented in [releasing](docs/releasing.md).
 The [Financial NER case study](examples/financial_ner/README.md) demonstrates
 the adapter and cross-domain failure pattern on 2,098 derived prediction rows.
 

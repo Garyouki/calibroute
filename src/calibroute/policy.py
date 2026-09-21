@@ -2,6 +2,7 @@
 
 from __future__ import annotations
 
+import math
 from collections.abc import Iterable
 from dataclasses import asdict, dataclass
 
@@ -30,7 +31,7 @@ class GatePolicy:
     shift_min_batch_size: int = 20
     shift_effect_floor: float = 0.02
     shift_seed: int = 0
-    schema_version: str = "1.1"
+    schema_version: str = "1.2"
 
     def __post_init__(self) -> None:
         if not 0 <= self.review_threshold <= self.accept_threshold <= 1:
@@ -41,6 +42,12 @@ class GatePolicy:
             raise ValueError("validation_coverage must be in (0, 1]")
         if self.histogram_bins != len(self.reference_histogram):
             raise ValueError("histogram_bins must match reference_histogram length")
+        if (
+            self.histogram_bins < 2
+            or any(not math.isfinite(value) or value < 0 for value in self.reference_histogram)
+            or sum(self.reference_histogram) <= 0
+        ):
+            raise ValueError("reference_histogram requires finite nonnegative positive mass")
         if self.risk_method not in {"empirical", "clopper_pearson"}:
             raise ValueError("risk_method must be empirical or clopper_pearson")
         if not 0 < self.confidence_level < 1:
@@ -53,7 +60,9 @@ class GatePolicy:
             raise ValueError("shift_resamples must be at least 20")
         if not 0 < self.shift_confidence_level < 1:
             raise ValueError("shift_confidence_level must be in (0, 1)")
-        if self.max_js_divergence is not None and self.max_js_divergence < 0:
+        if self.max_js_divergence is not None and (
+            not math.isfinite(self.max_js_divergence) or self.max_js_divergence < 0
+        ):
             raise ValueError("max_js_divergence must be non-negative")
         for value, name in (
             (self.declared_risk_limit, "declared_risk_limit"),
@@ -75,10 +84,8 @@ class GatePolicy:
             reference_histogram=[float(value) for value in payload["reference_histogram"]],
             histogram_bins=int(payload.get("histogram_bins", 10)),
             max_js_divergence=(
-                0.10
-                if "max_js_divergence" not in payload
-                else None
-                if payload["max_js_divergence"] is None
+                None
+                if payload.get("max_js_divergence") is None
                 else float(payload["max_js_divergence"])
             ),
             declared_risk_limit=(
@@ -118,11 +125,13 @@ def fit_policy(
     shift_effect_floor: float = 0.02,
     shift_seed: int = 0,
 ) -> GatePolicy:
-    """Choose the highest-coverage validation prefix satisfying ``max_risk``.
+    """Choose the highest-coverage attainable threshold satisfying ``max_risk``.
 
     By default the accepted set must satisfy a one-sided exact binomial upper
     bound, not only its observed error rate. ``empirical`` is available for
-    exploratory analyses with small samples.
+    exploratory analyses with small samples. Bounds used during threshold search
+    are pointwise diagnostics, not selection-adjusted guarantees. Evaluate the
+    frozen threshold with validate_policy on an independent IID holdout.
     """
 
     if not 0 <= max_risk < 1:
@@ -133,6 +142,8 @@ def fit_policy(
         raise ValueError("review_margin must be between 0 and 1")
     if risk_method not in {"empirical", "clopper_pearson"}:
         raise ValueError("risk_method must be empirical or clopper_pearson")
+    if not 0 < confidence_level < 1:
+        raise ValueError("confidence_level must be in (0, 1)")
 
     rows = list(validation_records)
     if not rows or any(row.correct is None for row in rows):
@@ -143,6 +154,11 @@ def fit_policy(
     best: tuple[int, float, float, float] | None = None
     for kept, row in enumerate(ranked, start=1):
         errors += int(not row.correct)
+        # A deployed >= threshold accepts every member of a tie group.
+        if kept < len(ranked) and ranked[kept].confidence == row.confidence:
+            continue
+        if kept < minimum:
+            continue
         risk = errors / kept
         upper = (
             clopper_pearson_upper(errors, kept, confidence_level)

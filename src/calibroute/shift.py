@@ -30,7 +30,7 @@ def js_divergence(p: Sequence[float], q: Sequence[float]) -> float:
 
     if len(p) != len(q) or not p:
         raise ValueError("distributions must be non-empty and have equal length")
-    if any(value < 0 for value in (*p, *q)):
+    if any(not math.isfinite(value) or value < 0 for value in (*p, *q)):
         raise ValueError("distribution values must be non-negative")
     p_total, q_total = sum(p), sum(q)
     if p_total <= 0 or q_total <= 0:
@@ -61,7 +61,11 @@ def calibrate_js_threshold(
         raise ValueError("confidence_level must be in (0, 1)")
     if resamples < 20:
         raise ValueError("resamples must be at least 20")
-    if not reference or any(value < 0 for value in reference) or sum(reference) <= 0:
+    if (
+        not reference
+        or any(not math.isfinite(value) or value < 0 for value in reference)
+        or sum(reference) <= 0
+    ):
         raise ValueError("reference must be a non-empty distribution")
     normalized = [value / sum(reference) for value in reference]
     rng = random.Random(seed)
@@ -69,7 +73,9 @@ def calibrate_js_threshold(
     population = list(range(len(normalized)))
     for _ in range(resamples):
         sampled = rng.choices(population, weights=normalized, k=batch_size)
-        counts = [sampled.count(index) / batch_size for index in population]
+        counts = [0] * len(population)
+        for index in sampled:
+            counts[index] += 1
         scores.append(js_divergence(normalized, counts))
     scores.sort()
     index = min(resamples - 1, math.ceil(confidence_level * resamples) - 1)

@@ -1,41 +1,89 @@
 {
   "fin_test": {
+    "accepted_empirical_risk": 0.0683453237410072,
     "actions": {
       "abstain": 5,
       "accept": 278,
       "human_review": 16
     },
     "count": 299,
+    "evaluation_context": "retrospective benchmark, not fresh certification",
     "max_js_divergence": 0.02,
     "severe_shift": false,
     "shift_evaluable": true,
     "shift_score": 0.014149820444428451,
-    "shift_status": "within_reference_range"
+    "shift_status": "within_reference_range",
+    "threshold_evaluation": {
+      "accept_threshold": 0.3879493176937103,
+      "accepted": 278,
+      "assumption": "independent IID holdout; policy frozen before observing labels",
+      "confidence_level": 0.95,
+      "count": 299,
+      "coverage": 0.9297658862876255,
+      "declared_risk_limit": 0.1,
+      "empirical_risk": 0.0683453237410072,
+      "errors": 19,
+      "passed": true,
+      "risk_upper_bound": 0.09867473238486532,
+      "scope": "fixed_threshold_before_shift_gate"
+    }
   },
   "finer_ord_test": {
+    "accepted_empirical_risk": null,
     "actions": {
       "abstain": 0,
       "accept": 0,
       "human_review": 300
     },
     "count": 300,
+    "evaluation_context": "retrospective benchmark, not fresh certification",
     "max_js_divergence": 0.02,
     "severe_shift": true,
     "shift_evaluable": true,
     "shift_score": 0.1170491327993495,
-    "shift_status": "severe_shift"
+    "shift_status": "severe_shift",
+    "threshold_evaluation": {
+      "accept_threshold": 0.3879493176937103,
+      "accepted": 222,
+      "assumption": "independent IID holdout; policy frozen before observing labels",
+      "confidence_level": 0.95,
+      "count": 300,
+      "coverage": 0.74,
+      "declared_risk_limit": 0.1,
+      "empirical_risk": 0.40540540540540543,
+      "errors": 90,
+      "passed": false,
+      "risk_upper_bound": 0.46256881058942745,
+      "scope": "fixed_threshold_before_shift_gate"
+    }
   },
   "tweetner7_test": {
+    "accepted_empirical_risk": null,
     "actions": {
       "abstain": 0,
       "accept": 0,
       "human_review": 300
     },
     "count": 300,
+    "evaluation_context": "retrospective benchmark, not fresh certification",
     "max_js_divergence": 0.02,
     "severe_shift": true,
     "shift_evaluable": true,
     "shift_score": 0.2152788916002584,
-    "shift_status": "severe_shift"
+    "shift_status": "severe_shift",
+    "threshold_evaluation": {
+      "accept_threshold": 0.3879493176937103,
+      "accepted": 160,
+      "assumption": "independent IID holdout; policy frozen before observing labels",
+      "confidence_level": 0.95,
+      "count": 300,
+      "coverage": 0.5333333333333333,
+      "declared_risk_limit": 0.1,
+      "empirical_risk": 0.90625,
+      "errors": 145,
+      "passed": false,
+      "risk_upper_bound": 0.9413205040799242,
+      "scope": "fixed_threshold_before_shift_gate"
+    }
   }
 }

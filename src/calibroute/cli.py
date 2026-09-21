@@ -11,6 +11,7 @@ from .io import read_policy, read_records, write_decisions, write_json
 from .metrics import audit_records
 from .policy import fit_policy, route_batch
 from .report import render_markdown
+from .validation import validate_policy
 
 
 def build_parser() -> argparse.ArgumentParser:
@@ -57,6 +58,14 @@ def build_parser() -> argparse.ArgumentParser:
     convert.add_argument("--model", choices=["encoder", "generative"], required=True)
     convert.add_argument("--signal")
     convert.add_argument("--seed", type=int)
+    validate = subparsers.add_parser(
+        "validate", help="Evaluate a frozen policy on independent holdout."
+    )
+    validate.add_argument("--input", required=True)
+    validate.add_argument("--policy", required=True)
+    validate.add_argument("--output", required=True)
+    validate.add_argument("--max-risk", type=float)
+    validate.add_argument("--confidence-level", type=float, default=0.95)
     return parser
 
 
@@ -64,7 +73,17 @@ def main(argv: list[str] | None = None) -> int:
     parser = build_parser()
     args = parser.parse_args(argv)
     try:
-        if args.command == "audit":
+        if args.command == "validate":
+            report = validate_policy(
+                read_records(args.input),
+                read_policy(args.policy),
+                max_risk=args.max_risk,
+                confidence_level=args.confidence_level,
+            )
+            write_json(args.output, report)
+            print(json.dumps(report, indent=2))
+            return 0 if report["passed"] else 1
+        elif args.command == "audit":
             report = audit_records(
                 read_records(args.input), bins=args.bins, coverages=args.coverages
             )

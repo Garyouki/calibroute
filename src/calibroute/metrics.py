@@ -2,9 +2,9 @@
 
 from __future__ import annotations
 
-import math
 from collections import defaultdict
 from collections.abc import Iterable, Sequence
+from itertools import groupby
 
 from .models import PredictionRecord
 
@@ -49,20 +49,28 @@ def roc_auc(records: Iterable[PredictionRecord]) -> float | None:
     if not positive or not negative:
         return None
     wins = 0.0
-    for pos in positive:
-        for neg in negative:
-            wins += 1.0 if pos > neg else 0.5 if pos == neg else 0.0
+    negatives_below = 0
+    for _, group in groupby(
+        sorted(rows, key=lambda row: row.confidence), key=lambda row: row.confidence
+    ):
+        members = list(group)
+        positives = sum(bool(row.correct) for row in members)
+        negatives = len(members) - positives
+        wins += positives * (negatives_below + 0.5 * negatives)
+        negatives_below += negatives
     return wins / (len(positive) * len(negative))
 
 
 def risk_coverage(records: Iterable[PredictionRecord]) -> tuple[list[dict[str, float]], float]:
-    """Return every prefix point and area under the empirical risk-coverage curve."""
+    """Return attainable threshold points and right-step, coverage-weighted AURC."""
 
     rows = sorted(_labeled(records), key=lambda row: row.confidence, reverse=True)
     points: list[dict[str, float]] = []
     errors = 0
     for index, row in enumerate(rows, start=1):
         errors += int(not row.correct)
+        if index < len(rows) and rows[index].confidence == row.confidence:
+            continue
         points.append(
             {
                 "coverage": index / len(rows),
@@ -70,28 +78,31 @@ def risk_coverage(records: Iterable[PredictionRecord]) -> tuple[list[dict[str, f
                 "threshold": row.confidence,
             }
         )
-    aurc = sum(point["risk"] for point in points) / len(points)
+    previous = 0.0
+    aurc = 0.0
+    for point in points:
+        aurc += (point["coverage"] - previous) * point["risk"]
+        previous = point["coverage"]
     return points, aurc
 
 
 def selective_points(
     records: Iterable[PredictionRecord], coverages: Sequence[float]
 ) -> list[dict[str, float]]:
-    rows = sorted(_labeled(records), key=lambda row: row.confidence, reverse=True)
+    points, _ = risk_coverage(records)
     result = []
     for coverage in coverages:
         if not 0 < coverage <= 1:
             raise ValueError("coverage values must be in (0, 1]")
-        kept = max(1, math.ceil(coverage * len(rows)))
-        subset = rows[:kept]
-        risk = sum(not row.correct for row in subset) / kept
+        point = next(point for point in points if point["coverage"] >= coverage)
+        risk = point["risk"]
         result.append(
             {
                 "requested_coverage": coverage,
-                "coverage": kept / len(rows),
+                "coverage": point["coverage"],
                 "risk": risk,
                 "accuracy": 1 - risk,
-                "threshold": subset[-1].confidence,
+                "threshold": point["threshold"],
             }
         )
     return result
@@ -125,7 +136,7 @@ def audit_records(
         }
 
     return {
-        "schema_version": "1.0",
+        "schema_version": "1.1",
         "overall": {
             **summarize(rows),
             "aurc": aurc,

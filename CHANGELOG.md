@@ -1,5 +1,18 @@
 # Changelog
 
+## 0.3.0 - Unreleased on PyPI
+
+- Fix tie groups in threshold fitting, risk-coverage curves, and selective reports.
+- Add independent holdout validation with CLI pass/fail exit codes.
+- Clarify pointwise fit bounds versus independent fixed-policy risk assessment.
+- Replace quadratic AUROC with tie-aware O(n log n) rank aggregation.
+- Make missing shift threshold default to adaptive monitoring; validate inputs.
+- Regenerate case-study reports and record provenance and reproducibility limits.
+- Align package/citation versions; expand CI to lint, build, and check distributions.
+
+Refit 0.2 policies before deployment. The 0.2 policy selection and audit reports
+could split ties and depend on input order. No 0.2 PyPI release is intended.
+
 ## 0.2.0 - 2026-09-19
 
 - Add exact Clopper-Pearson upper risk bounds to policy fitting.

@@ -29,15 +29,19 @@ def read_financial_ner_records(
     if signal not in allowed:
         raise ValueError(f"unsupported {model} confidence signal: {signal}")
     records = []
-    with Path(path).open(encoding="utf-8") as handle:
+    with Path(path).open(encoding="utf-8-sig") as handle:
         for line_number, line in enumerate(handle, start=1):
             if not line.strip():
                 continue
             row = json.loads(line)
-            if seed is not None and int(row.get("seed", seed)) != seed:
+            if seed is not None and "seed" not in row:
+                raise ValueError(f"line {line_number}: seed required when filtering")
+            if seed is not None and int(row["seed"]) != seed:
                 continue
             if signal not in row or row[signal] is None:
-                continue
+                raise ValueError(f"line {line_number}: missing confidence signal {signal}")
+            if row.get("sent_error") not in (0, 1):
+                raise ValueError(f"line {line_number}: sent_error must be 0 or 1")
             record_id = str(row.get("sent_id") or f"row-{line_number}")
             row_seed = row.get("seed")
             records.append(
