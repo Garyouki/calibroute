@@ -11,7 +11,7 @@ uncertainty-aware routing. It converts model predictions into three actions:
 - Validation-only threshold fitting
 - Tie-aware threshold fitting and independent holdout risk assessment
 - Batch-size-aware confidence-shift detection
-- Financial NER encoder and generative-output adapter
+- Financial NER sentence- and entity-level output adapters
 - CSV and JSONL support
 - Dependency-free Python API and CLI
 
