@@ -66,6 +66,28 @@ calibroute convert-financial-ner --input sentences.jsonl --model encoder --seed 
 calibroute convert-financial-ner --input sentences.jsonl --model generative --signal conf_min_sc --output predictions.csv
 ```
 
+## Entity-level routing
+
+For entity-level evaluation, each JSONL row can contain an `entities` list. An
+entity needs a boolean `correct` and a `confidence` field, or a selected
+model-specific confidence signal. `entity_id` and `type` are optional; entity
+text is neither required nor exported. The converter emits one common-schema
+record per entity, so the existing `audit`, `fit`, `validate`, and `route`
+commands apply without a separate policy format.
+
+```json
+{"seed": 42, "sent_id": "example-1", "domain": "fin_test", "entities": [{"entity_id": "e1", "confidence": 0.93, "correct": true, "type": "ORG"}]}
+```
+
+```bash
+calibroute convert-financial-ner-entities \
+  --input entity_predictions.jsonl --model encoder --seed 42 \
+  --output entity_predictions.csv
+```
+
+The entity-level correctness definition must be fixed before policy fitting;
+do not mix relaxed span overlap and exact-match labels in a single audit.
+
 These are empirical research results, not claims of deployment safety. Dataset
 and model licensing remains the responsibility of users who reproduce the
 underlying experiments.
