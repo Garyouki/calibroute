@@ -6,7 +6,11 @@ import argparse
 import json
 from pathlib import Path
 
-from .adapters.financial_ner import read_financial_ner_records, write_records_csv
+from .adapters.financial_ner import (
+    read_financial_ner_entity_records,
+    read_financial_ner_records,
+    write_records_csv,
+)
 from .io import read_policy, read_records, write_decisions, write_json
 from .metrics import audit_records
 from .policy import fit_policy, route_batch
@@ -58,6 +62,16 @@ def build_parser() -> argparse.ArgumentParser:
     convert.add_argument("--model", choices=["encoder", "generative"], required=True)
     convert.add_argument("--signal")
     convert.add_argument("--seed", type=int)
+    convert_entities = subparsers.add_parser(
+        "convert-financial-ner-entities",
+        help="Convert entity-level Financial NER JSONL output.",
+    )
+    convert_entities.add_argument("--input", required=True, help="Entity-level JSONL output.")
+    convert_entities.add_argument("--output", required=True, help="Common-schema CSV output.")
+    convert_entities.add_argument("--model", choices=["encoder", "generative"], required=True)
+    convert_entities.add_argument("--signal")
+    convert_entities.add_argument("--seed", type=int)
+    convert_entities.add_argument("--entities-key", default="entities")
     validate = subparsers.add_parser(
         "validate", help="Evaluate a frozen policy on independent holdout."
     )
@@ -126,6 +140,16 @@ def main(argv: list[str] | None = None) -> int:
             )
             write_records_csv(args.output, records)
             print(f"wrote {len(records)} common-schema records to {args.output}")
+        elif args.command == "convert-financial-ner-entities":
+            records = read_financial_ner_entity_records(
+                args.input,
+                model=args.model,
+                signal=args.signal,
+                seed=args.seed,
+                entities_key=args.entities_key,
+            )
+            write_records_csv(args.output, records)
+            print(f"wrote {len(records)} common-schema entity records to {args.output}")
     except (OSError, ValueError, KeyError, json.JSONDecodeError) as error:
         parser.error(str(error))
     return 0

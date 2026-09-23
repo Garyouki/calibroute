@@ -14,7 +14,7 @@
 - [x] reproduce multi-domain confidence and risk analyses
 - [x] add exact one-sided binomial risk bounds
 - [x] calibrate shift thresholds by batch size and handle small batches
-- [ ] add entity-level policies
+- [x] add entity-level policies
 - [ ] publish a complete external data acquisition manifest
 
 ## 0.3 - Correctness and reproducible evaluation
