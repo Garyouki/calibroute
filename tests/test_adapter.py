@@ -107,7 +107,7 @@ class FinancialNerAdapterTests(unittest.TestCase):
     def test_entity_conversion_rejects_unlabeled_or_malformed_entities(self):
         path = self._file([{"entities": [{"confidence": 0.8, "correct": 1}]}])
 
-        with self.assertRaisesRegex(ValueError, "correct must be a boolean"):
+        with self.assertRaisesRegex(TypeError, "correct must be a boolean"):
             read_financial_ner_entity_records(path, model="encoder")
 
 
