@@ -95,19 +95,19 @@ def read_financial_ner_entity_records(
                 continue
             entities = row.get(entities_key)
             if not isinstance(entities, list):
-                raise ValueError(f"line {line_number}: {entities_key} must be a list")
+                raise TypeError(f"line {line_number}: {entities_key} must be a list")
             sentence_id = str(row.get("sent_id") or f"row-{line_number}")
             row_seed = row.get("seed")
             for entity_index, entity in enumerate(entities):
                 if not isinstance(entity, dict):
-                    raise ValueError(f"line {line_number}: entity {entity_index} must be an object")
+                    raise TypeError(f"line {line_number}: entity {entity_index} must be an object")
                 confidence_key = signal or "confidence"
                 if confidence_key not in entity or entity[confidence_key] is None:
                     raise ValueError(
                         f"line {line_number}: entity {entity_index} missing {confidence_key}"
                     )
                 if not isinstance(entity.get("correct"), bool):
-                    raise ValueError(
+                    raise TypeError(
                         f"line {line_number}: entity {entity_index} correct must be a boolean"
                     )
                 entity_id = str(entity.get("entity_id") or entity_index)
