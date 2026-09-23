@@ -97,9 +97,9 @@ class FinancialNerAdapterTests(unittest.TestCase):
             ]
         )
 
-        record = read_financial_ner_entity_records(
-            path, model="generative", signal="conf_min_sc"
-        )[0]
+        record = read_financial_ner_entity_records(path, model="generative", signal="conf_min_sc")[
+            0
+        ]
 
         self.assertEqual(record.confidence, 0.7)
         self.assertEqual(record.metadata["signal"], "conf_min_sc")
