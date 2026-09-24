@@ -12,6 +12,7 @@ uncertainty-aware routing. It converts model predictions into three actions:
 - Tie-aware threshold fitting and independent holdout risk assessment
 - Batch-size-aware confidence-shift detection
 - Financial NER sentence- and entity-level output adapters
+- ShiftGuard agent-replay adapter and offline confidence audit (repository version)
 - CSV and JSONL support
 - Dependency-free Python API and CLI
 
@@ -115,6 +116,10 @@ See [CONTRIBUTING.md](CONTRIBUTING.md) and [ROADMAP.md](ROADMAP.md).
 Release preparation is documented in [releasing](docs/releasing.md).
 The [Financial NER case study](examples/financial_ner/README.md) demonstrates
 the adapter and cross-domain failure pattern on 2,098 derived prediction rows.
+The [ShiftGuard agent example](examples/shiftguard/README.md) audits 384 frozen
+proposals, keeps task templates separate, and reports when no confidence
+threshold meets the declared empirical risk target. Install from this checkout
+to use the new `convert-shiftguard` command.
 
 ## License
 

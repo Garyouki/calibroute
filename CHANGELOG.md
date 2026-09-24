@@ -1,5 +1,12 @@
 # Changelog
 
+## Unreleased
+
+- Add a ShiftGuard replay-log adapter and `convert-shiftguard` CLI command.
+- Preserve task-template grouping and explicit safe-success label provenance in CSV exports.
+- Add an offline agent example with a frozen 384-record slice, source hashes,
+  template-separated empirical fitting, and explicit infeasible-policy reporting.
+
 ## 0.3.0 - 2026-09-20
 
 - Fix tie groups in threshold fitting, risk-coverage curves, and selective reports.

@@ -32,6 +32,7 @@
 
 ## 0.4 - Agent and language-system adapters
 
+- [x] ShiftGuard proposal adapter and offline template-separated confidence example
 - structured-output and tool-call correctness adapters
 - cost-sensitive escalation policies
 - regression gates for persistent agent updates

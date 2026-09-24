@@ -11,6 +11,7 @@ from .adapters.financial_ner import (
     read_financial_ner_records,
     write_records_csv,
 )
+from .adapters.shiftguard import read_shiftguard_records, write_shiftguard_csv
 from .io import read_policy, read_records, write_decisions, write_json
 from .metrics import audit_records
 from .policy import fit_policy, route_batch
@@ -72,6 +73,13 @@ def build_parser() -> argparse.ArgumentParser:
     convert_entities.add_argument("--signal")
     convert_entities.add_argument("--seed", type=int)
     convert_entities.add_argument("--entities-key", default="entities")
+    shiftguard = subparsers.add_parser(
+        "convert-shiftguard", help="Convert frozen ShiftGuard always-execute outcomes."
+    )
+    shiftguard.add_argument("--input", required=True, help="Replayed ShiftGuard JSONL.")
+    shiftguard.add_argument("--output", required=True, help="Common-schema CSV output.")
+    shiftguard.add_argument("--model", help="Optional exact model tag filter.")
+    shiftguard.add_argument("--seed", type=int)
     validate = subparsers.add_parser(
         "validate", help="Evaluate a frozen policy on independent holdout."
     )
@@ -150,6 +158,10 @@ def main(argv: list[str] | None = None) -> int:
             )
             write_records_csv(args.output, records)
             print(f"wrote {len(records)} common-schema entity records to {args.output}")
+        elif args.command == "convert-shiftguard":
+            records = read_shiftguard_records(args.input, model=args.model, seed=args.seed)
+            write_shiftguard_csv(args.output, records)
+            print(f"wrote {len(records)} common-schema agent records to {args.output}")
     except (OSError, ValueError, KeyError, json.JSONDecodeError) as error:
         parser.error(str(error))
     return 0

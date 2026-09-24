@@ -10,4 +10,5 @@ build/
 coverage.xml
 .coverage
 examples/output/
+examples/shiftguard/output/
 workcheck/
