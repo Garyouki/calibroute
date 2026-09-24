@@ -1,0 +1,308 @@
+[
+  {
+    "source_path": "experiment/data/raw/manifest_01_download.json",
+    "original_sha256": "3b058a1cdd35a3ce2c7d56f79b7968d6aa3e403db51e6fc3ca2e8f29034f2a94",
+    "transformation": "input_hashes keys shortened to experiment-relative paths",
+    "record": {
+      "stage": "01_download",
+      "timestamp_utc": "2026-08-06T02:00:58.994421+00:00",
+      "git_commit": "unknown",
+      "command": "scripts/01_download_data.py",
+      "args": {},
+      "input_hashes": {
+        "experiment/data/raw/fin_train.jsonl": "3275e618dc9da73d0afa19c9b8a9beb6d2ea80d46a1c2647f6a05b44f112184d",
+        "experiment/data/raw/fin_valid.jsonl": "9e040dd9d7faf8c077c84fd515becb01c8c96ac0cf795a27e8fad801b18a68d3",
+        "experiment/data/raw/fin_test.jsonl": "f1952143b3efd9396264f82f64ebf1a6661f31df18272ebdbbc41efc3ad11da9",
+        "experiment/data/raw/tweetner7_test.jsonl": "e17932de66d5361e0702fcb0cb3cef36bf9d00774ebb184856ab0374e6281f16",
+        "experiment/data/raw/finer_ord_test.jsonl": "f59b292967245e22e022551c70217ef27b0cf5329b3fd44416c5241416b0a213"
+      },
+      "python": "3.12.7 (main, Oct  1 2024, 02:05:46) [Clang 15.0.0 (clang-1500.3.9.4)]",
+      "platform": "macOS-26.5.2-arm64-arm-64bit",
+      "torch": "2.13.0",
+      "transformers": "5.14.1",
+      "extra": {
+        "sources": {
+          "fin_label": "https://huggingface.co/datasets/tner/fin/resolve/main/dataset/label.json",
+          "fin_train": "https://huggingface.co/datasets/tner/fin/resolve/main/dataset/train.json",
+          "fin_valid": "https://huggingface.co/datasets/tner/fin/resolve/main/dataset/valid.json",
+          "fin_test": "https://huggingface.co/datasets/tner/fin/resolve/main/dataset/test.json",
+          "tweetner7_label": "https://huggingface.co/datasets/tner/tweetner7/resolve/main/dataset/label.json",
+          "tweetner7_test": "https://huggingface.co/datasets/tner/tweetner7/resolve/main/dataset/2021.test.json",
+          "finer_ord_test": "https://huggingface.co/datasets/gtfintechlab/finer-ord/resolve/main/test.csv"
+        },
+        "fin_labels": {
+          "O": 0,
+          "B-PER": 1,
+          "B-LOC": 2,
+          "B-ORG": 3,
+          "B-MISC": 4,
+          "I-PER": 5,
+          "I-LOC": 6,
+          "I-ORG": 7,
+          "I-MISC": 8
+        },
+        "tweetner7_labels": {
+          "B-corporation": 0,
+          "B-creative_work": 1,
+          "B-event": 2,
+          "B-group": 3,
+          "B-location": 4,
+          "B-person": 5,
+          "B-product": 6,
+          "I-corporation": 7,
+          "I-creative_work": 8,
+          "I-event": 9,
+          "I-group": 10,
+          "I-location": 11,
+          "I-person": 12,
+          "I-product": 13,
+          "O": 14
+        },
+        "finer_ord_csv_fields": [
+          "gold_label",
+          "gold_token",
+          "doc_idx",
+          "sent_idx"
+        ]
+      }
+    }
+  },
+  {
+    "source_path": "experiment/data/processed/manifest_02_preprocess.json",
+    "original_sha256": "e96b4ac1540e0c11cb6bed0cf302afe2f0fe7a2e8864b16f3857a4f2143771c4",
+    "transformation": "input_hashes keys shortened to experiment-relative paths",
+    "record": {
+      "stage": "02_preprocess",
+      "timestamp_utc": "2026-08-06T02:01:40.917834+00:00",
+      "git_commit": "b218b6ee65b1f31790c1cd38dd8a0dec1421939d",
+      "command": "scripts/02_preprocess.py",
+      "args": {},
+      "input_hashes": {
+        "experiment/data/raw/fin_test.jsonl": "f1952143b3efd9396264f82f64ebf1a6661f31df18272ebdbbc41efc3ad11da9",
+        "experiment/data/raw/fin_train.jsonl": "3275e618dc9da73d0afa19c9b8a9beb6d2ea80d46a1c2647f6a05b44f112184d",
+        "experiment/data/raw/fin_valid.jsonl": "9e040dd9d7faf8c077c84fd515becb01c8c96ac0cf795a27e8fad801b18a68d3",
+        "experiment/data/raw/finer_ord_test.jsonl": "f59b292967245e22e022551c70217ef27b0cf5329b3fd44416c5241416b0a213",
+        "experiment/data/raw/tweetner7_test.jsonl": "e17932de66d5361e0702fcb0cb3cef36bf9d00774ebb184856ab0374e6281f16"
+      },
+      "python": "3.12.7 (main, Oct  1 2024, 02:05:46) [Clang 15.0.0 (clang-1500.3.9.4)]",
+      "platform": "macOS-26.5.2-arm64-arm-64bit",
+      "torch": "2.13.0",
+      "transformers": "5.14.1",
+      "extra": {
+        "fin_train": {
+          "sentences": 1014,
+          "entities": 980,
+          "by_type": {
+            "LOC": 157,
+            "PER": 648,
+            "ORG": 175
+          },
+          "dropped_misc_sentences": 4
+        },
+        "fin_valid": {
+          "sentences": 150,
+          "entities": 177,
+          "by_type": {
+            "ORG": 68,
+            "LOC": 12,
+            "PER": 97
+          },
+          "dropped_misc_sentences": 0
+        },
+        "fin_test": {
+          "sentences": 299,
+          "entities": 295,
+          "by_type": {
+            "ORG": 56,
+            "PER": 201,
+            "LOC": 38
+          },
+          "dropped_misc_sentences": 6
+        },
+        "finer_ord_test": {
+          "sentences": 300,
+          "entities": 322,
+          "by_type": {
+            "PER": 78,
+            "LOC": 93,
+            "ORG": 151
+          },
+          "dropped_sentences": 0
+        },
+        "tweetner7_test": {
+          "sentences": 300,
+          "entities": 619,
+          "by_type": {
+            "ORG": 135,
+            "LOC": 103,
+            "PER": 381
+          },
+          "dropped_out_of_schema_sentences": 2179
+        }
+      }
+    }
+  },
+  {
+    "source_path": "experiment/results/manifest_04_eval_encoder.json",
+    "original_sha256": "2680ad6d663d46c48b6b7798951ec79c4a8dc1730be18fe1fd4b9c30c2763aec",
+    "transformation": "input_hashes keys shortened to experiment-relative paths",
+    "record": {
+      "stage": "04_eval_encoder",
+      "timestamp_utc": "2026-08-06T03:45:49.479572+00:00",
+      "git_commit": "2b88bb618bee6bfa7330ff4acd33050ac7853f69",
+      "command": "scripts/04_eval_encoder.py",
+      "args": {},
+      "input_hashes": {
+        "experiment/data/processed/fin_valid.jsonl": "9e040dd9d7faf8c077c84fd515becb01c8c96ac0cf795a27e8fad801b18a68d3",
+        "experiment/data/processed/fin_test.jsonl": "1f6b3e19d486636ff6f25bde3bc00d743ff9f1cc3d76855f877a3cef7ea6d9d7",
+        "experiment/data/processed/finer_ord_test.jsonl": "659f3be941ca847ddbd0cf48c67699ffbdb4aa181644b22764ace811478ebacb",
+        "experiment/data/processed/tweetner7_test.jsonl": "885c104fd84114eeac33d115887a3261cfe2c45d039ac95380caf1f8cbb6ea5b"
+      },
+      "python": "3.12.7 (main, Oct  1 2024, 02:05:46) [Clang 15.0.0 (clang-1500.3.9.4)]",
+      "platform": "macOS-26.5.2-arm64-arm-64bit",
+      "torch": "2.13.0",
+      "transformers": "5.14.1",
+      "extra": {
+        "temperatures": {
+          "13": 1.0433261394500732,
+          "42": 0.9999560117721558,
+          "2026": 1.0
+        },
+        "n_entity_records": 6824,
+        "n_sentence_records": 3147
+      }
+    }
+  },
+  {
+    "source_path": "experiment/results/manifest_06_eval_generative_seed42.json",
+    "original_sha256": "0b95a6a940ad603e1f270f5dd6fb503f369f85a88d3857a3ad3ddb09a3935515",
+    "transformation": "input_hashes keys shortened to experiment-relative paths",
+    "record": {
+      "stage": "06_eval_generative_seed42",
+      "timestamp_utc": "2026-08-06T11:18:19.818395+00:00",
+      "git_commit": "24295dd72b022d6bd9cdc24c824794c9be2961b8",
+      "command": "scripts/06_eval_generative.py --seed 42",
+      "args": {
+        "seed": 42,
+        "sets": "fin_valid,fin_test,finer_ord_test,tweetner7_test",
+        "batch_size": 8
+      },
+      "input_hashes": {
+        "experiment/data/processed/fin_valid.jsonl": "9e040dd9d7faf8c077c84fd515becb01c8c96ac0cf795a27e8fad801b18a68d3",
+        "experiment/data/processed/fin_test.jsonl": "1f6b3e19d486636ff6f25bde3bc00d743ff9f1cc3d76855f877a3cef7ea6d9d7",
+        "experiment/data/processed/finer_ord_test.jsonl": "659f3be941ca847ddbd0cf48c67699ffbdb4aa181644b22764ace811478ebacb",
+        "experiment/data/processed/tweetner7_test.jsonl": "885c104fd84114eeac33d115887a3261cfe2c45d039ac95380caf1f8cbb6ea5b"
+      },
+      "python": "3.12.7 (main, Oct  1 2024, 02:05:46) [Clang 15.0.0 (clang-1500.3.9.4)]",
+      "platform": "macOS-26.5.2-arm64-arm-64bit",
+      "torch": "2.13.0",
+      "transformers": "5.14.1",
+      "extra": {
+        "minutes": 331.438207368056,
+        "counts": {
+          "fin_valid": {
+            "entities": 36,
+            "sentences": 150
+          },
+          "fin_test": {
+            "entities": 267,
+            "sentences": 299
+          },
+          "finer_ord_test": {
+            "entities": 229,
+            "sentences": 300
+          },
+          "tweetner7_test": {
+            "entities": 559,
+            "sentences": 300
+          }
+        }
+      }
+    }
+  },
+  {
+    "source_path": "experiment/runs/encoder_seed42/manifest_03_train_encoder.json",
+    "original_sha256": "da3826dc9f43c2bd9cbd2766d6ce788390d08d47db6fe7021cd1d62a2c290c90",
+    "transformation": "input_hashes keys shortened to experiment-relative paths",
+    "record": {
+      "stage": "03_train_encoder",
+      "timestamp_utc": "2026-08-06T03:40:25.733381+00:00",
+      "git_commit": "2b88bb618bee6bfa7330ff4acd33050ac7853f69",
+      "command": "scripts/03_train_encoder.py --seed 42",
+      "args": {
+        "seed": 42,
+        "model_name": "bert-base-cased",
+        "seeds": [
+          13,
+          42,
+          2026
+        ],
+        "epochs": 5,
+        "lr": 3e-05,
+        "batch_size": 16,
+        "max_length": 256,
+        "weight_decay": 0.01,
+        "warmup_ratio": 0.1
+      },
+      "input_hashes": {
+        "experiment/data/processed/fin_train.jsonl": "9480877110b8356cf12f576c6d79eb04d73aa445a8854d3ad94fda61047e78ec"
+      },
+      "python": "3.12.7 (main, Oct  1 2024, 02:05:46) [Clang 15.0.0 (clang-1500.3.9.4)]",
+      "platform": "macOS-26.5.2-arm64-arm-64bit",
+      "torch": "2.13.0",
+      "transformers": "5.14.1",
+      "extra": {
+        "train_minutes": 53.329095697402956,
+        "final_loss": 0.005303902551531792
+      }
+    }
+  },
+  {
+    "source_path": "experiment/runs/generative_seed42/manifest_05_train_generative.json",
+    "original_sha256": "c4f3321631f9ab6130d64b1d3088fb4240991d55d5c6d2a1a622e488c0bccfeb",
+    "transformation": "input_hashes keys shortened to experiment-relative paths",
+    "record": {
+      "stage": "05_train_generative",
+      "timestamp_utc": "2026-08-06T04:40:03.218159+00:00",
+      "git_commit": "684ce3d9ef4ea8e421639a11ff5a78777648c0e6",
+      "command": "scripts/05_train_generative.py --seed 42",
+      "args": {
+        "seed": 42,
+        "model_name": "Qwen/Qwen2.5-0.5B-Instruct",
+        "seeds": [
+          42,
+          13,
+          2026
+        ],
+        "epochs": 3,
+        "lr": 0.0001,
+        "batch_size": 2,
+        "grad_accum": 8,
+        "max_length": 256,
+        "lora_r": 16,
+        "lora_alpha": 32,
+        "lora_dropout": 0.05,
+        "target_modules": [
+          "q_proj",
+          "k_proj",
+          "v_proj",
+          "o_proj"
+        ],
+        "self_consistency_k": 5,
+        "sc_temperature": 0.7,
+        "max_new_tokens": 128
+      },
+      "input_hashes": {
+        "experiment/data/processed/fin_train.jsonl": "9480877110b8356cf12f576c6d79eb04d73aa445a8854d3ad94fda61047e78ec"
+      },
+      "python": "3.12.7 (main, Oct  1 2024, 02:05:46) [Clang 15.0.0 (clang-1500.3.9.4)]",
+      "platform": "macOS-26.5.2-arm64-arm-64bit",
+      "torch": "2.13.0",
+      "transformers": "5.14.1",
+      "extra": {
+        "train_minutes": 38.06517799695333,
+        "final_loss": 0.009444769471883774
+      }
+    }
+  }
+]

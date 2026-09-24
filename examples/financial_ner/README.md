@@ -8,14 +8,20 @@ The checked-in CSV files contain only derived prediction metadata (identifier,
 confidence, correctness, domain, model, seed, and signal). They contain no
 source sentences or dataset text.
 
+To acquire and verify the original data splits, inspect exact prompts/model
+configuration, or review the recovered training and evaluation scripts, see
+[experiment sources and data preparation](reproduction/README.md). The data
+preparation command runs without model dependencies; model retraining remains
+a separate, not-yet-validated path.
+
 ## Results
 
 | Model / confidence signal | Domain | n | Accuracy | ECE | AUROC |
 |---|---|---:|---:|---:|---:|
-| Encoder / mean span MSP | FIN validation | 150 | 0.940 | 0.037 | 0.787 |
-| Encoder / mean span MSP | FIN test | 299 | 0.880 | 0.050 | 0.905 |
-| Encoder / mean span MSP | FiNER-ORD | 300 | 0.480 | 0.265 | 0.742 |
-| Encoder / mean span MSP | TweetNER7 | 300 | 0.083 | 0.519 | 0.558 |
+| Encoder / min of span-mean MSP | FIN validation | 150 | 0.940 | 0.037 | 0.787 |
+| Encoder / min of span-mean MSP | FIN test | 299 | 0.880 | 0.050 | 0.905 |
+| Encoder / min of span-mean MSP | FiNER-ORD | 300 | 0.480 | 0.265 | 0.742 |
+| Encoder / min of span-mean MSP | TweetNER7 | 300 | 0.083 | 0.519 | 0.558 |
 | Generative / self-consistency | FIN validation | 150 | 0.467 | 0.499 | 0.555 |
 | Generative / self-consistency | FIN test | 299 | 0.656 | 0.225 | 0.729 |
 | Generative / self-consistency | FiNER-ORD | 300 | 0.407 | 0.418 | 0.672 |

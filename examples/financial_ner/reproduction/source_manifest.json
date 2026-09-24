@@ -1,0 +1,259 @@
+{
+  "schema_version": 1,
+  "source_commit": "70df7dca0c5c55509d34bd115ae5740b410d7752",
+  "source_repository": "author local Financial NER Model repository; no public remote recorded",
+  "recovered_files": [
+    {
+      "source_path": "experiment/configs/config.yaml",
+      "path": "reference/configs/config.yaml",
+      "sha256": "f26250d12c611342627502a6d0c6dd0fe6f84a963f791973ff4475e7d04f6d6f",
+      "bytes": 1626
+    },
+    {
+      "source_path": "experiment/scripts/common.py",
+      "path": "reference/scripts/common.py",
+      "sha256": "4a6abecdfcaa8045b4cf9ba7c8b37a84dc561786f9d87bc7fb3d30a191b9b4df",
+      "bytes": 5499
+    },
+    {
+      "source_path": "experiment/scripts/01_download_data.py",
+      "path": "reference/scripts/01_download_data.py",
+      "sha256": "5769525b6d769e336937e063602d92a3278cd99524ada317b9bacfd32e291284",
+      "bytes": 4209
+    },
+    {
+      "source_path": "experiment/scripts/02_preprocess.py",
+      "path": "reference/scripts/02_preprocess.py",
+      "sha256": "9610bae8767ceb65e00fa105c82ca6c29ac95dbc04e5e7baef47ebda644f4f33",
+      "bytes": 4325
+    },
+    {
+      "source_path": "experiment/scripts/03_train_encoder.py",
+      "path": "reference/scripts/03_train_encoder.py",
+      "sha256": "0a797d713a6f517c87a63ec612d1a38a22395f4dde077c1d398d819d16247cfb",
+      "bytes": 3963
+    },
+    {
+      "source_path": "experiment/scripts/04_eval_encoder.py",
+      "path": "reference/scripts/04_eval_encoder.py",
+      "sha256": "e929b90cb0429311a88f6bf3a047a96fd9b09df5802a40f99bbb26c0b40d5984",
+      "bytes": 6501
+    },
+    {
+      "source_path": "experiment/scripts/05_train_generative.py",
+      "path": "reference/scripts/05_train_generative.py",
+      "sha256": "61750f500e000ef986da35a512792a91caee669aa41cefce44805d73024c4a39",
+      "bytes": 5483
+    },
+    {
+      "source_path": "experiment/scripts/06_eval_generative.py",
+      "path": "reference/scripts/06_eval_generative.py",
+      "sha256": "d9ac656de131585bac02c101714756a2522f5efe25a3b7898789c7ebfdbfaa39",
+      "bytes": 10104
+    }
+  ],
+  "datasets": [
+    {
+      "id": "tner/fin",
+      "retrieval_revision": "e79eb66d7f3ee016c31e70ad9d48e33f15047786",
+      "historical_revision": null,
+      "license_note": "Dataset card metadata: mit",
+      "card_url": "https://huggingface.co/datasets/tner/fin/blob/e79eb66d7f3ee016c31e70ad9d48e33f15047786/README.md"
+    },
+    {
+      "id": "gtfintechlab/finer-ord",
+      "retrieval_revision": "ffde4829ec7be59c846365f8e8a10421bb79138a",
+      "historical_revision": null,
+      "license_note": "Dataset card metadata: cc-by-nc-4.0",
+      "card_url": "https://huggingface.co/datasets/gtfintechlab/finer-ord/blob/ffde4829ec7be59c846365f8e8a10421bb79138a/README.md"
+    },
+    {
+      "id": "tner/tweetner7",
+      "retrieval_revision": "9d9c27f1d4fb18a02e0d8283bac6ebb01c56c458",
+      "historical_revision": null,
+      "license_note": "Dataset card metadata: other; consult upstream terms",
+      "card_url": "https://huggingface.co/datasets/tner/tweetner7/blob/9d9c27f1d4fb18a02e0d8283bac6ebb01c56c458/README.md"
+    }
+  ],
+  "downloads": [
+    {
+      "key": "fin_label",
+      "historical_url": "https://huggingface.co/datasets/tner/fin/resolve/main/dataset/label.json",
+      "url": "https://huggingface.co/datasets/tner/fin/resolve/e79eb66d7f3ee016c31e70ad9d48e33f15047786/dataset/label.json",
+      "sha256": "df76b5d72dc854571f02c4893ad3c801f667a08de3bf01d76ed746a69c6c6264",
+      "bytes": 106
+    },
+    {
+      "key": "fin_train",
+      "historical_url": "https://huggingface.co/datasets/tner/fin/resolve/main/dataset/train.json",
+      "url": "https://huggingface.co/datasets/tner/fin/resolve/e79eb66d7f3ee016c31e70ad9d48e33f15047786/dataset/train.json",
+      "sha256": "9e1044c4e82465166d80f8a0673f0e6d26894ffc61238636f70aafe27f393b8d",
+      "bytes": 440445
+    },
+    {
+      "key": "fin_valid",
+      "historical_url": "https://huggingface.co/datasets/tner/fin/resolve/main/dataset/valid.json",
+      "url": "https://huggingface.co/datasets/tner/fin/resolve/e79eb66d7f3ee016c31e70ad9d48e33f15047786/dataset/valid.json",
+      "sha256": "1900660f810bb846e527519e3156cee76fc7ab7d49c303ca73be221e9bc74348",
+      "bytes": 53847
+    },
+    {
+      "key": "fin_test",
+      "historical_url": "https://huggingface.co/datasets/tner/fin/resolve/main/dataset/test.json",
+      "url": "https://huggingface.co/datasets/tner/fin/resolve/e79eb66d7f3ee016c31e70ad9d48e33f15047786/dataset/test.json",
+      "sha256": "d60808c4b8a1a74ab4474da0379616d65c455de0c9a1a2a72ce3511dacacf470",
+      "bytes": 157521
+    },
+    {
+      "key": "tweetner7_label",
+      "historical_url": "https://huggingface.co/datasets/tner/tweetner7/resolve/main/dataset/label.json",
+      "url": "https://huggingface.co/datasets/tner/tweetner7/resolve/9d9c27f1d4fb18a02e0d8283bac6ebb01c56c458/dataset/label.json",
+      "sha256": "8ac0bee05ac6750360e7345863475399c9d13cb4316c74c558ea7832d786f948",
+      "bytes": 249
+    },
+    {
+      "key": "tweetner7_test",
+      "historical_url": "https://huggingface.co/datasets/tner/tweetner7/resolve/main/dataset/2021.test.json",
+      "url": "https://huggingface.co/datasets/tner/tweetner7/resolve/9d9c27f1d4fb18a02e0d8283bac6ebb01c56c458/dataset/2021.test.json",
+      "sha256": "f6614249136655bd1071c0101f8b256956245a3d338209e146031d9eb45e20e8",
+      "bytes": 1340938
+    },
+    {
+      "key": "finer_ord_test",
+      "historical_url": "https://huggingface.co/datasets/gtfintechlab/finer-ord/resolve/main/test.csv",
+      "url": "https://huggingface.co/datasets/gtfintechlab/finer-ord/resolve/ffde4829ec7be59c846365f8e8a10421bb79138a/test.csv",
+      "sha256": "51d305cb7e4431592a6880fe1c88b7b7ce35026f4249ce22d2d9cd84b4150b5b",
+      "bytes": 335950
+    }
+  ],
+  "revision_note": "Retrieval revisions resolved during packaging, not recorded historical revisions. Compare normalized raw and processed hashes to establish data equivalence.",
+  "preprocess": {
+    "max_test_sentences_per_domain": 300,
+    "subsample_seed": 1234,
+    "tweetner7_keep_types": {
+      "corporation": "ORG",
+      "person": "PER",
+      "location": "LOC"
+    }
+  },
+  "expected_data": {
+    "raw": {
+      "fin_train.jsonl": {
+        "sha256": "3275e618dc9da73d0afa19c9b8a9beb6d2ea80d46a1c2647f6a05b44f112184d",
+        "rows": 1018
+      },
+      "fin_valid.jsonl": {
+        "sha256": "9e040dd9d7faf8c077c84fd515becb01c8c96ac0cf795a27e8fad801b18a68d3",
+        "rows": 150
+      },
+      "fin_test.jsonl": {
+        "sha256": "f1952143b3efd9396264f82f64ebf1a6661f31df18272ebdbbc41efc3ad11da9",
+        "rows": 305
+      },
+      "finer_ord_test.jsonl": {
+        "sha256": "f59b292967245e22e022551c70217ef27b0cf5329b3fd44416c5241416b0a213",
+        "rows": 1075
+      },
+      "tweetner7_test.jsonl": {
+        "sha256": "e17932de66d5361e0702fcb0cb3cef36bf9d00774ebb184856ab0374e6281f16",
+        "rows": 2807
+      }
+    },
+    "processed": {
+      "fin_train.jsonl": {
+        "sha256": "9480877110b8356cf12f576c6d79eb04d73aa445a8854d3ad94fda61047e78ec",
+        "rows": 1014
+      },
+      "fin_valid.jsonl": {
+        "sha256": "9e040dd9d7faf8c077c84fd515becb01c8c96ac0cf795a27e8fad801b18a68d3",
+        "rows": 150
+      },
+      "fin_test.jsonl": {
+        "sha256": "1f6b3e19d486636ff6f25bde3bc00d743ff9f1cc3d76855f877a3cef7ea6d9d7",
+        "rows": 299
+      },
+      "finer_ord_test.jsonl": {
+        "sha256": "659f3be941ca847ddbd0cf48c67699ffbdb4aa181644b22764ace811478ebacb",
+        "rows": 300
+      },
+      "tweetner7_test.jsonl": {
+        "sha256": "885c104fd84114eeac33d115887a3261cfe2c45d039ac95380caf1f8cbb6ea5b",
+        "rows": 300
+      }
+    }
+  },
+  "source_predictions": [
+    {
+      "source_path": "experiment/results/encoder_sentences.jsonl",
+      "sha256": "fdf15df0b49511847083dbf49d5dda9119bdce008757a5fb95e2f08a6a6224f2",
+      "rows": 3147
+    },
+    {
+      "source_path": "experiment/results/generative_sentences_seed42_fin_valid.jsonl",
+      "sha256": "72d158b3b0a04e28f87b93a6162b8886675aa1fcc70842f12e34ba073550c5c0",
+      "rows": 150
+    },
+    {
+      "source_path": "experiment/results/generative_sentences_seed42_fin_test.jsonl",
+      "sha256": "518f6c25d437ca538efef81d337caa4511aba74f8a26ac53c2906bf11f38cc1c",
+      "rows": 299
+    },
+    {
+      "source_path": "experiment/results/generative_sentences_seed42_finer_ord_test.jsonl",
+      "sha256": "9e97301ba75ad498be6453807842d05268afd9615561c8f4eb7813a10bf8320c",
+      "rows": 300
+    },
+    {
+      "source_path": "experiment/results/generative_sentences_seed42_tweetner7_test.jsonl",
+      "sha256": "91e3bb87118cca127233de2c398616911644aa11343872d59c3923a461956dca",
+      "rows": 300
+    }
+  ],
+  "models": {
+    "encoder": {
+      "model_name": "bert-base-cased",
+      "seeds": [
+        13,
+        42,
+        2026
+      ],
+      "epochs": 5,
+      "lr": 3e-05,
+      "batch_size": 16,
+      "max_length": 256,
+      "weight_decay": 0.01,
+      "warmup_ratio": 0.1
+    },
+    "generative": {
+      "model_name": "Qwen/Qwen2.5-0.5B-Instruct",
+      "seeds": [
+        42,
+        13,
+        2026
+      ],
+      "epochs": 3,
+      "lr": 0.0001,
+      "batch_size": 2,
+      "grad_accum": 8,
+      "max_length": 256,
+      "lora_r": 16,
+      "lora_alpha": 32,
+      "lora_dropout": 0.05,
+      "target_modules": [
+        "q_proj",
+        "k_proj",
+        "v_proj",
+        "o_proj"
+      ],
+      "self_consistency_k": 5,
+      "sc_temperature": 0.7,
+      "max_new_tokens": 128
+    },
+    "historical_base_model_revisions": null,
+    "missing": [
+      "requirements.lock",
+      "generative_seed42/adapter_model.safetensors"
+    ],
+    "notes": "Versions in historical_manifests.json are recorded observations, not a verified dependency lock. Model weights and source dataset text are not included."
+  }
+}

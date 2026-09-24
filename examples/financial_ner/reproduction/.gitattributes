@@ -1,0 +1,2 @@
+# Preserve historical source bytes when cloning with core.autocrlf=true.
+reference/** text eol=lf

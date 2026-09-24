@@ -15,7 +15,7 @@
 - [x] add exact one-sided binomial risk bounds
 - [x] calibrate shift thresholds by batch size and handle small batches
 - [x] add entity-level policies
-- [ ] publish a complete external data acquisition manifest
+- [x] add pinned external data acquisition manifest and historical hash verification
 
 ## 0.3 - Correctness and reproducible evaluation
 

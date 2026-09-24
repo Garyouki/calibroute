@@ -1,0 +1,55 @@
+# Master experiment configuration.
+# Scaled-down local instantiation of RESEARCH_PLAN.md (see paper §Limitations):
+# plan assumed RTX 4080 + Qwen3-1.7B/4B; this machine is an Apple M1 Pro 16GB,
+# so the generative model is Qwen2.5-0.5B-Instruct + LoRA and the encoder
+# baseline is bert-base-cased. Design (domains, confidence signals, metrics,
+# thresholds-on-validation protocol) follows the plan unchanged.
+
+label_set: [PER, ORG, LOC]
+
+datasets:
+  train_domain:
+    name: fin                # Salinas Alvarado et al. 2015, SEC filings
+    hf_id: tner/fin
+  near_shift:
+    name: finer_ord          # Shah et al. 2023, financial news
+    hf_id: gtfintechlab/finer-ord
+  far_shift:
+    name: tweetner7          # Ushio et al. 2022, financial/social tweets
+    hf_id: tner/tweetner7
+
+preprocess:
+  max_test_sentences_per_domain: 300   # cap OOD test sets for generative inference cost
+  subsample_seed: 1234
+  tweetner7_keep_types: {corporation: ORG, person: PER, location: LOC}
+  # tweets containing entity types outside the mapping are dropped so gold stays clean
+
+encoder:
+  model_name: bert-base-cased
+  seeds: [13, 42, 2026]
+  epochs: 5
+  lr: 3.0e-5
+  batch_size: 16
+  max_length: 256
+  weight_decay: 0.01
+  warmup_ratio: 0.1
+
+generative:
+  model_name: Qwen/Qwen2.5-0.5B-Instruct
+  seeds: [42, 13, 2026]
+  epochs: 3
+  lr: 1.0e-4
+  batch_size: 2
+  grad_accum: 8
+  max_length: 256
+  lora_r: 16
+  lora_alpha: 32
+  lora_dropout: 0.05
+  target_modules: [q_proj, k_proj, v_proj, o_proj]
+  self_consistency_k: 5
+  sc_temperature: 0.7
+  max_new_tokens: 128
+
+selective:
+  coverages: [1.0, 0.9, 0.8, 0.7, 0.6, 0.5]
+  ece_bins: 15
