@@ -35,6 +35,10 @@ The distribution name is `calibroute-ai`; the Python import and command are
 
 ## Quick start
 
+New here? Follow the [document-review walkthrough](examples/document_review/README.md):
+one offline script demonstrates development data, a separate holdout, and routing
+using the published 0.3.0 API. It also explains how to use your own predictions.
+
 ```bash
 # Audit labeled predictions
 calibroute audit \
@@ -113,6 +117,8 @@ python -m unittest discover -s tests -v
 ```
 
 See [CONTRIBUTING.md](CONTRIBUTING.md) and [ROADMAP.md](ROADMAP.md).
+Tried it on a task? Share a [usage report](https://github.com/Garyouki/calibroute/issues/new?template=usage-report.md),
+including unsuccessful trials or integration difficulties.
 Release preparation is documented in [releasing](docs/releasing.md).
 The [Financial NER case study](examples/financial_ner/README.md) demonstrates
 the adapter and cross-domain failure pattern on 2,098 derived prediction rows.
