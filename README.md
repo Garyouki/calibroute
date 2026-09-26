@@ -41,6 +41,7 @@ includes additional adapters that have not yet been published to PyPI.
 | Capability | PyPI 0.3.0 | GitHub `main` |
 |---|---|---|
 | `audit`, `fit`, `validate`, `route` | Available | Available |
+| Three-rule comparison report: `compare` | Not included | Available |
 | Tie-aware thresholds, holdout assessment, and confidence-shift routing | Available | Available |
 | Financial NER sentence adapter: `convert-financial-ner` | Available | Available |
 | Financial NER entity adapter: `convert-financial-ner-entities` | Not included | Available |
@@ -62,6 +63,9 @@ published release. Check the listed commands and installation location; record
 `git rev-parse HEAD` when reporting results from a source checkout.
 
 ## Quick start
+
+To compare all-accept, a fixed threshold, and CalibRoute on the same labeled
+batch, see the [one-command comparison guide](docs/comparison.md) (GitHub `main`).
 
 New here? Follow the [document-review walkthrough](examples/document_review/README.md):
 one offline script demonstrates development data, a separate holdout, and routing

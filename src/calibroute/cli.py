@@ -12,6 +12,7 @@ from .adapters.financial_ner import (
     write_records_csv,
 )
 from .adapters.shiftguard import read_shiftguard_records, write_shiftguard_csv
+from .comparison import compare_policies, render_comparison
 from .io import read_policy, read_records, write_decisions, write_json
 from .metrics import audit_records
 from .policy import fit_policy, route_batch
@@ -88,6 +89,12 @@ def build_parser() -> argparse.ArgumentParser:
     validate.add_argument("--output", required=True)
     validate.add_argument("--max-risk", type=float)
     validate.add_argument("--confidence-level", type=float, default=0.95)
+    compare = subparsers.add_parser("compare", help="Compare three frozen rules on labeled data.")
+    compare.add_argument("--input", required=True)
+    compare.add_argument("--policy", required=True)
+    compare.add_argument("--fixed-threshold", type=float, required=True)
+    compare.add_argument("--domain", help="Evaluate only this domain as one batch.")
+    compare.add_argument("--output", required=True, help="Comparison .json or .md report.")
     return parser
 
 
@@ -95,7 +102,20 @@ def main(argv: list[str] | None = None) -> int:
     parser = build_parser()
     args = parser.parse_args(argv)
     try:
-        if args.command == "validate":
+        if args.command == "compare":
+            rows = read_records(args.input)
+            if args.domain is not None:
+                rows = [row for row in rows if row.domain == args.domain]
+            report = compare_policies(
+                rows, read_policy(args.policy), fixed_threshold=args.fixed_threshold
+            )
+            output = Path(args.output)
+            if output.suffix.lower() in {".md", ".markdown"}:
+                output.write_text(render_comparison(report), encoding="utf-8")
+            else:
+                write_json(output, report)
+            print(f"wrote comparison report to {output}")
+        elif args.command == "validate":
             report = validate_policy(
                 read_records(args.input),
                 read_policy(args.policy),

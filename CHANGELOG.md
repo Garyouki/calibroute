@@ -2,6 +2,8 @@
 
 ## Unreleased
 
+- Add `compare` reports for all-accept, fixed-threshold/review, and CalibRoute
+  routing on the same labeled batch, including domain slices and undefined-risk handling.
 - Add a ShiftGuard replay-log adapter and `convert-shiftguard` CLI command.
 - Preserve task-template grouping and explicit safe-success label provenance in CSV exports.
 - Add an offline agent example with a frozen 384-record slice, source hashes,
