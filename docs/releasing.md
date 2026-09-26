@@ -1,6 +1,7 @@
 # Release workflow
 
-0.3.0 is the first intended PyPI release. Do not publish 0.2.0.
+0.3.0 was the first PyPI release; 0.4.0 adds adapters and comparison reports.
+Do not publish 0.2.0.
 Public Git history preserves the earlier defect and its correction.
 
 ## Trusted Publishing setup
@@ -26,7 +27,7 @@ PyPI publisher has been configured and release metadata is finalized.
 1. Run tests, lint, the case study, and build checks below.
 2. Check package version, `__version__`, CITATION, and changelog agree.
 3. On actual release, set CITATION `date-released` to that release date and
-   replace the changelog's pending marker. Create an annotated tag `v0.3.0`
+   replace the changelog's pending marker. Create an annotated version tag
    and a GitHub Release pointing at the verified commit.
 4. Publish built artifacts using PyPI Trusted Publishing or a token configured
    locally. Never put a token in chat, source, or a committed `.pypirc`.

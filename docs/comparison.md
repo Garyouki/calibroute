@@ -1,7 +1,7 @@
 # Compare routing rules on your evaluation data
 
-Requires GitHub `main`; `compare` is not included in PyPI 0.3.0. Install from
-the checkout with `python -m pip install -e .`.
+Requires CalibRoute 0.4.0 or newer; `compare` is not included in PyPI 0.3.0.
+Install with `python -m pip install --upgrade calibroute-ai`.
 
 Supply a previously fitted policy and labeled evaluation records. The command
 evaluates three rules on exactly the same records:

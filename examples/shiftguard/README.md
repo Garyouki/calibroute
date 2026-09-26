@@ -7,8 +7,8 @@ It requires no model service, API key, network, GPU, or additional dependencies.
 
 ## Run
 
-Install the current repository checkout with `python -m pip install -e .`.
-The adapter is new in the repository and is not part of the 0.3.0 PyPI package.
+Install `calibroute-ai>=0.4.0` from PyPI, or install the current repository
+checkout with `python -m pip install -e .`. The adapter is not in PyPI 0.3.0.
 From the repository root, run:
 
 `python examples/shiftguard/run_case_study.py`

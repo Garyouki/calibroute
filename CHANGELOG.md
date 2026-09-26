@@ -1,7 +1,9 @@
 # Changelog
 
-## Unreleased
+## 0.4.0 - 2026-09-25
 
+- Add entity-level Financial NER conversion with `convert-financial-ner-entities`.
+- Add a document-review walkthrough, usage feedback template, and version compatibility guide.
 - Add `compare` reports for all-accept, fixed-threshold/review, and CalibRoute
   routing on the same labeled batch, including domain slices and undefined-risk handling.
 - Add a ShiftGuard replay-log adapter and `convert-shiftguard` CLI command.

@@ -2,8 +2,8 @@ cff-version: 1.2.0
 message: "If CalibRoute supports your research, please cite the software release."
 title: "CalibRoute: Uncertainty-Aware Evaluation and Decision Control for AI Systems"
 type: software
-version: 0.3.0
-date-released: 2026-09-20
+version: 0.4.0
+date-released: 2026-09-25
 repository-code: "https://github.com/Garyouki/calibroute"
 authors:
   - family-names: "Zheng"

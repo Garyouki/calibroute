@@ -12,7 +12,7 @@ uncertainty-aware routing. It converts model predictions into three actions:
 - Tie-aware threshold fitting and independent holdout risk assessment
 - Batch-size-aware confidence-shift detection
 - Financial NER sentence- and entity-level output adapters
-- ShiftGuard agent-replay adapter and offline confidence audit (repository version)
+- ShiftGuard agent-replay adapter and offline confidence audit
 - CSV and JSONL support
 - Dependency-free Python API and CLI
 
@@ -35,10 +35,10 @@ The distribution name is `calibroute-ai`; the Python import and command are
 
 ## Version compatibility
 
-As of September 25, 2026, the latest PyPI release is **0.3.0**. GitHub `main`
-includes additional adapters that have not yet been published to PyPI.
+Release **0.4.0** adds entity-level NER, ShiftGuard, and comparison reports to
+the PyPI package. Upgrade with `python -m pip install --upgrade calibroute-ai`.
 
-| Capability | PyPI 0.3.0 | GitHub `main` |
+| Capability | PyPI 0.3.0 | PyPI 0.4.0 |
 |---|---|---|
 | `audit`, `fit`, `validate`, `route` | Available | Available |
 | Three-rule comparison report: `compare` | Not included | Available |
@@ -46,26 +46,23 @@ includes additional adapters that have not yet been published to PyPI.
 | Financial NER sentence adapter: `convert-financial-ner` | Available | Available |
 | Financial NER entity adapter: `convert-financial-ner-entities` | Not included | Available |
 | ShiftGuard replay adapter: `convert-shiftguard` | Not included | Available |
-| Document-review walkthrough | Compatible; obtain script from GitHub | Included in checkout |
-| Financial NER sentence case study | Compatible; obtain script/data from GitHub | Included in checkout |
-| ShiftGuard case study | Requires repository adapters | Included in checkout |
+| Document-review walkthrough | Compatible; obtain script from GitHub | Compatible; obtain script from GitHub |
+| Financial NER sentence case study | Compatible; obtain script/data from GitHub | Compatible; obtain script/data from GitHub |
+| ShiftGuard case study | Not compatible | Compatible; obtain script/data from GitHub |
 
-For the published release, use `python -m pip install calibroute-ai==0.3.0`.
-For entity-level conversion or ShiftGuard, clone this repository and run
-`python -m pip install -e .` as shown above. Upgrading from PyPI alone does not
-install unpublished adapters. Example scripts and data are available in the
-repository; installing the wheel does not install the example folders.
+For reproducible installation, use `python -m pip install calibroute-ai==0.4.0`.
+Example scripts and data are available in the repository; installing the wheel
+does not install the example folders. Check out tag `v0.4.0` for examples matching
+this release; GitHub `main` may receive further development changes.
 
 To check the active environment, run `python -m calibroute.cli --help` and
-`python -m pip show calibroute-ai`. The current checkout still reports package
-version `0.3.0`, so the version number alone does not distinguish it from the
-published release. Check the listed commands and installation location; record
+`python -m pip show calibroute-ai`. Check the listed commands and installation location; record
 `git rev-parse HEAD` when reporting results from a source checkout.
 
 ## Quick start
 
 To compare all-accept, a fixed threshold, and CalibRoute on the same labeled
-batch, see the [one-command comparison guide](docs/comparison.md) (GitHub `main`).
+batch, see the [one-command comparison guide](docs/comparison.md) (0.4.0 or newer).
 
 New here? Follow the [document-review walkthrough](examples/document_review/README.md):
 one offline script demonstrates development data, a separate holdout, and routing
@@ -156,8 +153,8 @@ The [Financial NER case study](examples/financial_ner/README.md) demonstrates
 the adapter and cross-domain failure pattern on 2,098 derived prediction rows.
 The [ShiftGuard agent example](examples/shiftguard/README.md) audits 384 frozen
 proposals, keeps task templates separate, and reports when no confidence
-threshold meets the declared empirical risk target. Install from this checkout
-to use the new `convert-shiftguard` command.
+threshold meets the declared empirical risk target. Use CalibRoute 0.4.0 or newer
+for the `convert-shiftguard` command.
 
 ## License
 

@@ -74,8 +74,9 @@ calibroute convert-financial-ner --input sentences.jsonl --model generative --si
 
 ## Entity-level routing
 
-Requires installation from GitHub `main`; this adapter is not included in PyPI
-0.3.0. See the [version compatibility table](../../README.md#version-compatibility).
+Requires CalibRoute 0.4.0 or newer. Upgrade with
+`python -m pip install --upgrade calibroute-ai`. See the
+[version compatibility table](../../README.md#version-compatibility).
 
 For entity-level evaluation, each JSONL row can contain an `entities` list. An
 entity needs a boolean `correct` and a `confidence` field, or a selected
