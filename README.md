@@ -33,6 +33,34 @@ python -m pip install -e .
 The distribution name is `calibroute-ai`; the Python import and command are
 `calibroute`. No API key or model service is needed.
 
+## Version compatibility
+
+As of September 25, 2026, the latest PyPI release is **0.3.0**. GitHub `main`
+includes additional adapters that have not yet been published to PyPI.
+
+| Capability | PyPI 0.3.0 | GitHub `main` |
+|---|---|---|
+| `audit`, `fit`, `validate`, `route` | Available | Available |
+| Tie-aware thresholds, holdout assessment, and confidence-shift routing | Available | Available |
+| Financial NER sentence adapter: `convert-financial-ner` | Available | Available |
+| Financial NER entity adapter: `convert-financial-ner-entities` | Not included | Available |
+| ShiftGuard replay adapter: `convert-shiftguard` | Not included | Available |
+| Document-review walkthrough | Compatible; obtain script from GitHub | Included in checkout |
+| Financial NER sentence case study | Compatible; obtain script/data from GitHub | Included in checkout |
+| ShiftGuard case study | Requires repository adapters | Included in checkout |
+
+For the published release, use `python -m pip install calibroute-ai==0.3.0`.
+For entity-level conversion or ShiftGuard, clone this repository and run
+`python -m pip install -e .` as shown above. Upgrading from PyPI alone does not
+install unpublished adapters. Example scripts and data are available in the
+repository; installing the wheel does not install the example folders.
+
+To check the active environment, run `python -m calibroute.cli --help` and
+`python -m pip show calibroute-ai`. The current checkout still reports package
+version `0.3.0`, so the version number alone does not distinguish it from the
+published release. Check the listed commands and installation location; record
+`git rev-parse HEAD` when reporting results from a source checkout.
+
 ## Quick start
 
 New here? Follow the [document-review walkthrough](examples/document_review/README.md):
