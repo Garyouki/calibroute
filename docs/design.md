@@ -66,6 +66,12 @@ must be chosen on development data for the application. Batches smaller than
 instead queue them or require review. Unchanged confidence histograms can hide
 large correctness changes. Monitoring confidence cannot replace labeled audits.
 
+The [finite-reference simulation](../examples/shift_study/README.md) measures
+these limitations with a protocol recorded before evaluation. Under unchanged
+synthetic distributions, small empirical references produced frequent alarms;
+label-only accuracy losses produced identical alarms to stable paired trials.
+The results include routing costs and do not change the default 0.02 floor.
+
 ## Migrating from 0.2
 
 Refit policies and regenerate audits. Old policies can retain thresholds selected

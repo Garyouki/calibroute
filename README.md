@@ -74,6 +74,10 @@ for explicit column mapping, clean installation, and frozen-policy comparison.
 The column helper is a repository example added after `v0.4.0`; obtain it from
 `main` and record the checkout commit. It works with the published 0.4.0 package.
 
+For measured limitations of confidence-shift monitoring, see the
+[synthetic shift study](examples/shift_study/README.md), including false alarms,
+label-only accuracy losses, and additional review workload.
+
 ```bash
 # Audit labeled predictions
 calibroute audit \

@@ -1,0 +1,2137 @@
+{
+  "schema_version": "1.0",
+  "mode": "full_protocol",
+  "protocol_sha256": "d082e1616d4fc133e95e5bff9f006206d2f858e5b273edf11f856586636dda82",
+  "script_sha256": "d826b4d311757fe8a9f4e0f4df51bd1b14e4dab6978c7b5b4af418489b6ce559",
+  "trials_sha256": "295ea8222b1edbbb6193fe2231ade399073f9d8f4bd3a117b60da87f78ed5a92",
+  "package_version": "0.4.0",
+  "python": "3.13.7",
+  "trial_scenario_count": 10800,
+  "replications_per_cell": 300,
+  "cells": [
+    {
+      "profile": "high_confidence",
+      "reference_size": 50,
+      "batch_size": 50,
+      "scenario": "stable",
+      "replications": 300,
+      "alarms": 215,
+      "alarm_rate": 0.7166666666666667,
+      "alarm_rate_wilson_95": [
+        0.6631855651003921,
+        0.7646691473689714
+      ],
+      "oracle_alarms": 19,
+      "oracle_alarm_rate": 0.06333333333333334,
+      "oracle_rate_wilson_95": [
+        0.040916882383915276,
+        0.09679131248552161
+      ],
+      "mean_threshold": 0.0214820375048061,
+      "floor_binding_trials": 187,
+      "metrics": {
+        "fixed_090": {
+          "count": 15000,
+          "accepted": 14238,
+          "accepted_errors": 315,
+          "review": 762,
+          "abstain": 0,
+          "total_errors": 489,
+          "coverage": 0.9492,
+          "review_rate": 0.0508,
+          "accepted_risk": 0.022123893805309734
+        },
+        "threshold_only": {
+          "count": 15000,
+          "accepted": 14323,
+          "accepted_errors": 323,
+          "review": 171,
+          "abstain": 506,
+          "total_errors": 489,
+          "coverage": 0.9548666666666666,
+          "review_rate": 0.0114,
+          "accepted_risk": 0.022551141520631153
+        },
+        "full_router": {
+          "count": 15000,
+          "accepted": 4122,
+          "accepted_errors": 96,
+          "review": 10783,
+          "abstain": 95,
+          "total_errors": 489,
+          "coverage": 0.2748,
+          "review_rate": 0.7188666666666667,
+          "accepted_risk": 0.023289665211062592
+        }
+      },
+      "additional_reviews": 10612,
+      "accepted_errors_withheld": 227,
+      "extra_reviews_per_withheld_error": 46.74889867841409
+    },
+    {
+      "profile": "high_confidence",
+      "reference_size": 50,
+      "batch_size": 300,
+      "scenario": "stable",
+      "replications": 300,
+      "alarms": 171,
+      "alarm_rate": 0.57,
+      "alarm_rate_wilson_95": [
+        0.513441160762328,
+        0.6247888232662354
+      ],
+      "oracle_alarms": 0,
+      "oracle_alarm_rate": 0.0,
+      "oracle_rate_wilson_95": [
+        8.673617379884035e-19,
+        0.012642971224546034
+      ],
+      "mean_threshold": 0.02,
+      "floor_binding_trials": 300,
+      "metrics": {
+        "fixed_090": {
+          "count": 90000,
+          "accepted": 85527,
+          "accepted_errors": 2012,
+          "review": 4473,
+          "abstain": 0,
+          "total_errors": 3127,
+          "coverage": 0.9503,
+          "review_rate": 0.0497,
+          "accepted_risk": 0.023524734879044044
+        },
+        "threshold_only": {
+          "count": 90000,
+          "accepted": 86018,
+          "accepted_errors": 2042,
+          "review": 995,
+          "abstain": 2987,
+          "total_errors": 3127,
+          "coverage": 0.9557555555555556,
+          "review_rate": 0.011055555555555556,
+          "accepted_risk": 0.023739217373107954
+        },
+        "full_router": {
+          "count": 90000,
+          "accepted": 37103,
+          "accepted_errors": 871,
+          "review": 51721,
+          "abstain": 1176,
+          "total_errors": 3127,
+          "coverage": 0.41225555555555554,
+          "review_rate": 0.5746777777777777,
+          "accepted_risk": 0.02347519068538932
+        }
+      },
+      "additional_reviews": 50726,
+      "accepted_errors_withheld": 1171,
+      "extra_reviews_per_withheld_error": 43.31853116994022
+    },
+    {
+      "profile": "high_confidence",
+      "reference_size": 150,
+      "batch_size": 50,
+      "scenario": "stable",
+      "replications": 300,
+      "alarms": 132,
+      "alarm_rate": 0.44,
+      "alarm_rate_wilson_95": [
+        0.38493919498482354,
+        0.49657796156212186
+      ],
+      "oracle_alarms": 15,
+      "oracle_alarm_rate": 0.05,
+      "oracle_rate_wilson_95": [
+        0.03053164062934728,
+        0.08084703347274415
+      ],
+      "mean_threshold": 0.022536162218039238,
+      "floor_binding_trials": 131,
+      "metrics": {
+        "fixed_090": {
+          "count": 15000,
+          "accepted": 14285,
+          "accepted_errors": 348,
+          "review": 715,
+          "abstain": 0,
+          "total_errors": 539,
+          "coverage": 0.9523333333333334,
+          "review_rate": 0.04766666666666667,
+          "accepted_risk": 0.024361218060903043
+        },
+        "threshold_only": {
+          "count": 15000,
+          "accepted": 14357,
+          "accepted_errors": 352,
+          "review": 149,
+          "abstain": 494,
+          "total_errors": 539,
+          "coverage": 0.9571333333333333,
+          "review_rate": 0.009933333333333334,
+          "accepted_risk": 0.02451765689210838
+        },
+        "full_router": {
+          "count": 15000,
+          "accepted": 8114,
+          "accepted_errors": 197,
+          "review": 6667,
+          "abstain": 219,
+          "total_errors": 539,
+          "coverage": 0.5409333333333334,
+          "review_rate": 0.4444666666666667,
+          "accepted_risk": 0.02427902390929258
+        }
+      },
+      "additional_reviews": 6518,
+      "accepted_errors_withheld": 155,
+      "extra_reviews_per_withheld_error": 42.05161290322581
+    },
+    {
+      "profile": "high_confidence",
+      "reference_size": 150,
+      "batch_size": 300,
+      "scenario": "benign_score_shift_30",
+      "replications": 300,
+      "alarms": 300,
+      "alarm_rate": 1.0,
+      "alarm_rate_wilson_95": [
+        0.9873570287754538,
+        0.9999999999999998
+      ],
+      "oracle_alarms": 300,
+      "oracle_alarm_rate": 1.0,
+      "oracle_rate_wilson_95": [
+        0.9873570287754538,
+        0.9999999999999998
+      ],
+      "mean_threshold": 0.02,
+      "floor_binding_trials": 300,
+      "metrics": {
+        "fixed_090": {
+          "count": 90000,
+          "accepted": 60004,
+          "accepted_errors": 1368,
+          "review": 29996,
+          "abstain": 0,
+          "total_errors": 3062,
+          "coverage": 0.6667111111111111,
+          "review_rate": 0.3332888888888889,
+          "accepted_risk": 0.02279848010132658
+        },
+        "threshold_only": {
+          "count": 90000,
+          "accepted": 60355,
+          "accepted_errors": 1396,
+          "review": 769,
+          "abstain": 28876,
+          "total_errors": 3062,
+          "coverage": 0.6706111111111112,
+          "review_rate": 0.008544444444444445,
+          "accepted_risk": 0.023129815259713363
+        },
+        "full_router": {
+          "count": 90000,
+          "accepted": 0,
+          "accepted_errors": 0,
+          "review": 90000,
+          "abstain": 0,
+          "total_errors": 3062,
+          "coverage": 0.0,
+          "review_rate": 1.0,
+          "accepted_risk": null
+        }
+      },
+      "additional_reviews": 89231,
+      "accepted_errors_withheld": 1396,
+      "extra_reviews_per_withheld_error": 63.91905444126075
+    },
+    {
+      "profile": "high_confidence",
+      "reference_size": 150,
+      "batch_size": 300,
+      "scenario": "label_only",
+      "replications": 300,
+      "alarms": 28,
+      "alarm_rate": 0.09333333333333334,
+      "alarm_rate_wilson_95": [
+        0.06536421957889091,
+        0.1315853970170732
+      ],
+      "oracle_alarms": 0,
+      "oracle_alarm_rate": 0.0,
+      "oracle_rate_wilson_95": [
+        8.673617379884035e-19,
+        0.012642971224546034
+      ],
+      "mean_threshold": 0.02,
+      "floor_binding_trials": 300,
+      "metrics": {
+        "fixed_090": {
+          "count": 90000,
+          "accepted": 85386,
+          "accepted_errors": 27560,
+          "review": 4614,
+          "abstain": 0,
+          "total_errors": 30118,
+          "coverage": 0.9487333333333333,
+          "review_rate": 0.05126666666666667,
+          "accepted_risk": 0.3227695406741152
+        },
+        "threshold_only": {
+          "count": 90000,
+          "accepted": 85877,
+          "accepted_errors": 27744,
+          "review": 1063,
+          "abstain": 3060,
+          "total_errors": 30118,
+          "coverage": 0.9541888888888889,
+          "review_rate": 0.01181111111111111,
+          "accepted_risk": 0.3230667116923041
+        },
+        "full_router": {
+          "count": 90000,
+          "accepted": 77933,
+          "accepted_errors": 25190,
+          "review": 9333,
+          "abstain": 2734,
+          "total_errors": 30118,
+          "coverage": 0.8659222222222223,
+          "review_rate": 0.1037,
+          "accepted_risk": 0.32322636110505176
+        }
+      },
+      "additional_reviews": 8270,
+      "accepted_errors_withheld": 2554,
+      "extra_reviews_per_withheld_error": 3.2380579483163663
+    },
+    {
+      "profile": "high_confidence",
+      "reference_size": 150,
+      "batch_size": 300,
+      "scenario": "score_shift_05",
+      "replications": 300,
+      "alarms": 217,
+      "alarm_rate": 0.7233333333333334,
+      "alarm_rate_wilson_95": [
+        0.6701300560341223,
+        0.7708894168189138
+      ],
+      "oracle_alarms": 67,
+      "oracle_alarm_rate": 0.22333333333333333,
+      "oracle_rate_wilson_95": [
+        0.17987135808006235,
+        0.27379108599751967
+      ],
+      "mean_threshold": 0.02,
+      "floor_binding_trials": 300,
+      "metrics": {
+        "fixed_090": {
+          "count": 90000,
+          "accepted": 81184,
+          "accepted_errors": 1841,
+          "review": 8816,
+          "abstain": 0,
+          "total_errors": 4768,
+          "coverage": 0.9020444444444444,
+          "review_rate": 0.09795555555555556,
+          "accepted_risk": 0.02267688214426488
+        },
+        "threshold_only": {
+          "count": 90000,
+          "accepted": 81658,
+          "accepted_errors": 1881,
+          "review": 1007,
+          "abstain": 7335,
+          "total_errors": 4768,
+          "coverage": 0.9073111111111111,
+          "review_rate": 0.011188888888888889,
+          "accepted_risk": 0.023035097602194517
+        },
+        "full_router": {
+          "count": 90000,
+          "accepted": 22783,
+          "accepted_errors": 503,
+          "review": 65370,
+          "abstain": 1847,
+          "total_errors": 4768,
+          "coverage": 0.25314444444444445,
+          "review_rate": 0.7263333333333334,
+          "accepted_risk": 0.0220778650748365
+        }
+      },
+      "additional_reviews": 64363,
+      "accepted_errors_withheld": 1378,
+      "extra_reviews_per_withheld_error": 46.70754716981132
+    },
+    {
+      "profile": "high_confidence",
+      "reference_size": 150,
+      "batch_size": 300,
+      "scenario": "score_shift_15",
+      "replications": 300,
+      "alarms": 300,
+      "alarm_rate": 1.0,
+      "alarm_rate_wilson_95": [
+        0.9873570287754538,
+        0.9999999999999998
+      ],
+      "oracle_alarms": 300,
+      "oracle_alarm_rate": 1.0,
+      "oracle_rate_wilson_95": [
+        0.9873570287754538,
+        0.9999999999999998
+      ],
+      "mean_threshold": 0.02,
+      "floor_binding_trials": 300,
+      "metrics": {
+        "fixed_090": {
+          "count": 90000,
+          "accepted": 72693,
+          "accepted_errors": 1651,
+          "review": 17307,
+          "abstain": 0,
+          "total_errors": 8303,
+          "coverage": 0.8077,
+          "review_rate": 0.1923,
+          "accepted_risk": 0.022711953007854953
+        },
+        "threshold_only": {
+          "count": 90000,
+          "accepted": 73112,
+          "accepted_errors": 1683,
+          "review": 905,
+          "abstain": 15983,
+          "total_errors": 8303,
+          "coverage": 0.8123555555555556,
+          "review_rate": 0.010055555555555555,
+          "accepted_risk": 0.02301947696684539
+        },
+        "full_router": {
+          "count": 90000,
+          "accepted": 0,
+          "accepted_errors": 0,
+          "review": 90000,
+          "abstain": 0,
+          "total_errors": 8303,
+          "coverage": 0.0,
+          "review_rate": 1.0,
+          "accepted_risk": null
+        }
+      },
+      "additional_reviews": 89095,
+      "accepted_errors_withheld": 1683,
+      "extra_reviews_per_withheld_error": 52.938205585264406
+    },
+    {
+      "profile": "high_confidence",
+      "reference_size": 150,
+      "batch_size": 300,
+      "scenario": "score_shift_30",
+      "replications": 300,
+      "alarms": 300,
+      "alarm_rate": 1.0,
+      "alarm_rate_wilson_95": [
+        0.9873570287754538,
+        0.9999999999999998
+      ],
+      "oracle_alarms": 300,
+      "oracle_alarm_rate": 1.0,
+      "oracle_rate_wilson_95": [
+        0.9873570287754538,
+        0.9999999999999998
+      ],
+      "mean_threshold": 0.02,
+      "floor_binding_trials": 300,
+      "metrics": {
+        "fixed_090": {
+          "count": 90000,
+          "accepted": 60004,
+          "accepted_errors": 1368,
+          "review": 29996,
+          "abstain": 0,
+          "total_errors": 13593,
+          "coverage": 0.6667111111111111,
+          "review_rate": 0.3332888888888889,
+          "accepted_risk": 0.02279848010132658
+        },
+        "threshold_only": {
+          "count": 90000,
+          "accepted": 60355,
+          "accepted_errors": 1396,
+          "review": 769,
+          "abstain": 28876,
+          "total_errors": 13593,
+          "coverage": 0.6706111111111112,
+          "review_rate": 0.008544444444444445,
+          "accepted_risk": 0.023129815259713363
+        },
+        "full_router": {
+          "count": 90000,
+          "accepted": 0,
+          "accepted_errors": 0,
+          "review": 90000,
+          "abstain": 0,
+          "total_errors": 13593,
+          "coverage": 0.0,
+          "review_rate": 1.0,
+          "accepted_risk": null
+        }
+      },
+      "additional_reviews": 89231,
+      "accepted_errors_withheld": 1396,
+      "extra_reviews_per_withheld_error": 63.91905444126075
+    },
+    {
+      "profile": "high_confidence",
+      "reference_size": 150,
+      "batch_size": 300,
+      "scenario": "score_shift_60",
+      "replications": 300,
+      "alarms": 300,
+      "alarm_rate": 1.0,
+      "alarm_rate_wilson_95": [
+        0.9873570287754538,
+        0.9999999999999998
+      ],
+      "oracle_alarms": 300,
+      "oracle_alarm_rate": 1.0,
+      "oracle_rate_wilson_95": [
+        0.9873570287754538,
+        0.9999999999999998
+      ],
+      "mean_threshold": 0.02,
+      "floor_binding_trials": 300,
+      "metrics": {
+        "fixed_090": {
+          "count": 90000,
+          "accepted": 34393,
+          "accepted_errors": 808,
+          "review": 55607,
+          "abstain": 0,
+          "total_errors": 24250,
+          "coverage": 0.38214444444444445,
+          "review_rate": 0.6178555555555556,
+          "accepted_risk": 0.023493152676416714
+        },
+        "threshold_only": {
+          "count": 90000,
+          "accepted": 34602,
+          "accepted_errors": 824,
+          "review": 452,
+          "abstain": 54946,
+          "total_errors": 24250,
+          "coverage": 0.3844666666666667,
+          "review_rate": 0.005022222222222222,
+          "accepted_risk": 0.02381365239003526
+        },
+        "full_router": {
+          "count": 90000,
+          "accepted": 0,
+          "accepted_errors": 0,
+          "review": 90000,
+          "abstain": 0,
+          "total_errors": 24250,
+          "coverage": 0.0,
+          "review_rate": 1.0,
+          "accepted_risk": null
+        }
+      },
+      "additional_reviews": 89548,
+      "accepted_errors_withheld": 824,
+      "extra_reviews_per_withheld_error": 108.6747572815534
+    },
+    {
+      "profile": "high_confidence",
+      "reference_size": 150,
+      "batch_size": 300,
+      "scenario": "stable",
+      "replications": 300,
+      "alarms": 28,
+      "alarm_rate": 0.09333333333333334,
+      "alarm_rate_wilson_95": [
+        0.06536421957889091,
+        0.1315853970170732
+      ],
+      "oracle_alarms": 0,
+      "oracle_alarm_rate": 0.0,
+      "oracle_rate_wilson_95": [
+        8.673617379884035e-19,
+        0.012642971224546034
+      ],
+      "mean_threshold": 0.02,
+      "floor_binding_trials": 300,
+      "metrics": {
+        "fixed_090": {
+          "count": 90000,
+          "accepted": 85386,
+          "accepted_errors": 1920,
+          "review": 4614,
+          "abstain": 0,
+          "total_errors": 3062,
+          "coverage": 0.9487333333333333,
+          "review_rate": 0.05126666666666667,
+          "accepted_risk": 0.022486121846672757
+        },
+        "threshold_only": {
+          "count": 90000,
+          "accepted": 85877,
+          "accepted_errors": 1960,
+          "review": 1063,
+          "abstain": 3060,
+          "total_errors": 3062,
+          "coverage": 0.9541888888888889,
+          "review_rate": 0.01181111111111111,
+          "accepted_risk": 0.022823340358885384
+        },
+        "full_router": {
+          "count": 90000,
+          "accepted": 77933,
+          "accepted_errors": 1798,
+          "review": 9333,
+          "abstain": 2734,
+          "total_errors": 3062,
+          "coverage": 0.8659222222222223,
+          "review_rate": 0.1037,
+          "accepted_risk": 0.023071099534215288
+        }
+      },
+      "additional_reviews": 8270,
+      "accepted_errors_withheld": 162,
+      "extra_reviews_per_withheld_error": 51.04938271604938
+    },
+    {
+      "profile": "high_confidence",
+      "reference_size": 500,
+      "batch_size": 50,
+      "scenario": "stable",
+      "replications": 300,
+      "alarms": 43,
+      "alarm_rate": 0.14333333333333334,
+      "alarm_rate_wilson_95": [
+        0.1081847423238497,
+        0.18750057714965976
+      ],
+      "oracle_alarms": 11,
+      "oracle_alarm_rate": 0.03666666666666667,
+      "oracle_rate_wilson_95": [
+        0.02059530516285303,
+        0.06445384817189295
+      ],
+      "mean_threshold": 0.025293203867478867,
+      "floor_binding_trials": 8,
+      "metrics": {
+        "fixed_090": {
+          "count": 15000,
+          "accepted": 14259,
+          "accepted_errors": 316,
+          "review": 741,
+          "abstain": 0,
+          "total_errors": 482,
+          "coverage": 0.9506,
+          "review_rate": 0.0494,
+          "accepted_risk": 0.022161441896346168
+        },
+        "threshold_only": {
+          "count": 15000,
+          "accepted": 14347,
+          "accepted_errors": 319,
+          "review": 164,
+          "abstain": 489,
+          "total_errors": 482,
+          "coverage": 0.9564666666666667,
+          "review_rate": 0.010933333333333333,
+          "accepted_risk": 0.022234613508050463
+        },
+        "full_router": {
+          "count": 15000,
+          "accepted": 12336,
+          "accepted_errors": 273,
+          "review": 2277,
+          "abstain": 387,
+          "total_errors": 482,
+          "coverage": 0.8224,
+          "review_rate": 0.1518,
+          "accepted_risk": 0.02213035019455253
+        }
+      },
+      "additional_reviews": 2113,
+      "accepted_errors_withheld": 46,
+      "extra_reviews_per_withheld_error": 45.93478260869565
+    },
+    {
+      "profile": "high_confidence",
+      "reference_size": 500,
+      "batch_size": 300,
+      "scenario": "stable",
+      "replications": 300,
+      "alarms": 0,
+      "alarm_rate": 0.0,
+      "alarm_rate_wilson_95": [
+        8.673617379884035e-19,
+        0.012642971224546034
+      ],
+      "oracle_alarms": 0,
+      "oracle_alarm_rate": 0.0,
+      "oracle_rate_wilson_95": [
+        8.673617379884035e-19,
+        0.012642971224546034
+      ],
+      "mean_threshold": 0.02,
+      "floor_binding_trials": 300,
+      "metrics": {
+        "fixed_090": {
+          "count": 90000,
+          "accepted": 85486,
+          "accepted_errors": 1945,
+          "review": 4514,
+          "abstain": 0,
+          "total_errors": 3060,
+          "coverage": 0.9498444444444445,
+          "review_rate": 0.05015555555555556,
+          "accepted_risk": 0.022752263528530988
+        },
+        "threshold_only": {
+          "count": 90000,
+          "accepted": 85990,
+          "accepted_errors": 1978,
+          "review": 1013,
+          "abstain": 2997,
+          "total_errors": 3060,
+          "coverage": 0.9554444444444444,
+          "review_rate": 0.011255555555555555,
+          "accepted_risk": 0.023002674729619723
+        },
+        "full_router": {
+          "count": 90000,
+          "accepted": 85990,
+          "accepted_errors": 1978,
+          "review": 1013,
+          "abstain": 2997,
+          "total_errors": 3060,
+          "coverage": 0.9554444444444444,
+          "review_rate": 0.011255555555555555,
+          "accepted_risk": 0.023002674729619723
+        }
+      },
+      "additional_reviews": 0,
+      "accepted_errors_withheld": 0,
+      "extra_reviews_per_withheld_error": null
+    },
+    {
+      "profile": "three_modes",
+      "reference_size": 50,
+      "batch_size": 50,
+      "scenario": "stable",
+      "replications": 300,
+      "alarms": 49,
+      "alarm_rate": 0.16333333333333333,
+      "alarm_rate_wilson_95": [
+        0.1258064331944026,
+        0.20937316743012502
+      ],
+      "oracle_alarms": 6,
+      "oracle_alarm_rate": 0.02,
+      "oracle_rate_wilson_95": [
+        0.009197631557703617,
+        0.042939620817860576
+      ],
+      "mean_threshold": 0.020010003002068913,
+      "floor_binding_trials": 297,
+      "metrics": {
+        "fixed_090": {
+          "count": 15000,
+          "accepted": 7468,
+          "accepted_errors": 190,
+          "review": 7532,
+          "abstain": 0,
+          "total_errors": 2157,
+          "coverage": 0.4978666666666667,
+          "review_rate": 0.5021333333333333,
+          "accepted_risk": 0.02544188537761114
+        },
+        "threshold_only": {
+          "count": 15000,
+          "accepted": 7468,
+          "accepted_errors": 190,
+          "review": 2951,
+          "abstain": 4581,
+          "total_errors": 2157,
+          "coverage": 0.4978666666666667,
+          "review_rate": 0.19673333333333334,
+          "accepted_risk": 0.02544188537761114
+        },
+        "full_router": {
+          "count": 15000,
+          "accepted": 6267,
+          "accepted_errors": 155,
+          "review": 4908,
+          "abstain": 3825,
+          "total_errors": 2157,
+          "coverage": 0.4178,
+          "review_rate": 0.3272,
+          "accepted_risk": 0.024732726982607308
+        }
+      },
+      "additional_reviews": 1957,
+      "accepted_errors_withheld": 35,
+      "extra_reviews_per_withheld_error": 55.91428571428571
+    },
+    {
+      "profile": "three_modes",
+      "reference_size": 50,
+      "batch_size": 300,
+      "scenario": "stable",
+      "replications": 300,
+      "alarms": 16,
+      "alarm_rate": 0.05333333333333334,
+      "alarm_rate_wilson_95": [
+        0.03309191251909646,
+        0.08486914177483133
+      ],
+      "oracle_alarms": 0,
+      "oracle_alarm_rate": 0.0,
+      "oracle_rate_wilson_95": [
+        8.673617379884035e-19,
+        0.012642971224546034
+      ],
+      "mean_threshold": 0.02,
+      "floor_binding_trials": 300,
+      "metrics": {
+        "fixed_090": {
+          "count": 90000,
+          "accepted": 45068,
+          "accepted_errors": 1052,
+          "review": 44932,
+          "abstain": 0,
+          "total_errors": 13039,
+          "coverage": 0.5007555555555555,
+          "review_rate": 0.49924444444444444,
+          "accepted_risk": 0.023342504659625455
+        },
+        "threshold_only": {
+          "count": 90000,
+          "accepted": 45068,
+          "accepted_errors": 1052,
+          "review": 18076,
+          "abstain": 26856,
+          "total_errors": 13039,
+          "coverage": 0.5007555555555555,
+          "review_rate": 0.20084444444444444,
+          "accepted_risk": 0.023342504659625455
+        },
+        "full_router": {
+          "count": 90000,
+          "accepted": 42685,
+          "accepted_errors": 995,
+          "review": 21911,
+          "abstain": 25404,
+          "total_errors": 13039,
+          "coverage": 0.4742777777777778,
+          "review_rate": 0.24345555555555556,
+          "accepted_risk": 0.023310296357034088
+        }
+      },
+      "additional_reviews": 3835,
+      "accepted_errors_withheld": 57,
+      "extra_reviews_per_withheld_error": 67.28070175438596
+    },
+    {
+      "profile": "three_modes",
+      "reference_size": 150,
+      "batch_size": 50,
+      "scenario": "stable",
+      "replications": 300,
+      "alarms": 21,
+      "alarm_rate": 0.07,
+      "alarm_rate_wilson_95": [
+        0.046236944827176336,
+        0.10463601042593323
+      ],
+      "oracle_alarms": 15,
+      "oracle_alarm_rate": 0.05,
+      "oracle_rate_wilson_95": [
+        0.03053164062934728,
+        0.08084703347274415
+      ],
+      "mean_threshold": 0.02,
+      "floor_binding_trials": 300,
+      "metrics": {
+        "fixed_090": {
+          "count": 15000,
+          "accepted": 7528,
+          "accepted_errors": 177,
+          "review": 7472,
+          "abstain": 0,
+          "total_errors": 2118,
+          "coverage": 0.5018666666666667,
+          "review_rate": 0.4981333333333333,
+          "accepted_risk": 0.02351222104144527
+        },
+        "threshold_only": {
+          "count": 15000,
+          "accepted": 7528,
+          "accepted_errors": 177,
+          "review": 3041,
+          "abstain": 4431,
+          "total_errors": 2118,
+          "coverage": 0.5018666666666667,
+          "review_rate": 0.20273333333333332,
+          "accepted_risk": 0.02351222104144527
+        },
+        "full_router": {
+          "count": 15000,
+          "accepted": 7037,
+          "accepted_errors": 167,
+          "review": 3899,
+          "abstain": 4064,
+          "total_errors": 2118,
+          "coverage": 0.46913333333333335,
+          "review_rate": 0.25993333333333335,
+          "accepted_risk": 0.0237317038510729
+        }
+      },
+      "additional_reviews": 858,
+      "accepted_errors_withheld": 10,
+      "extra_reviews_per_withheld_error": 85.8
+    },
+    {
+      "profile": "three_modes",
+      "reference_size": 150,
+      "batch_size": 300,
+      "scenario": "benign_score_shift_30",
+      "replications": 300,
+      "alarms": 300,
+      "alarm_rate": 1.0,
+      "alarm_rate_wilson_95": [
+        0.9873570287754538,
+        0.9999999999999998
+      ],
+      "oracle_alarms": 300,
+      "oracle_alarm_rate": 1.0,
+      "oracle_rate_wilson_95": [
+        0.9873570287754538,
+        0.9999999999999998
+      ],
+      "mean_threshold": 0.02,
+      "floor_binding_trials": 300,
+      "metrics": {
+        "fixed_090": {
+          "count": 90000,
+          "accepted": 31561,
+          "accepted_errors": 714,
+          "review": 58439,
+          "abstain": 0,
+          "total_errors": 12931,
+          "coverage": 0.35067777777777775,
+          "review_rate": 0.6493222222222222,
+          "accepted_risk": 0.022622857323912424
+        },
+        "threshold_only": {
+          "count": 90000,
+          "accepted": 31561,
+          "accepted_errors": 714,
+          "review": 12651,
+          "abstain": 45788,
+          "total_errors": 12931,
+          "coverage": 0.35067777777777775,
+          "review_rate": 0.14056666666666667,
+          "accepted_risk": 0.022622857323912424
+        },
+        "full_router": {
+          "count": 90000,
+          "accepted": 0,
+          "accepted_errors": 0,
+          "review": 90000,
+          "abstain": 0,
+          "total_errors": 12931,
+          "coverage": 0.0,
+          "review_rate": 1.0,
+          "accepted_risk": null
+        }
+      },
+      "additional_reviews": 77349,
+      "accepted_errors_withheld": 714,
+      "extra_reviews_per_withheld_error": 108.33193277310924
+    },
+    {
+      "profile": "three_modes",
+      "reference_size": 150,
+      "batch_size": 300,
+      "scenario": "label_only",
+      "replications": 300,
+      "alarms": 1,
+      "alarm_rate": 0.0033333333333333335,
+      "alarm_rate_wilson_95": [
+        0.0005886577218511581,
+        0.018636693694531237
+      ],
+      "oracle_alarms": 0,
+      "oracle_alarm_rate": 0.0,
+      "oracle_rate_wilson_95": [
+        8.673617379884035e-19,
+        0.012642971224546034
+      ],
+      "mean_threshold": 0.02,
+      "floor_binding_trials": 300,
+      "metrics": {
+        "fixed_090": {
+          "count": 90000,
+          "accepted": 45014,
+          "accepted_errors": 14541,
+          "review": 44986,
+          "abstain": 0,
+          "total_errors": 39930,
+          "coverage": 0.5001555555555556,
+          "review_rate": 0.4998444444444444,
+          "accepted_risk": 0.32303283422935086
+        },
+        "threshold_only": {
+          "count": 90000,
+          "accepted": 45014,
+          "accepted_errors": 14541,
+          "review": 18133,
+          "abstain": 26853,
+          "total_errors": 39930,
+          "coverage": 0.5001555555555556,
+          "review_rate": 0.20147777777777778,
+          "accepted_risk": 0.32303283422935086
+        },
+        "full_router": {
+          "count": 90000,
+          "accepted": 44866,
+          "accepted_errors": 14499,
+          "review": 18388,
+          "abstain": 26746,
+          "total_errors": 39930,
+          "coverage": 0.4985111111111111,
+          "review_rate": 0.2043111111111111,
+          "accepted_risk": 0.3231623055320287
+        }
+      },
+      "additional_reviews": 255,
+      "accepted_errors_withheld": 42,
+      "extra_reviews_per_withheld_error": 6.071428571428571
+    },
+    {
+      "profile": "three_modes",
+      "reference_size": 150,
+      "batch_size": 300,
+      "scenario": "score_shift_05",
+      "replications": 300,
+      "alarms": 145,
+      "alarm_rate": 0.48333333333333334,
+      "alarm_rate_wilson_95": [
+        0.4273544128335898,
+        0.5397336862072283
+      ],
+      "oracle_alarms": 111,
+      "oracle_alarm_rate": 0.37,
+      "oracle_rate_wilson_95": [
+        0.317331727809741,
+        0.42595544470864083
+      ],
+      "mean_threshold": 0.02,
+      "floor_binding_trials": 300,
+      "metrics": {
+        "fixed_090": {
+          "count": 90000,
+          "accepted": 42831,
+          "accepted_errors": 981,
+          "review": 47169,
+          "abstain": 0,
+          "total_errors": 14203,
+          "coverage": 0.4759,
+          "review_rate": 0.5241,
+          "accepted_risk": 0.022903971422567768
+        },
+        "threshold_only": {
+          "count": 90000,
+          "accepted": 42831,
+          "accepted_errors": 981,
+          "review": 17162,
+          "abstain": 30007,
+          "total_errors": 14203,
+          "coverage": 0.4759,
+          "review_rate": 0.19068888888888888,
+          "accepted_risk": 0.022903971422567768
+        },
+        "full_router": {
+          "count": 90000,
+          "accepted": 22376,
+          "accepted_errors": 530,
+          "review": 52472,
+          "abstain": 15152,
+          "total_errors": 14203,
+          "coverage": 0.24862222222222222,
+          "review_rate": 0.5830222222222222,
+          "accepted_risk": 0.023686092241687523
+        }
+      },
+      "additional_reviews": 35310,
+      "accepted_errors_withheld": 451,
+      "extra_reviews_per_withheld_error": 78.29268292682927
+    },
+    {
+      "profile": "three_modes",
+      "reference_size": 150,
+      "batch_size": 300,
+      "scenario": "score_shift_15",
+      "replications": 300,
+      "alarms": 300,
+      "alarm_rate": 1.0,
+      "alarm_rate_wilson_95": [
+        0.9873570287754538,
+        0.9999999999999998
+      ],
+      "oracle_alarms": 300,
+      "oracle_alarm_rate": 1.0,
+      "oracle_rate_wilson_95": [
+        0.9873570287754538,
+        0.9999999999999998
+      ],
+      "mean_threshold": 0.02,
+      "floor_binding_trials": 300,
+      "metrics": {
+        "fixed_090": {
+          "count": 90000,
+          "accepted": 38294,
+          "accepted_errors": 871,
+          "review": 51706,
+          "abstain": 0,
+          "total_errors": 16747,
+          "coverage": 0.4254888888888889,
+          "review_rate": 0.5745111111111111,
+          "accepted_risk": 0.02274507755784196
+        },
+        "threshold_only": {
+          "count": 90000,
+          "accepted": 38294,
+          "accepted_errors": 871,
+          "review": 15359,
+          "abstain": 36347,
+          "total_errors": 16747,
+          "coverage": 0.4254888888888889,
+          "review_rate": 0.17065555555555556,
+          "accepted_risk": 0.02274507755784196
+        },
+        "full_router": {
+          "count": 90000,
+          "accepted": 0,
+          "accepted_errors": 0,
+          "review": 90000,
+          "abstain": 0,
+          "total_errors": 16747,
+          "coverage": 0.0,
+          "review_rate": 1.0,
+          "accepted_risk": null
+        }
+      },
+      "additional_reviews": 74641,
+      "accepted_errors_withheld": 871,
+      "extra_reviews_per_withheld_error": 85.69575200918484
+    },
+    {
+      "profile": "three_modes",
+      "reference_size": 150,
+      "batch_size": 300,
+      "scenario": "score_shift_30",
+      "replications": 300,
+      "alarms": 300,
+      "alarm_rate": 1.0,
+      "alarm_rate_wilson_95": [
+        0.9873570287754538,
+        0.9999999999999998
+      ],
+      "oracle_alarms": 300,
+      "oracle_alarm_rate": 1.0,
+      "oracle_rate_wilson_95": [
+        0.9873570287754538,
+        0.9999999999999998
+      ],
+      "mean_threshold": 0.02,
+      "floor_binding_trials": 300,
+      "metrics": {
+        "fixed_090": {
+          "count": 90000,
+          "accepted": 31561,
+          "accepted_errors": 714,
+          "review": 58439,
+          "abstain": 0,
+          "total_errors": 20487,
+          "coverage": 0.35067777777777775,
+          "review_rate": 0.6493222222222222,
+          "accepted_risk": 0.022622857323912424
+        },
+        "threshold_only": {
+          "count": 90000,
+          "accepted": 31561,
+          "accepted_errors": 714,
+          "review": 12651,
+          "abstain": 45788,
+          "total_errors": 20487,
+          "coverage": 0.35067777777777775,
+          "review_rate": 0.14056666666666667,
+          "accepted_risk": 0.022622857323912424
+        },
+        "full_router": {
+          "count": 90000,
+          "accepted": 0,
+          "accepted_errors": 0,
+          "review": 90000,
+          "abstain": 0,
+          "total_errors": 20487,
+          "coverage": 0.0,
+          "review_rate": 1.0,
+          "accepted_risk": null
+        }
+      },
+      "additional_reviews": 77349,
+      "accepted_errors_withheld": 714,
+      "extra_reviews_per_withheld_error": 108.33193277310924
+    },
+    {
+      "profile": "three_modes",
+      "reference_size": 150,
+      "batch_size": 300,
+      "scenario": "score_shift_60",
+      "replications": 300,
+      "alarms": 300,
+      "alarm_rate": 1.0,
+      "alarm_rate_wilson_95": [
+        0.9873570287754538,
+        0.9999999999999998
+      ],
+      "oracle_alarms": 300,
+      "oracle_alarm_rate": 1.0,
+      "oracle_rate_wilson_95": [
+        0.9873570287754538,
+        0.9999999999999998
+      ],
+      "mean_threshold": 0.02,
+      "floor_binding_trials": 300,
+      "metrics": {
+        "fixed_090": {
+          "count": 90000,
+          "accepted": 18007,
+          "accepted_errors": 407,
+          "review": 71993,
+          "abstain": 0,
+          "total_errors": 28213,
+          "coverage": 0.20007777777777777,
+          "review_rate": 0.7999222222222222,
+          "accepted_risk": 0.022602321319486866
+        },
+        "threshold_only": {
+          "count": 90000,
+          "accepted": 18007,
+          "accepted_errors": 407,
+          "review": 7237,
+          "abstain": 64756,
+          "total_errors": 28213,
+          "coverage": 0.20007777777777777,
+          "review_rate": 0.08041111111111111,
+          "accepted_risk": 0.022602321319486866
+        },
+        "full_router": {
+          "count": 90000,
+          "accepted": 0,
+          "accepted_errors": 0,
+          "review": 90000,
+          "abstain": 0,
+          "total_errors": 28213,
+          "coverage": 0.0,
+          "review_rate": 1.0,
+          "accepted_risk": null
+        }
+      },
+      "additional_reviews": 82763,
+      "accepted_errors_withheld": 407,
+      "extra_reviews_per_withheld_error": 203.34889434889436
+    },
+    {
+      "profile": "three_modes",
+      "reference_size": 150,
+      "batch_size": 300,
+      "scenario": "stable",
+      "replications": 300,
+      "alarms": 1,
+      "alarm_rate": 0.0033333333333333335,
+      "alarm_rate_wilson_95": [
+        0.0005886577218511581,
+        0.018636693694531237
+      ],
+      "oracle_alarms": 0,
+      "oracle_alarm_rate": 0.0,
+      "oracle_rate_wilson_95": [
+        8.673617379884035e-19,
+        0.012642971224546034
+      ],
+      "mean_threshold": 0.02,
+      "floor_binding_trials": 300,
+      "metrics": {
+        "fixed_090": {
+          "count": 90000,
+          "accepted": 45014,
+          "accepted_errors": 1029,
+          "review": 44986,
+          "abstain": 0,
+          "total_errors": 12931,
+          "coverage": 0.5001555555555556,
+          "review_rate": 0.4998444444444444,
+          "accepted_risk": 0.022859554805171725
+        },
+        "threshold_only": {
+          "count": 90000,
+          "accepted": 45014,
+          "accepted_errors": 1029,
+          "review": 18133,
+          "abstain": 26853,
+          "total_errors": 12931,
+          "coverage": 0.5001555555555556,
+          "review_rate": 0.20147777777777778,
+          "accepted_risk": 0.022859554805171725
+        },
+        "full_router": {
+          "count": 90000,
+          "accepted": 44866,
+          "accepted_errors": 1028,
+          "review": 18388,
+          "abstain": 26746,
+          "total_errors": 12931,
+          "coverage": 0.4985111111111111,
+          "review_rate": 0.2043111111111111,
+          "accepted_risk": 0.02291267329380823
+        }
+      },
+      "additional_reviews": 255,
+      "accepted_errors_withheld": 1,
+      "extra_reviews_per_withheld_error": 255.0
+    },
+    {
+      "profile": "three_modes",
+      "reference_size": 500,
+      "batch_size": 50,
+      "scenario": "stable",
+      "replications": 300,
+      "alarms": 10,
+      "alarm_rate": 0.03333333333333333,
+      "alarm_rate_wilson_95": [
+        0.01820494733885481,
+        0.06026182580405482
+      ],
+      "oracle_alarms": 5,
+      "oracle_alarm_rate": 0.016666666666666666,
+      "oracle_rate_wilson_95": [
+        0.00713947735063333,
+        0.0384153948330945
+      ],
+      "mean_threshold": 0.02,
+      "floor_binding_trials": 300,
+      "metrics": {
+        "fixed_090": {
+          "count": 15000,
+          "accepted": 7522,
+          "accepted_errors": 181,
+          "review": 7478,
+          "abstain": 0,
+          "total_errors": 2142,
+          "coverage": 0.5014666666666666,
+          "review_rate": 0.49853333333333333,
+          "accepted_risk": 0.024062749268811485
+        },
+        "threshold_only": {
+          "count": 15000,
+          "accepted": 7522,
+          "accepted_errors": 181,
+          "review": 3004,
+          "abstain": 4474,
+          "total_errors": 2142,
+          "coverage": 0.5014666666666666,
+          "review_rate": 0.20026666666666668,
+          "accepted_risk": 0.024062749268811485
+        },
+        "full_router": {
+          "count": 15000,
+          "accepted": 7266,
+          "accepted_errors": 175,
+          "review": 3382,
+          "abstain": 4352,
+          "total_errors": 2142,
+          "coverage": 0.4844,
+          "review_rate": 0.22546666666666668,
+          "accepted_risk": 0.024084778420038536
+        }
+      },
+      "additional_reviews": 378,
+      "accepted_errors_withheld": 6,
+      "extra_reviews_per_withheld_error": 63.0
+    },
+    {
+      "profile": "three_modes",
+      "reference_size": 500,
+      "batch_size": 300,
+      "scenario": "stable",
+      "replications": 300,
+      "alarms": 0,
+      "alarm_rate": 0.0,
+      "alarm_rate_wilson_95": [
+        8.673617379884035e-19,
+        0.012642971224546034
+      ],
+      "oracle_alarms": 0,
+      "oracle_alarm_rate": 0.0,
+      "oracle_rate_wilson_95": [
+        8.673617379884035e-19,
+        0.012642971224546034
+      ],
+      "mean_threshold": 0.02,
+      "floor_binding_trials": 300,
+      "metrics": {
+        "fixed_090": {
+          "count": 90000,
+          "accepted": 44960,
+          "accepted_errors": 1028,
+          "review": 45040,
+          "abstain": 0,
+          "total_errors": 12874,
+          "coverage": 0.49955555555555553,
+          "review_rate": 0.5004444444444445,
+          "accepted_risk": 0.02286476868327402
+        },
+        "threshold_only": {
+          "count": 90000,
+          "accepted": 44960,
+          "accepted_errors": 1028,
+          "review": 17991,
+          "abstain": 27049,
+          "total_errors": 12874,
+          "coverage": 0.49955555555555553,
+          "review_rate": 0.1999,
+          "accepted_risk": 0.02286476868327402
+        },
+        "full_router": {
+          "count": 90000,
+          "accepted": 44960,
+          "accepted_errors": 1028,
+          "review": 17991,
+          "abstain": 27049,
+          "total_errors": 12874,
+          "coverage": 0.49955555555555553,
+          "review_rate": 0.1999,
+          "accepted_risk": 0.02286476868327402
+        }
+      },
+      "additional_reviews": 0,
+      "accepted_errors_withheld": 0,
+      "extra_reviews_per_withheld_error": null
+    },
+    {
+      "profile": "uniform",
+      "reference_size": 50,
+      "batch_size": 50,
+      "scenario": "stable",
+      "replications": 300,
+      "alarms": 122,
+      "alarm_rate": 0.4066666666666667,
+      "alarm_rate_wilson_95": [
+        0.3526017598634212,
+        0.46309159476516065
+      ],
+      "oracle_alarms": 24,
+      "oracle_alarm_rate": 0.08,
+      "oracle_rate_wilson_95": [
+        0.054346855395144764,
+        0.11627324043347391
+      ],
+      "mean_threshold": 0.04859261793709005,
+      "floor_binding_trials": 0,
+      "metrics": {
+        "fixed_090": {
+          "count": 15000,
+          "accepted": 1520,
+          "accepted_errors": 40,
+          "review": 13480,
+          "abstain": 0,
+          "total_errors": 3341,
+          "coverage": 0.10133333333333333,
+          "review_rate": 0.8986666666666666,
+          "accepted_risk": 0.02631578947368421
+        },
+        "threshold_only": {
+          "count": 15000,
+          "accepted": 3004,
+          "accepted_errors": 137,
+          "review": 2978,
+          "abstain": 9018,
+          "total_errors": 3341,
+          "coverage": 0.20026666666666668,
+          "review_rate": 0.19853333333333334,
+          "accepted_risk": 0.04560585885486019
+        },
+        "full_router": {
+          "count": 15000,
+          "accepted": 1781,
+          "accepted_errors": 75,
+          "review": 7882,
+          "abstain": 5337,
+          "total_errors": 3341,
+          "coverage": 0.11873333333333333,
+          "review_rate": 0.5254666666666666,
+          "accepted_risk": 0.04211117349803481
+        }
+      },
+      "additional_reviews": 4904,
+      "accepted_errors_withheld": 62,
+      "extra_reviews_per_withheld_error": 79.09677419354838
+    },
+    {
+      "profile": "uniform",
+      "reference_size": 50,
+      "batch_size": 300,
+      "scenario": "stable",
+      "replications": 300,
+      "alarms": 205,
+      "alarm_rate": 0.6833333333333333,
+      "alarm_rate_wilson_95": [
+        0.628659261236736,
+        0.7333716493142638
+      ],
+      "oracle_alarms": 0,
+      "oracle_alarm_rate": 0.0,
+      "oracle_rate_wilson_95": [
+        8.673617379884035e-19,
+        0.012642971224546034
+      ],
+      "mean_threshold": 0.02,
+      "floor_binding_trials": 300,
+      "metrics": {
+        "fixed_090": {
+          "count": 90000,
+          "accepted": 8998,
+          "accepted_errors": 204,
+          "review": 81002,
+          "abstain": 0,
+          "total_errors": 20127,
+          "coverage": 0.09997777777777778,
+          "review_rate": 0.9000222222222222,
+          "accepted_risk": 0.022671704823294066
+        },
+        "threshold_only": {
+          "count": 90000,
+          "accepted": 18053,
+          "accepted_errors": 782,
+          "review": 17947,
+          "abstain": 54000,
+          "total_errors": 20127,
+          "coverage": 0.2005888888888889,
+          "review_rate": 0.19941111111111112,
+          "accepted_risk": 0.04331690023818756
+        },
+        "full_router": {
+          "count": 90000,
+          "accepted": 5691,
+          "accepted_errors": 235,
+          "review": 67240,
+          "abstain": 17069,
+          "total_errors": 20127,
+          "coverage": 0.06323333333333334,
+          "review_rate": 0.7471111111111111,
+          "accepted_risk": 0.0412932700755579
+        }
+      },
+      "additional_reviews": 49293,
+      "accepted_errors_withheld": 547,
+      "extra_reviews_per_withheld_error": 90.11517367458866
+    },
+    {
+      "profile": "uniform",
+      "reference_size": 150,
+      "batch_size": 50,
+      "scenario": "stable",
+      "replications": 300,
+      "alarms": 42,
+      "alarm_rate": 0.14,
+      "alarm_rate_wilson_95": [
+        0.10527132693072412,
+        0.18383161235094903
+      ],
+      "oracle_alarms": 18,
+      "oracle_alarm_rate": 0.06,
+      "oracle_rate_wilson_95": [
+        0.038286369524692054,
+        0.09283944515290843
+      ],
+      "mean_threshold": 0.04800726794203504,
+      "floor_binding_trials": 0,
+      "metrics": {
+        "fixed_090": {
+          "count": 15000,
+          "accepted": 1517,
+          "accepted_errors": 36,
+          "review": 13483,
+          "abstain": 0,
+          "total_errors": 3380,
+          "coverage": 0.10113333333333334,
+          "review_rate": 0.8988666666666667,
+          "accepted_risk": 0.023731048121292023
+        },
+        "threshold_only": {
+          "count": 15000,
+          "accepted": 2996,
+          "accepted_errors": 133,
+          "review": 3061,
+          "abstain": 8943,
+          "total_errors": 3380,
+          "coverage": 0.19973333333333335,
+          "review_rate": 0.20406666666666667,
+          "accepted_risk": 0.04439252336448598
+        },
+        "full_router": {
+          "count": 15000,
+          "accepted": 2547,
+          "accepted_errors": 112,
+          "review": 4749,
+          "abstain": 7704,
+          "total_errors": 3380,
+          "coverage": 0.1698,
+          "review_rate": 0.3166,
+          "accepted_risk": 0.04397330192383196
+        }
+      },
+      "additional_reviews": 1688,
+      "accepted_errors_withheld": 21,
+      "extra_reviews_per_withheld_error": 80.38095238095238
+    },
+    {
+      "profile": "uniform",
+      "reference_size": 150,
+      "batch_size": 300,
+      "scenario": "benign_score_shift_30",
+      "replications": 300,
+      "alarms": 300,
+      "alarm_rate": 1.0,
+      "alarm_rate_wilson_95": [
+        0.9873570287754538,
+        0.9999999999999998
+      ],
+      "oracle_alarms": 300,
+      "oracle_alarm_rate": 1.0,
+      "oracle_rate_wilson_95": [
+        0.9873570287754538,
+        0.9999999999999998
+      ],
+      "mean_threshold": 0.02,
+      "floor_binding_trials": 300,
+      "metrics": {
+        "fixed_090": {
+          "count": 90000,
+          "accepted": 6128,
+          "accepted_errors": 122,
+          "review": 83872,
+          "abstain": 0,
+          "total_errors": 20341,
+          "coverage": 0.0680888888888889,
+          "review_rate": 0.9319111111111111,
+          "accepted_risk": 0.019908616187989555
+        },
+        "threshold_only": {
+          "count": 90000,
+          "accepted": 12368,
+          "accepted_errors": 529,
+          "review": 12682,
+          "abstain": 64950,
+          "total_errors": 20341,
+          "coverage": 0.13742222222222222,
+          "review_rate": 0.1409111111111111,
+          "accepted_risk": 0.042771668822768436
+        },
+        "full_router": {
+          "count": 90000,
+          "accepted": 0,
+          "accepted_errors": 0,
+          "review": 90000,
+          "abstain": 0,
+          "total_errors": 20341,
+          "coverage": 0.0,
+          "review_rate": 1.0,
+          "accepted_risk": null
+        }
+      },
+      "additional_reviews": 77318,
+      "accepted_errors_withheld": 529,
+      "extra_reviews_per_withheld_error": 146.15879017013233
+    },
+    {
+      "profile": "uniform",
+      "reference_size": 150,
+      "batch_size": 300,
+      "scenario": "label_only",
+      "replications": 300,
+      "alarms": 25,
+      "alarm_rate": 0.08333333333333333,
+      "alarm_rate_wilson_95": [
+        0.057080874056394275,
+        0.12012160196406074
+      ],
+      "oracle_alarms": 0,
+      "oracle_alarm_rate": 0.0,
+      "oracle_rate_wilson_95": [
+        8.673617379884035e-19,
+        0.012642971224546034
+      ],
+      "mean_threshold": 0.02,
+      "floor_binding_trials": 300,
+      "metrics": {
+        "fixed_090": {
+          "count": 90000,
+          "accepted": 8935,
+          "accepted_errors": 2885,
+          "review": 81065,
+          "abstain": 0,
+          "total_errors": 47462,
+          "coverage": 0.09927777777777778,
+          "review_rate": 0.9007222222222222,
+          "accepted_risk": 0.3228875209848909
+        },
+        "threshold_only": {
+          "count": 90000,
+          "accepted": 17830,
+          "accepted_errors": 6118,
+          "review": 18135,
+          "abstain": 54035,
+          "total_errors": 47462,
+          "coverage": 0.1981111111111111,
+          "review_rate": 0.2015,
+          "accepted_risk": 0.3431295569265283
+        },
+        "full_router": {
+          "count": 90000,
+          "accepted": 16297,
+          "accepted_errors": 5577,
+          "review": 24078,
+          "abstain": 49625,
+          "total_errors": 47462,
+          "coverage": 0.18107777777777778,
+          "review_rate": 0.26753333333333335,
+          "accepted_risk": 0.34221022274038165
+        }
+      },
+      "additional_reviews": 5943,
+      "accepted_errors_withheld": 541,
+      "extra_reviews_per_withheld_error": 10.985212569316081
+    },
+    {
+      "profile": "uniform",
+      "reference_size": 150,
+      "batch_size": 300,
+      "scenario": "score_shift_05",
+      "replications": 300,
+      "alarms": 53,
+      "alarm_rate": 0.17666666666666667,
+      "alarm_rate_wilson_95": [
+        0.13767670929949632,
+        0.22383241209237675
+      ],
+      "oracle_alarms": 0,
+      "oracle_alarm_rate": 0.0,
+      "oracle_rate_wilson_95": [
+        8.673617379884035e-19,
+        0.012642971224546034
+      ],
+      "mean_threshold": 0.02,
+      "floor_binding_trials": 300,
+      "metrics": {
+        "fixed_090": {
+          "count": 90000,
+          "accepted": 8490,
+          "accepted_errors": 175,
+          "review": 81510,
+          "abstain": 0,
+          "total_errors": 21217,
+          "coverage": 0.09433333333333334,
+          "review_rate": 0.9056666666666666,
+          "accepted_risk": 0.02061248527679623
+        },
+        "threshold_only": {
+          "count": 90000,
+          "accepted": 16966,
+          "accepted_errors": 714,
+          "review": 17246,
+          "abstain": 55788,
+          "total_errors": 21217,
+          "coverage": 0.1885111111111111,
+          "review_rate": 0.19162222222222222,
+          "accepted_risk": 0.04208416833667335
+        },
+        "full_router": {
+          "count": 90000,
+          "accepted": 13956,
+          "accepted_errors": 583,
+          "review": 30091,
+          "abstain": 45953,
+          "total_errors": 21217,
+          "coverage": 0.15506666666666666,
+          "review_rate": 0.33434444444444444,
+          "accepted_risk": 0.04177414732014904
+        }
+      },
+      "additional_reviews": 12845,
+      "accepted_errors_withheld": 131,
+      "extra_reviews_per_withheld_error": 98.05343511450381
+    },
+    {
+      "profile": "uniform",
+      "reference_size": 150,
+      "batch_size": 300,
+      "scenario": "score_shift_15",
+      "replications": 300,
+      "alarms": 222,
+      "alarm_rate": 0.74,
+      "alarm_rate_wilson_95": [
+        0.6875519770721528,
+        0.7863793967400652
+      ],
+      "oracle_alarms": 153,
+      "oracle_alarm_rate": 0.51,
+      "oracle_rate_wilson_95": [
+        0.45366418945602693,
+        0.5660829511194823
+      ],
+      "mean_threshold": 0.02,
+      "floor_binding_trials": 300,
+      "metrics": {
+        "fixed_090": {
+          "count": 90000,
+          "accepted": 7540,
+          "accepted_errors": 153,
+          "review": 82460,
+          "abstain": 0,
+          "total_errors": 23056,
+          "coverage": 0.08377777777777778,
+          "review_rate": 0.9162222222222223,
+          "accepted_risk": 0.020291777188328912
+        },
+        "threshold_only": {
+          "count": 90000,
+          "accepted": 15130,
+          "accepted_errors": 650,
+          "review": 15447,
+          "abstain": 59423,
+          "total_errors": 23056,
+          "coverage": 0.1681111111111111,
+          "review_rate": 0.17163333333333333,
+          "accepted_risk": 0.04296100462656973
+        },
+        "full_router": {
+          "count": 90000,
+          "accepted": 4039,
+          "accepted_errors": 172,
+          "review": 70689,
+          "abstain": 15272,
+          "total_errors": 23056,
+          "coverage": 0.04487777777777778,
+          "review_rate": 0.7854333333333333,
+          "accepted_risk": 0.04258479821738054
+        }
+      },
+      "additional_reviews": 55242,
+      "accepted_errors_withheld": 478,
+      "extra_reviews_per_withheld_error": 115.56903765690376
+    },
+    {
+      "profile": "uniform",
+      "reference_size": 150,
+      "batch_size": 300,
+      "scenario": "score_shift_30",
+      "replications": 300,
+      "alarms": 300,
+      "alarm_rate": 1.0,
+      "alarm_rate_wilson_95": [
+        0.9873570287754538,
+        0.9999999999999998
+      ],
+      "oracle_alarms": 300,
+      "oracle_alarm_rate": 1.0,
+      "oracle_rate_wilson_95": [
+        0.9873570287754538,
+        0.9999999999999998
+      ],
+      "mean_threshold": 0.02,
+      "floor_binding_trials": 300,
+      "metrics": {
+        "fixed_090": {
+          "count": 90000,
+          "accepted": 6128,
+          "accepted_errors": 122,
+          "review": 83872,
+          "abstain": 0,
+          "total_errors": 25810,
+          "coverage": 0.0680888888888889,
+          "review_rate": 0.9319111111111111,
+          "accepted_risk": 0.019908616187989555
+        },
+        "threshold_only": {
+          "count": 90000,
+          "accepted": 12368,
+          "accepted_errors": 529,
+          "review": 12682,
+          "abstain": 64950,
+          "total_errors": 25810,
+          "coverage": 0.13742222222222222,
+          "review_rate": 0.1409111111111111,
+          "accepted_risk": 0.042771668822768436
+        },
+        "full_router": {
+          "count": 90000,
+          "accepted": 0,
+          "accepted_errors": 0,
+          "review": 90000,
+          "abstain": 0,
+          "total_errors": 25810,
+          "coverage": 0.0,
+          "review_rate": 1.0,
+          "accepted_risk": null
+        }
+      },
+      "additional_reviews": 77318,
+      "accepted_errors_withheld": 529,
+      "extra_reviews_per_withheld_error": 146.15879017013233
+    },
+    {
+      "profile": "uniform",
+      "reference_size": 150,
+      "batch_size": 300,
+      "scenario": "score_shift_60",
+      "replications": 300,
+      "alarms": 300,
+      "alarm_rate": 1.0,
+      "alarm_rate_wilson_95": [
+        0.9873570287754538,
+        0.9999999999999998
+      ],
+      "oracle_alarms": 300,
+      "oracle_alarm_rate": 1.0,
+      "oracle_rate_wilson_95": [
+        0.9873570287754538,
+        0.9999999999999998
+      ],
+      "mean_threshold": 0.02,
+      "floor_binding_trials": 300,
+      "metrics": {
+        "fixed_090": {
+          "count": 90000,
+          "accepted": 3507,
+          "accepted_errors": 74,
+          "review": 86493,
+          "abstain": 0,
+          "total_errors": 31297,
+          "coverage": 0.03896666666666666,
+          "review_rate": 0.9610333333333333,
+          "accepted_risk": 0.021100655831194755
+        },
+        "threshold_only": {
+          "count": 90000,
+          "accepted": 7068,
+          "accepted_errors": 324,
+          "review": 7292,
+          "abstain": 75640,
+          "total_errors": 31297,
+          "coverage": 0.07853333333333333,
+          "review_rate": 0.08102222222222222,
+          "accepted_risk": 0.04584040747028863
+        },
+        "full_router": {
+          "count": 90000,
+          "accepted": 0,
+          "accepted_errors": 0,
+          "review": 90000,
+          "abstain": 0,
+          "total_errors": 31297,
+          "coverage": 0.0,
+          "review_rate": 1.0,
+          "accepted_risk": null
+        }
+      },
+      "additional_reviews": 82708,
+      "accepted_errors_withheld": 324,
+      "extra_reviews_per_withheld_error": 255.2716049382716
+    },
+    {
+      "profile": "uniform",
+      "reference_size": 150,
+      "batch_size": 300,
+      "scenario": "stable",
+      "replications": 300,
+      "alarms": 25,
+      "alarm_rate": 0.08333333333333333,
+      "alarm_rate_wilson_95": [
+        0.057080874056394275,
+        0.12012160196406074
+      ],
+      "oracle_alarms": 0,
+      "oracle_alarm_rate": 0.0,
+      "oracle_rate_wilson_95": [
+        8.673617379884035e-19,
+        0.012642971224546034
+      ],
+      "mean_threshold": 0.02,
+      "floor_binding_trials": 300,
+      "metrics": {
+        "fixed_090": {
+          "count": 90000,
+          "accepted": 8935,
+          "accepted_errors": 188,
+          "review": 81065,
+          "abstain": 0,
+          "total_errors": 20341,
+          "coverage": 0.09927777777777778,
+          "review_rate": 0.9007222222222222,
+          "accepted_risk": 0.021040850587576945
+        },
+        "threshold_only": {
+          "count": 90000,
+          "accepted": 17830,
+          "accepted_errors": 758,
+          "review": 18135,
+          "abstain": 54035,
+          "total_errors": 20341,
+          "coverage": 0.1981111111111111,
+          "review_rate": 0.2015,
+          "accepted_risk": 0.042512619181155356
+        },
+        "full_router": {
+          "count": 90000,
+          "accepted": 16297,
+          "accepted_errors": 687,
+          "review": 24078,
+          "abstain": 49625,
+          "total_errors": 20341,
+          "coverage": 0.18107777777777778,
+          "review_rate": 0.26753333333333335,
+          "accepted_risk": 0.04215499785236547
+        }
+      },
+      "additional_reviews": 5943,
+      "accepted_errors_withheld": 71,
+      "extra_reviews_per_withheld_error": 83.70422535211267
+    },
+    {
+      "profile": "uniform",
+      "reference_size": 500,
+      "batch_size": 50,
+      "scenario": "stable",
+      "replications": 300,
+      "alarms": 28,
+      "alarm_rate": 0.09333333333333334,
+      "alarm_rate_wilson_95": [
+        0.06536421957889091,
+        0.1315853970170732
+      ],
+      "oracle_alarms": 15,
+      "oracle_alarm_rate": 0.05,
+      "oracle_rate_wilson_95": [
+        0.03053164062934728,
+        0.08084703347274415
+      ],
+      "mean_threshold": 0.04738948226958596,
+      "floor_binding_trials": 0,
+      "metrics": {
+        "fixed_090": {
+          "count": 15000,
+          "accepted": 1530,
+          "accepted_errors": 25,
+          "review": 13470,
+          "abstain": 0,
+          "total_errors": 3446,
+          "coverage": 0.102,
+          "review_rate": 0.898,
+          "accepted_risk": 0.016339869281045753
+        },
+        "threshold_only": {
+          "count": 15000,
+          "accepted": 3060,
+          "accepted_errors": 141,
+          "review": 2958,
+          "abstain": 8982,
+          "total_errors": 3446,
+          "coverage": 0.204,
+          "review_rate": 0.1972,
+          "accepted_risk": 0.04607843137254902
+        },
+        "full_router": {
+          "count": 15000,
+          "accepted": 2756,
+          "accepted_errors": 129,
+          "review": 4078,
+          "abstain": 8166,
+          "total_errors": 3446,
+          "coverage": 0.18373333333333333,
+          "review_rate": 0.27186666666666665,
+          "accepted_risk": 0.04680696661828737
+        }
+      },
+      "additional_reviews": 1120,
+      "accepted_errors_withheld": 12,
+      "extra_reviews_per_withheld_error": 93.33333333333333
+    },
+    {
+      "profile": "uniform",
+      "reference_size": 500,
+      "batch_size": 300,
+      "scenario": "stable",
+      "replications": 300,
+      "alarms": 0,
+      "alarm_rate": 0.0,
+      "alarm_rate_wilson_95": [
+        8.673617379884035e-19,
+        0.012642971224546034
+      ],
+      "oracle_alarms": 0,
+      "oracle_alarm_rate": 0.0,
+      "oracle_rate_wilson_95": [
+        8.673617379884035e-19,
+        0.012642971224546034
+      ],
+      "mean_threshold": 0.02,
+      "floor_binding_trials": 300,
+      "metrics": {
+        "fixed_090": {
+          "count": 90000,
+          "accepted": 8972,
+          "accepted_errors": 170,
+          "review": 81028,
+          "abstain": 0,
+          "total_errors": 20427,
+          "coverage": 0.09968888888888888,
+          "review_rate": 0.9003111111111111,
+          "accepted_risk": 0.018947837717342843
+        },
+        "threshold_only": {
+          "count": 90000,
+          "accepted": 18032,
+          "accepted_errors": 797,
+          "review": 17925,
+          "abstain": 54043,
+          "total_errors": 20427,
+          "coverage": 0.20035555555555556,
+          "review_rate": 0.19916666666666666,
+          "accepted_risk": 0.04419920141969831
+        },
+        "full_router": {
+          "count": 90000,
+          "accepted": 18032,
+          "accepted_errors": 797,
+          "review": 17925,
+          "abstain": 54043,
+          "total_errors": 20427,
+          "coverage": 0.20035555555555556,
+          "review_rate": 0.19916666666666666,
+          "accepted_risk": 0.04419920141969831
+        }
+      },
+      "additional_reviews": 0,
+      "accepted_errors_withheld": 0,
+      "extra_reviews_per_withheld_error": null
+    }
+  ]
+}
