@@ -16,8 +16,8 @@ jobs:
         with:
           python-version: ${{ matrix.python-version }}
       - run: python -m pip install -e ".[dev]"
-      - run: ruff check src tests examples/financial_ner/run_case_study.py examples/shiftguard
-      - run: ruff format --check src tests examples/financial_ner/run_case_study.py examples/shiftguard
+      - run: ruff check src tests examples/financial_ner/run_case_study.py examples/shiftguard examples/your_data
+      - run: ruff format --check src tests examples/financial_ner/run_case_study.py examples/shiftguard examples/your_data
       - run: python -m unittest discover -s tests -v
       - run: python examples/financial_ner/run_case_study.py
       - run: python examples/shiftguard/run_case_study.py

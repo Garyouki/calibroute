@@ -22,13 +22,15 @@ Requires Python 3.10 or newer.
 
 Install with `python -m pip install calibroute-ai`.
 
-To run the checked-in examples or contribute, clone the repository:
+To obtain example scripts, clone the repository:
 
 ```bash
 git clone https://github.com/Garyouki/calibroute.git
 cd calibroute
-python -m pip install -e .
 ```
+
+Use the installed release for the walkthroughs. For source development, install
+the checkout with `python -m pip install -e .`.
 
 The distribution name is `calibroute-ai`; the Python import and command are
 `calibroute`. No API key or model service is needed.
@@ -66,7 +68,11 @@ batch, see the [one-command comparison guide](docs/comparison.md) (0.4.0 or newe
 
 New here? Follow the [document-review walkthrough](examples/document_review/README.md):
 one offline script demonstrates development data, a separate holdout, and routing
-using the published 0.3.0 API. It also explains how to use your own predictions.
+using the published 0.4.0 package (the script also supports the 0.3.0 API).
+For your own exports, follow the [CSV onboarding walkthrough](examples/your_data/README.md)
+for explicit column mapping, clean installation, and frozen-policy comparison.
+The column helper is a repository example added after `v0.4.0`; obtain it from
+`main` and record the checkout commit. It works with the published 0.4.0 package.
 
 ```bash
 # Audit labeled predictions

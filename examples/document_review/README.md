@@ -7,9 +7,9 @@ or operate a review queue. This demo runs locally without API keys or data uploa
 
 ## Run in a few minutes
 
-Install `calibroute-ai==0.3.0`, clone this repository for the example script, then
+Install `calibroute-ai==0.4.0`, clone this repository for the example script, then
 run `python examples/document_review/run_demo.py` from the repository root.
-The script uses only APIs included in the published 0.3.0 package. Generated
+The script also remains compatible with the 0.3.0 API. Generated
 files go to `examples/output/document_review/` (ignored by Git).
 
 The example creates explicitly synthetic development, holdout, and unlabeled
@@ -23,6 +23,10 @@ Open `summary.json` for the validation result and action counts, or
 batch illustrates escalation; a confidence histogram cannot detect every shift.
 
 ## Use your own predictions
+
+If your export has columns such as `score`, `is_correct`, or `prediction,label`,
+follow the [own-data walkthrough](../your_data/README.md) for explicit column
+mapping, clean release installation, separate evaluation, and baseline comparison.
 
 One row represents one unit you are prepared to accept or review (for example,
 one extracted invoice amount). Provide `id,confidence,correct,domain` columns.
@@ -59,6 +63,11 @@ bound does not meet the target; code 2 indicates input errors. `--max-risk 0.10`
 is an illustrative choice, not a recommendation for a particular application.
 
 ## Evaluate usefulness
+
+The [comparison guide](../../docs/comparison.md) provides the `compare` command
+(0.4.0 or newer). `validate` checks the threshold before the batch shift gate;
+`compare` applies the complete router. A threshold can pass validation while
+a shift alarm sends the entire batch to review. Read both reports together.
 
 Compare with accepting everything and with your existing review rule, using
 the same untouched evaluation set. Record accepted-set error rate, automatic
