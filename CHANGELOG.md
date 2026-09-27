@@ -1,5 +1,12 @@
 # Changelog
 
+## Unreleased
+
+- Separate ShiftGuard recorded safety, task success, safe task success, and
+  valid safe-success reporting with explicit event definitions and per-target ECE.
+- Add outcome counts for fitting/evaluation splits and domains to example report
+  schema 2; retain the original combined policy label and fitting constraints.
+
 ## 0.4.0 - 2026-09-25
 
 - Add entity-level Financial NER conversion with `convert-financial-ner-entities`.

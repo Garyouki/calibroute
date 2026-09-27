@@ -159,6 +159,50 @@ class ShiftGuardAdapterTests(unittest.TestCase):
         report = CASE.run_case_study(EXAMPLE / "traces.jsonl", self.directory / "output")
         self.assertEqual(report["audit"]["overall"]["count"], 384)
         self.assertAlmostEqual(report["audit"]["overall"]["accuracy"], 224 / 384)
+        self.assertEqual(report["schema_version"], 2)
+        outcomes = report["outcomes"]["overall"]
+        self.assertEqual(outcomes["valid_json_count"], 384)
+        expected_counts = {
+            "safety": 224,
+            "task_success": 294,
+            "safe_task_success": 224,
+            "policy_correctness": 224,
+        }
+        for name, count in expected_counts.items():
+            with self.subTest(target=name):
+                target = outcomes["targets"][name]
+                self.assertEqual(target["positive_count"], count)
+                self.assertAlmostEqual(target["rate"], count / 384)
+                self.assertEqual(
+                    sum(
+                        report["outcomes"][part]["targets"][name]["positive_count"]
+                        for part in ("fitting", "evaluation")
+                    ),
+                    count,
+                )
+                self.assertEqual(
+                    sum(
+                        domain["targets"][name]["positive_count"]
+                        for domain in report["outcomes"]["domains"].values()
+                    ),
+                    count,
+                )
+        self.assertEqual(
+            outcomes["contingency"],
+            {
+                "successful_safe": 224,
+                "successful_unsafe": 70,
+                "unsuccessful_safe": 0,
+                "unsuccessful_unsafe": 90,
+            },
+        )
+        self.assertEqual(report["audit_target"], report["policy_attempt"]["label_definition"])
+        self.assertEqual(
+            report["policy_attempt"]["risk_event"], "invalid_json or not task_success or unsafe"
+        )
+        markdown = (self.directory / "output" / "report.md").read_text(encoding="utf-8")
+        self.assertIn("294 / 384 | 76.56%", markdown)
+        self.assertIn("No-unsafe can include nonexecution", markdown)
         self.assertEqual(report["split"]["fitting_count"], 288)
         self.assertEqual(report["split"]["evaluation_count"], 96)
         self.assertEqual(report["policy_attempt"]["status"], "no_feasible_policy")
@@ -176,6 +220,47 @@ class ShiftGuardAdapterTests(unittest.TestCase):
         supplied = router.call_args.args[0]
         self.assertTrue(all(r.correct is None and not r.metadata for r in supplied))
         self.assertEqual(report["routing"]["accepted_empirical_risk"], 0.0)
+
+    def test_outcome_summary_separates_all_events_and_invalid_json(self):
+        rows = [
+            trace("success-safe"),
+            trace("success-unsafe", unsafe=True),
+            trace("failure-safe", success=False),
+            trace("failure-unsafe", success=False, unsafe=True),
+            trace("invalid"),
+        ]
+        rows[-1]["proposal"]["valid_json"] = False
+        summary = CASE.summarize_outcomes(read_shiftguard_records(self.write(rows)))
+        self.assertEqual(summary["valid_json_count"], 4)
+        self.assertEqual(
+            summary["contingency"],
+            {
+                "successful_safe": 2,
+                "successful_unsafe": 1,
+                "unsuccessful_safe": 1,
+                "unsuccessful_unsafe": 1,
+            },
+        )
+        for name, count in (
+            ("safety", 3),
+            ("task_success", 3),
+            ("safe_task_success", 2),
+            ("policy_correctness", 1),
+        ):
+            with self.subTest(target=name):
+                target = summary["targets"][name]
+                self.assertEqual(target["positive_count"], count)
+                self.assertAlmostEqual(target["rate"], count / 5)
+                self.assertAlmostEqual(target["ece"], 0.95 - count / 5)
+                self.assertEqual(target["auroc"], 0.5)
+
+    def test_outcome_summary_rejects_unvalidated_string_booleans_and_empty_input(self):
+        records = read_shiftguard_records(self.write([trace()]))
+        records[0].metadata["unsafe"] = "False"
+        with self.assertRaisesRegex(TypeError, "boolean unsafe"):
+            CASE.summarize_outcomes(records)
+        with self.assertRaisesRegex(ValueError, "at least one"):
+            CASE.summarize_outcomes([])
 
 
 if __name__ == "__main__":
