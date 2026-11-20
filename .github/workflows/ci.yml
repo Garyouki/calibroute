@@ -22,6 +22,11 @@ jobs:
       - run: python examples/financial_ner/run_case_study.py
       - run: python examples/shiftguard/run_case_study.py
       - run: python examples/document_review/run_demo.py
-      - run: python examples/shift_study/run_study.py --replications 2 --workers 2
+      - name: Smoke-test the frozen 0.4.0 shift study
+        run: |
+          python -m venv "$RUNNER_TEMP/calibroute-shift-study"
+          study_python="$RUNNER_TEMP/calibroute-shift-study/bin/python"
+          "$study_python" -m pip install "calibroute-ai==0.4.0"
+          "$study_python" examples/shift_study/run_study.py --replications 2 --workers 2
       - run: python -m build
       - run: python -m twine check dist/*

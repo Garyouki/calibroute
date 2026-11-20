@@ -1,9 +1,8 @@
 # Bring your own prediction CSV
 
-This walkthrough uses the **published `calibroute-ai==0.4.0` package** and a
-standard-library column converter obtained from GitHub. The converter is an
-example script on `main`, added after `v0.4.0`; it is not a new installed CLI
-command. Record `git rev-parse HEAD` to pin the example version.
+This walkthrough uses the **published `calibroute-ai==0.5.0` package** and a
+standard-library column converter from the corresponding GitHub release tag.
+Record `git rev-parse HEAD` to pin the example version.
 
 See the [internal onboarding check](../../docs/onboarding-check-2026-09-27.md)
 for a completed attempt with the released package, including unfavorable results.
@@ -13,7 +12,7 @@ for a completed attempt with the released package, including unfavorable results
 Clone this repository and open a terminal at its root. On Windows PowerShell:
 
 1. Create an environment: `python -m venv .venv`.
-2. Install the release: `.\.venv\Scripts\python.exe -I -m pip --isolated install --index-url https://pypi.org/simple calibroute-ai==0.4.0`.
+2. Install the release: `.\.venv\Scripts\python.exe -I -m pip --isolated install --index-url https://pypi.org/simple calibroute-ai==0.5.0`.
 3. Inspect it: `.\.venv\Scripts\python.exe -I -m pip show calibroute-ai`.
 4. Check commands: `.\.venv\Scripts\python.exe -I -m calibroute.cli --help`.
 

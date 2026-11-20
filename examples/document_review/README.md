@@ -7,10 +7,10 @@ or operate a review queue. This demo runs locally without API keys or data uploa
 
 ## Run in a few minutes
 
-Install `calibroute-ai==0.4.0`, clone this repository for the example script, then
+Install `calibroute-ai==0.5.0`, clone this repository for the example script, then
 run `python examples/document_review/run_demo.py` from the repository root.
-The script also remains compatible with the 0.3.0 API. Generated
-files go to `examples/output/document_review/` (ignored by Git).
+The script also supports the 0.3.0 API.
+Generated files go to `examples/output/document_review/` (ignored by Git).
 
 The example creates explicitly synthetic development, holdout, and unlabeled
 production records using separate random seeds. It fits a policy on development

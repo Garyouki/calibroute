@@ -37,6 +37,10 @@ The distribution name is `calibroute-ai`; the Python import and command are
 
 ## Version compatibility
 
+Release **0.5.0** includes the 0.4.0 features below and hardens holdout
+validation. When upgrading, give each holdout prediction a stable, unique ID.
+Validation uses the policy's saved confidence level unless explicitly overridden.
+
 Release **0.4.0** adds entity-level NER, ShiftGuard, and comparison reports to
 the PyPI package. Upgrade with `python -m pip install --upgrade calibroute-ai`.
 
@@ -52,9 +56,9 @@ the PyPI package. Upgrade with `python -m pip install --upgrade calibroute-ai`.
 | Financial NER sentence case study | Compatible; obtain script/data from GitHub | Compatible; obtain script/data from GitHub |
 | ShiftGuard case study | Not compatible | Compatible; obtain script/data from GitHub |
 
-For reproducible installation, use `python -m pip install calibroute-ai==0.4.0`.
+For reproducible installation, use `python -m pip install calibroute-ai==0.5.0`.
 Example scripts and data are available in the repository; installing the wheel
-does not install the example folders. Check out tag `v0.4.0` for examples matching
+does not install the example folders. Check out tag `v0.5.0` for examples matching
 this release; GitHub `main` may receive further development changes.
 
 To check the active environment, run `python -m calibroute.cli --help` and
@@ -68,11 +72,11 @@ batch, see the [one-command comparison guide](docs/comparison.md) (0.4.0 or newe
 
 New here? Follow the [document-review walkthrough](examples/document_review/README.md):
 one offline script demonstrates development data, a separate holdout, and routing
-using the published 0.4.0 package (the script also supports the 0.3.0 API).
+using the published 0.5.0 package.
 For your own exports, follow the [CSV onboarding walkthrough](examples/your_data/README.md)
 for explicit column mapping, clean installation, and frozen-policy comparison.
-The column helper is a repository example added after `v0.4.0`; obtain it from
-`main` and record the checkout commit. It works with the published 0.4.0 package.
+The column helper is a repository example. Use the matching tag and record the
+checkout commit when reporting results.
 
 For measured limitations of confidence-shift monitoring, see the
 [synthetic shift study](examples/shift_study/README.md), including false alarms,

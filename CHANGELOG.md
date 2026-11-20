@@ -1,11 +1,21 @@
 # Changelog
 
-## Unreleased
+## 0.5.0 - 2026-11-19
 
+- Require an explicit, unique `id` or `record_id` for every holdout prediction
+  passed to the `validate` CLI. Duplicate or missing IDs produce exit code 2.
+- Validate frozen policies at their stored confidence level by default.
+  Use `--confidence-level` to select a different level explicitly.
+- Report observed risk for empirical fits, with `null` as the statistical
+  upper bound, including when reading older empirical policies.
+- Report malformed prediction records with input line numbers and handle
+  invalid policy values as CLI input errors.
 - Separate ShiftGuard recorded safety, task success, safe task success, and
   valid safe-success reporting with explicit event definitions and per-target ECE.
 - Add outcome counts for fitting/evaluation splits and domains to example report
   schema 2; retain the original combined policy label and fitting constraints.
+- Add a walkthrough for mapping and evaluating prediction CSVs from other tools.
+- Document a frozen synthetic study of shift alarms and review workload.
 
 ## 0.4.0 - 2026-09-25
 
