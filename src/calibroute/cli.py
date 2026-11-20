@@ -88,7 +88,9 @@ def build_parser() -> argparse.ArgumentParser:
     validate.add_argument("--policy", required=True)
     validate.add_argument("--output", required=True)
     validate.add_argument("--max-risk", type=float)
-    validate.add_argument("--confidence-level", type=float, default=0.95)
+    validate.add_argument(
+        "--confidence-level", type=float, help="Override the confidence level saved in the policy."
+    )
     compare = subparsers.add_parser("compare", help="Compare three frozen rules on labeled data.")
     compare.add_argument("--input", required=True)
     compare.add_argument("--policy", required=True)
@@ -117,7 +119,7 @@ def main(argv: list[str] | None = None) -> int:
             print(f"wrote comparison report to {output}")
         elif args.command == "validate":
             report = validate_policy(
-                read_records(args.input),
+                read_records(args.input, require_id=True),
                 read_policy(args.policy),
                 max_risk=args.max_risk,
                 confidence_level=args.confidence_level,
@@ -149,11 +151,16 @@ def main(argv: list[str] | None = None) -> int:
                 shift_effect_floor=args.shift_effect_floor,
             )
             write_json(args.output, policy.as_dict())
+            bound = (
+                f"risk upper bound={policy.risk_upper_bound:.4f}, "
+                if policy.risk_upper_bound is not None
+                else ""
+            )
             print(
                 "fitted policy: "
                 f"accept>={policy.accept_threshold:.4f}, "
                 f"validation risk={policy.max_validation_risk:.4f}, "
-                f"risk upper bound={policy.risk_upper_bound:.4f}, "
+                f"{bound}"
                 f"coverage={policy.validation_coverage:.4f}"
             )
         elif args.command == "route":

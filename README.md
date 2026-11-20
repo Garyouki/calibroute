@@ -104,9 +104,9 @@ calibroute route \
 
 | Field | Required | Description |
 |---|---|---|
-| `id` | recommended | Prediction identifier |
+| `id` | required for `validate` | Unique prediction identifier. `record_id` is also accepted. |
 | `confidence` | yes | Number between 0 and 1 |
-| `correct` | `audit` and `fit` only | Boolean or `1`/`0` label |
+| `correct` | `audit`, `fit`, `validate`, and `compare` | Boolean or `1`/`0` label |
 | `domain` | no | Evaluation slice or deployment domain |
 
 Additional columns are preserved as metadata.
@@ -119,10 +119,17 @@ the selected policy. Freeze the policy, then assess it on a separate IID holdout
 calibroute validate --input holdout.csv --policy examples/policy.json --output holdout-report.json
 ```
 
-Exit code 0 means the holdout upper bound meets the declared risk limit; 1 means
-it does not (including zero accepted samples); 2 means invalid input. Never tune
-against this holdout or reuse it to select among multiple policies. A pass does
-not cover distribution shift. See [statistical scope](docs/design.md).
+Provide an explicit, unique ID for each holdout prediction. Assign the ID to
+the underlying prediction before combining exports so duplicates can be
+detected. The bound assumes independent IID holdout units.
+`validate` uses the confidence level saved in the policy unless you pass
+`--confidence-level`. Empirical fitting reports observed risk and stores
+`null` in `risk_upper_bound`.
+
+Exit code 0 means the holdout upper bound meets the declared risk limit. Exit
+code 1 means it does not, including when there are zero accepted samples.
+Exit code 2 indicates invalid input. Use an untouched holdout and interpret
+the result for its sampled distribution. See [statistical scope](docs/design.md).
 
 ## Python API
 

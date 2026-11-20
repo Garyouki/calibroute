@@ -76,6 +76,8 @@ class GatePolicy:
 
     @classmethod
     def from_dict(cls, payload: dict[str, object]) -> GatePolicy:
+        risk_method = str(payload.get("risk_method", "empirical"))
+        risk_upper_bound = payload.get("risk_upper_bound")
         return cls(
             accept_threshold=float(payload["accept_threshold"]),
             review_threshold=float(payload["review_threshold"]),
@@ -94,11 +96,11 @@ class GatePolicy:
                 else float(payload["declared_risk_limit"])
             ),
             risk_upper_bound=(
-                None
-                if payload.get("risk_upper_bound") is None
-                else float(payload["risk_upper_bound"])
+                float(risk_upper_bound)
+                if risk_method == "clopper_pearson" and risk_upper_bound is not None
+                else None
             ),
-            risk_method=str(payload.get("risk_method", "empirical")),
+            risk_method=risk_method,
             confidence_level=float(payload.get("confidence_level", 0.95)),
             shift_confidence_level=float(payload.get("shift_confidence_level", 0.95)),
             shift_resamples=int(payload.get("shift_resamples", 500)),
@@ -172,7 +174,7 @@ def fit_policy(
             "no validation operating point satisfies max_risk and min_coverage; "
             "improve the model or relax the declared constraints"
         )
-    kept, threshold, achieved_risk, risk_upper_bound = best
+    kept, threshold, achieved_risk, criterion = best
     return GatePolicy(
         accept_threshold=threshold,
         review_threshold=max(0.0, threshold - review_margin),
@@ -184,7 +186,7 @@ def fit_policy(
         histogram_bins=histogram_bins,
         max_js_divergence=max_js_divergence,
         declared_risk_limit=max_risk,
-        risk_upper_bound=risk_upper_bound,
+        risk_upper_bound=criterion if risk_method == "clopper_pearson" else None,
         risk_method=risk_method,
         confidence_level=confidence_level,
         shift_confidence_level=shift_confidence_level,

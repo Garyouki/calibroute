@@ -12,19 +12,30 @@ def validate_policy(
     policy: GatePolicy,
     *,
     max_risk: float | None = None,
-    confidence_level: float = 0.95,
+    confidence_level: float | None = None,
 ) -> dict[str, object]:
     """Assess a fixed threshold. Caller must supply independent, IID holdout data.
 
-    Do not tune the policy or repeatedly select policies using this holdout.
-    This evaluates threshold acceptance before the optional batch shift gate.
+    Holdout IDs must be unique. The confidence level defaults to the saved
+    policy level. This assesses threshold acceptance before the batch shift
+    gate. Do not tune or select policies using this holdout.
     """
     rows = list(records)
     if not rows or any(row.correct is None for row in rows):
         raise ValueError("non-empty labeled holdout records are required")
+    seen_ids = set()
+    for row in rows:
+        record_id = row.record_id.strip()
+        if not record_id:
+            raise ValueError("holdout prediction ID must not be blank")
+        if record_id in seen_ids:
+            raise ValueError(f"duplicate holdout prediction ID: {record_id!r}")
+        seen_ids.add(record_id)
     limit = policy.declared_risk_limit if max_risk is None else max_risk
     if limit is None or not 0 <= limit < 1:
         raise ValueError("a max_risk in [0, 1) is required")
+    if confidence_level is None:
+        confidence_level = policy.confidence_level
     if not 0 < confidence_level < 1:
         raise ValueError("confidence_level must be in (0, 1)")
     accepted = [row for row in rows if row.confidence >= policy.accept_threshold]
