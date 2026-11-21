@@ -1,5 +1,7 @@
 # CalibRoute
 
+[![DOI](https://zenodo.org/badge/DOI/10.5281/zenodo.24430274.svg)](https://doi.org/10.5281/zenodo.24430274)
+
 CalibRoute is a lightweight Python toolkit for confidence evaluation and
 uncertainty-aware routing. It converts model predictions into three actions:
 `accept`, `human_review`, or `abstain`.
