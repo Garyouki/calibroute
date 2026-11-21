@@ -1,5 +1,9 @@
 # Changelog
 
+## 0.5.1 - 2026-11-21
+
+- Add Zenodo metadata so each release is archived with a citable DOI. No code changes.
+
 ## 0.5.0 - 2026-11-19
 
 - Require an explicit, unique `id` or `record_id` for every holdout prediction

@@ -60,9 +60,9 @@ the PyPI package. Upgrade with `python -m pip install --upgrade calibroute-ai`.
 | Financial NER sentence case study | Compatible; obtain script/data from GitHub | Compatible; obtain script/data from GitHub |
 | ShiftGuard case study | Not compatible | Compatible; obtain script/data from GitHub |
 
-For reproducible installation, use `python -m pip install calibroute-ai==0.5.0`.
+For reproducible installation, use `python -m pip install calibroute-ai==0.5.1`.
 Example scripts and data are available in the repository; installing the wheel
-does not install the example folders. Check out tag `v0.5.0` for examples matching
+does not install the example folders. Check out tag `v0.5.1` for examples matching
 this release; GitHub `main` may receive further development changes.
 
 To check the active environment, run `python -m calibroute.cli --help` and
