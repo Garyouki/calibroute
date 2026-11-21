@@ -4,6 +4,10 @@ CalibRoute is a lightweight Python toolkit for confidence evaluation and
 uncertainty-aware routing. It converts model predictions into three actions:
 `accept`, `human_review`, or `abstain`.
 
+**Try it in your browser:** the [interactive demo on Hugging Face Spaces](https://huggingface.co/spaces/youkijiudai/calibroute-demo)
+runs the 0.5.0 package with Pyodide on the Financial NER and ShiftGuard examples, or on a CSV you
+upload. Nothing leaves your browser.
+
 ## Features
 
 - Confidence calibration and error-ranking metrics
