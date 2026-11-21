@@ -1,0 +1,20 @@
+{
+  "title": "calibroute-ai: Uncertainty-aware evaluation and decision control for AI systems",
+  "upload_type": "software",
+  "description": "Uncertainty-aware evaluation and decision control for AI systems. Source code: https://github.com/Garyouki/calibroute",
+  "creators": [
+    {
+      "name": "Zheng, Zihao"
+    }
+  ],
+  "license": "MIT",
+  "access_right": "open",
+  "keywords": [
+    "trustworthy-ai",
+    "uncertainty",
+    "selective-prediction",
+    "abstention",
+    "distribution-shift",
+    "ai-evaluation"
+  ]
+}
