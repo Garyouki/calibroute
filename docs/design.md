@@ -69,6 +69,11 @@ stderr and exits 2. Pass `on_infeasible="all_human"` (CLI:
 `--on-infeasible all-human`) to save an explicit policy that routes every
 record to human review instead. The constraints are never relaxed silently.
 
+In cost mode, accepting nothing is always an option. If every attainable
+threshold costs more than routing all records to review, the fit reports
+`status: "all_human_is_cheaper"` with the cheapest threshold for reference,
+rather than returning a dominated policy.
+
 ## Observable reasons
 
 Every decision carries a stable reason code and the batch shift score. This is

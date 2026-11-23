@@ -291,9 +291,30 @@ def fit_policy(
         "validation_all_human_cost": all_human_cost,
     }
 
-    if best is None:
+    # In cost mode, accepting nothing is always an option. A threshold that costs
+    # more than routing everything to review is dominated and must not be returned.
+    dominated = (
+        best is not None
+        and costs is not None
+        and best[4] is not None
+        and best[4] > all_human_cost * total
+    )
+    if best is None or dominated:
+        cheapest = None
+        if dominated:
+            kept, threshold, risk, criterion, cost = best
+            cheapest = {
+                "accepted": kept,
+                "coverage": kept / total,
+                "accept_threshold": threshold,
+                "observed_risk": risk,
+                "risk_criterion": criterion,
+                "cost_per_record": cost / total,
+                "all_human_cost_per_record": all_human_cost,
+            }
         report = {
-            "status": "no_feasible_policy",
+            "status": "all_human_is_cheaper" if dominated else "no_feasible_policy",
+            "cheapest_threshold": cheapest,
             "validation_count": total,
             "validation_errors": sum(not row.correct for row in ranked),
             "declared_risk_limit": max_risk,
@@ -311,11 +332,14 @@ def fit_policy(
             ],
         }
         if on_infeasible == "raise":
-            raise InfeasiblePolicyError(
-                "no validation operating point satisfies max_risk and min_coverage; "
-                "improve the model or relax the declared constraints",
-                report,
+            message = (
+                "every feasible threshold costs more than routing all records to human "
+                "review under the declared costs; improve the model or revisit the costs"
+                if dominated
+                else "no validation operating point satisfies max_risk and min_coverage; "
+                "improve the model or relax the declared constraints"
             )
+            raise InfeasiblePolicyError(message, report)
         return GatePolicy(
             accept_threshold=1.0,
             review_threshold=0.0,

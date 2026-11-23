@@ -69,7 +69,7 @@ class CostFitTests(unittest.TestCase):
         for costs, margin in (
             (ActionCosts(accept_error=5, human_review=1), 0.15),
             (ActionCosts(accept_error=2, human_review=1, abstain=0.2), 0.10),
-            (ActionCosts(accept_error=10, human_review=1, abstain=3), 0.05),
+            (ActionCosts(accept_error=10, human_review=1, abstain=0.5), 0.05),
         ):
             with self.subTest(costs=costs, margin=margin):
                 policy = fit_policy(rows, costs=costs, min_coverage=0.1, review_margin=margin)
@@ -164,6 +164,21 @@ class InfeasibleTests(unittest.TestCase):
         report = validate_policy(holdout, policy)
         self.assertEqual(report["verdict"], "all_human_fallback")
         self.assertEqual(report["accepted"], 0)
+
+    def test_cost_mode_never_returns_a_threshold_worse_than_all_human(self):
+        # Every record has confidence 0.9 and only 40% are correct: accepting the
+        # single attainable group costs 0.6 * 5 = 3 per record, review costs 1.
+        rows = [PredictionRecord(f"t{i}", 0.9, i < 4) for i in range(10)]
+        costs = ActionCosts(accept_error=5, human_review=1)
+        with self.assertRaises(InfeasiblePolicyError) as caught:
+            fit_policy(rows, costs=costs)
+        report = caught.exception.report
+        self.assertEqual(report["status"], "all_human_is_cheaper")
+        self.assertAlmostEqual(report["cheapest_threshold"]["cost_per_record"], 3.0)
+        self.assertEqual(report["cheapest_threshold"]["all_human_cost_per_record"], 1)
+        fallback = fit_policy(rows, costs=costs, on_infeasible="all_human")
+        self.assertTrue(fallback.accept_disabled)
+        self.assertEqual(fallback.validation_expected_cost, 1)
 
     def test_rejects_unknown_infeasible_mode(self):
         with self.assertRaises(ValueError):

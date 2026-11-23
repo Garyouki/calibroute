@@ -13,6 +13,8 @@
 - Raise `InfeasiblePolicyError` (a `ValueError` subclass) with a structured
   report when no threshold is feasible; the CLI prints it to stderr. Add an
   opt-in all-human fallback (`on_infeasible="all_human"`, `--on-infeasible all-human`).
+  In cost mode, a fit whose best threshold costs more than all-human review is
+  reported as `all_human_is_cheaper` instead of returning a dominated policy.
 - Document the fit, validate, route workflow in the quick start, define
   `human_review` versus `abstain` operationally, and add related work.
 - Policy schema 1.3 adds `objective`, `costs`, `validation_expected_cost`,
