@@ -7,15 +7,17 @@ uncertainty-aware routing. It converts model predictions into three actions:
 `accept`, `human_review`, or `abstain`.
 
 **Try it in your browser:** the [interactive demo on Hugging Face Spaces](https://huggingface.co/spaces/youkijiudai/calibroute-demo)
-runs the 0.5.0 package with Pyodide on the Financial NER and ShiftGuard examples, or on a CSV you
+runs the 0.6.0 package with Pyodide on the Financial NER and ShiftGuard examples, or on a CSV you
 upload. Nothing leaves your browser.
 
 ## Features
 
 - Confidence calibration and error-ranking metrics
 - Risk-coverage analysis
-- Validation-only threshold fitting
-- Tie-aware threshold fitting and independent holdout risk assessment
+- Validation-only threshold fitting with a risk-limit or declared-cost objective
+- Tie-aware threshold fitting and independent holdout risk assessment with
+  `pass` / `inconclusive` / `fail` verdicts
+- Structured no-feasible-policy reports and an opt-in all-human fallback
 - Batch-size-aware confidence-shift detection
 - Financial NER sentence- and entity-level output adapters
 - ShiftGuard agent-replay adapter and offline confidence audit
@@ -43,6 +45,11 @@ The distribution name is `calibroute-ai`; the Python import and command are
 
 ## Version compatibility
 
+Release **0.6.0** adds declared action costs (`ActionCosts`, `--cost-*` flags)
+to `fit`, `validate`, and `compare`; a `verdict` and lower bound in holdout
+validation; and `InfeasiblePolicyError` reports with an opt-in all-human
+fallback. Existing calls, saved policies, and exit codes keep their meaning.
+
 Release **0.5.0** includes the 0.4.0 features below and hardens holdout
 validation. When upgrading, give each holdout prediction a stable, unique ID.
 Validation uses the policy's saved confidence level unless explicitly overridden.
@@ -62,9 +69,9 @@ the PyPI package. Upgrade with `python -m pip install --upgrade calibroute-ai`.
 | Financial NER sentence case study | Compatible; obtain script/data from GitHub | Compatible; obtain script/data from GitHub |
 | ShiftGuard case study | Not compatible | Compatible; obtain script/data from GitHub |
 
-For reproducible installation, use `python -m pip install calibroute-ai==0.5.1`.
+For reproducible installation, use `python -m pip install calibroute-ai==0.6.0`.
 Example scripts and data are available in the repository; installing the wheel
-does not install the example folders. Check out tag `v0.5.1` for examples matching
+does not install the example folders. Check out tag `v0.6.0` for examples matching
 this release; GitHub `main` may receive further development changes.
 
 To check the active environment, run `python -m calibroute.cli --help` and
@@ -88,13 +95,20 @@ For measured limitations of confidence-shift monitoring, see the
 [synthetic shift study](examples/shift_study/README.md), including false alarms,
 label-only accuracy losses, and additional review workload.
 
+The workflow has three steps, and the middle one is not optional: a policy
+that fits successfully can still fail on new data.
+
+1. **Fit** on labeled development (validation) data.
+2. **Validate** the frozen policy on a separate, untouched labeled holdout.
+3. **Route** unlabeled production batches only after step 2.
+
 ```bash
-# Audit labeled predictions
+# 0. Audit labeled predictions
 calibroute audit \
   --input examples/validation.csv \
   --output examples/audit.md
 
-# Fit an acceptance policy on validation data
+# 1. Fit an acceptance policy on development data
 calibroute fit \
   --input examples/validation.csv \
   --max-risk 0.20 \
@@ -102,13 +116,49 @@ calibroute fit \
   --risk-method empirical \
   --output examples/policy.json
 
-# Route a new prediction batch
+# 2. Assess the frozen policy on an independent labeled holdout (your file)
+calibroute validate \
+  --input holdout.csv \
+  --policy examples/policy.json \
+  --output holdout-report.json
+
+# 3. Route a new prediction batch
 calibroute route \
   --input examples/production_batch.csv \
   --policy examples/policy.json \
   --output examples/decisions.csv \
   --summary examples/routing-summary.json
 ```
+
+## Choosing an objective: risk limit or costs
+
+`--max-risk` answers "how much can I automate while keeping accepted errors
+under a limit?" Declared costs answer "which threshold minimizes the total cost
+of wrong acceptances, reviews, and abstentions?" They are different questions
+and generally give different thresholds.
+
+```bash
+# Cost objective: a wrong acceptance costs 5 units, a review costs 1
+calibroute fit --input dev.csv --cost-accept-error 5 --cost-review 1 --output policy.json
+
+# Both: minimize cost subject to a 10% accepted-error bound
+calibroute fit --input dev.csv --cost-accept-error 5 --cost-review 1 --max-risk 0.10 --output policy.json
+```
+
+`--cost-abstain` defaults to the review cost, since an abstained item usually
+still has to be resolved. Cost units are your declared assumptions, not
+measured savings. The three actions mean:
+
+| Action | What the caller should do |
+|---|---|
+| `accept` | Use the model output automatically. |
+| `human_review` | Send to a reviewer, with the model output shown as a suggestion. |
+| `abstain` | Discard the model output; handle the item through the default non-AI path. |
+
+If no threshold meets the constraints, `fit` exits 2 and prints a structured
+report of the closest attainable operating points. Add
+`--on-infeasible all-human` to save an explicit all-human policy instead.
+See [design principles](docs/design.md) for details.
 
 ## Input format
 
@@ -138,13 +188,18 @@ detected. The bound assumes independent IID holdout units.
 
 Exit code 0 means the holdout upper bound meets the declared risk limit. Exit
 code 1 means it does not, including when there are zero accepted samples.
+The report's `verdict` distinguishes `fail` (the lower bound is above the
+limit: evidence of a violation) from `inconclusive` (the bound is too wide to
+tell). Policies fitted right at the limit are often `inconclusive` on a
+holdout; fit with a stricter `--max-risk` than the limit you will validate
+against, or collect a larger holdout.
 Exit code 2 indicates invalid input. Use an untouched holdout and interpret
 the result for its sampled distribution. See [statistical scope](docs/design.md).
 
 ## Python API
 
 ```python
-from calibroute import PredictionRecord, fit_policy, route_batch
+from calibroute import ActionCosts, PredictionRecord, fit_policy, route_batch
 
 validation = [
     PredictionRecord("a", 0.98, True),
@@ -158,6 +213,9 @@ decisions, summary = route_batch(
     [PredictionRecord("new", 0.74)],
     policy,
 )
+
+# Cost objective: a wrong acceptance costs 5, a review or abstention costs 1.
+cost_policy = fit_policy(validation, costs=ActionCosts(accept_error=5, human_review=1))
 ```
 
 ## Limitations
@@ -182,6 +240,16 @@ The [ShiftGuard agent example](examples/shiftguard/README.md) audits 384 frozen
 proposals, keeps task templates separate, and reports when no confidence
 threshold meets the declared empirical risk target. Use CalibRoute 0.4.0 or newer
 for the `convert-shiftguard` command.
+
+## Related work
+
+CalibRoute builds on selective prediction and risk-controlled abstention.
+Closely related work on cost-aware deferral for operational triage:
+
+- Sachin Gupta. *Cost-Aware Abstention for LLM-Based IT Ticket Classification.*
+  Accepted at IEEE ICTAI 2026. Project and artifact:
+  [RouteGuard](https://github.com/sachinkg12/RouteGuard),
+  [DOI 10.5281/zenodo.22609128](https://doi.org/10.5281/zenodo.22609128).
 
 ## License
 

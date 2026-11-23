@@ -1,10 +1,14 @@
 {
+  "accept_disabled": false,
   "accept_threshold": 0.3879493176937103,
   "confidence_level": 0.95,
+  "costs": null,
   "declared_risk_limit": 0.1,
   "histogram_bins": 10,
+  "infeasibility": null,
   "max_js_divergence": null,
   "max_validation_risk": 0.053691275167785234,
+  "objective": "max_coverage",
   "reference_histogram": [
     0.0,
     0.0,
@@ -20,11 +24,13 @@
   "review_threshold": 0.23794931769371033,
   "risk_method": "clopper_pearson",
   "risk_upper_bound": 0.0947896191925601,
-  "schema_version": "1.2",
+  "schema_version": "1.3",
   "shift_confidence_level": 0.95,
   "shift_effect_floor": 0.02,
   "shift_min_batch_size": 20,
   "shift_resamples": 500,
   "shift_seed": 0,
-  "validation_coverage": 0.9933333333333333
+  "validation_all_human_cost": null,
+  "validation_coverage": 0.9933333333333333,
+  "validation_expected_cost": null
 }

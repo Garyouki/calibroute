@@ -3,10 +3,12 @@
 from __future__ import annotations
 
 import math
+from bisect import bisect_left
 from collections.abc import Iterable
 from dataclasses import asdict, dataclass
 
 from .bounds import clopper_pearson_upper
+from .costs import ActionCosts
 from .models import Action, Decision, PredictionRecord
 from .shift import calibrate_js_threshold, confidence_histogram, js_divergence
 
@@ -31,15 +33,28 @@ class GatePolicy:
     shift_min_batch_size: int = 20
     shift_effect_floor: float = 0.02
     shift_seed: int = 0
-    schema_version: str = "1.2"
+    objective: str = "max_coverage"
+    costs: dict[str, float] | None = None
+    validation_expected_cost: float | None = None
+    validation_all_human_cost: float | None = None
+    accept_disabled: bool = False
+    infeasibility: dict[str, object] | None = None
+    schema_version: str = "1.3"
 
     def __post_init__(self) -> None:
         if not 0 <= self.review_threshold <= self.accept_threshold <= 1:
             raise ValueError("thresholds must satisfy 0 <= review <= accept <= 1")
         if not 0 <= self.max_validation_risk <= 1:
             raise ValueError("max_validation_risk must be between 0 and 1")
-        if not 0 < self.validation_coverage <= 1:
+        if self.accept_disabled:
+            if self.validation_coverage != 0:
+                raise ValueError("an all-human policy must have zero validation_coverage")
+        elif not 0 < self.validation_coverage <= 1:
             raise ValueError("validation_coverage must be in (0, 1]")
+        if self.objective not in OBJECTIVES:
+            raise ValueError(f"objective must be one of {sorted(OBJECTIVES)}")
+        if self.costs is not None:
+            ActionCosts.from_dict(self.costs)
         if self.histogram_bins != len(self.reference_histogram):
             raise ValueError("histogram_bins must match reference_histogram length")
         if (
@@ -107,16 +122,49 @@ class GatePolicy:
             shift_min_batch_size=int(payload.get("shift_min_batch_size", 20)),
             shift_effect_floor=float(payload.get("shift_effect_floor", 0.02)),
             shift_seed=int(payload.get("shift_seed", 0)),
+            objective=str(payload.get("objective", "max_coverage")),
+            costs=(
+                None
+                if payload.get("costs") is None
+                else ActionCosts.from_dict(payload["costs"]).as_dict()
+            ),
+            validation_expected_cost=_optional_float(payload.get("validation_expected_cost")),
+            validation_all_human_cost=_optional_float(payload.get("validation_all_human_cost")),
+            accept_disabled=bool(payload.get("accept_disabled", False)),
+            infeasibility=payload.get("infeasibility"),
             schema_version=str(payload.get("schema_version", "1.0")),
         )
+
+
+OBJECTIVES = {"max_coverage", "min_cost", "all_human_fallback"}
+ON_INFEASIBLE = {"raise", "all_human"}
+
+
+def _optional_float(value: object) -> float | None:
+    return None if value is None else float(value)
+
+
+class InfeasiblePolicyError(ValueError):
+    """No acceptance threshold satisfies the declared constraints.
+
+    ``report`` is a JSON-serializable diagnosis with the closest attainable
+    operating points, so callers can decide whether to improve the model,
+    collect more validation data, or relax constraints explicitly.
+    """
+
+    def __init__(self, message: str, report: dict[str, object]):
+        super().__init__(message)
+        self.report = report
 
 
 def fit_policy(
     validation_records: Iterable[PredictionRecord],
     *,
-    max_risk: float,
+    max_risk: float | None = None,
     min_coverage: float = 0.10,
     review_margin: float = 0.15,
+    costs: ActionCosts | None = None,
+    on_infeasible: str = "raise",
     histogram_bins: int = 10,
     max_js_divergence: float | None = None,
     risk_method: str = "clopper_pearson",
@@ -127,17 +175,32 @@ def fit_policy(
     shift_effect_floor: float = 0.02,
     shift_seed: int = 0,
 ) -> GatePolicy:
-    """Choose the highest-coverage attainable threshold satisfying ``max_risk``.
+    """Fit an acceptance threshold on labeled validation data.
 
-    By default the accepted set must satisfy a one-sided exact binomial upper
-    bound, not only its observed error rate. ``empirical`` is available for
-    exploratory analyses with small samples. Bounds used during threshold search
-    are pointwise diagnostics, not selection-adjusted guarantees. Evaluate the
-    frozen threshold with validate_policy on an independent IID holdout.
+    Without ``costs`` the objective is coverage: choose the highest-coverage
+    attainable threshold whose accepted-error criterion satisfies ``max_risk``.
+    With ``costs`` the objective is cost: choose the threshold with the lowest
+    total declared cost on these records, where records below the acceptance
+    threshold are charged as review (within ``review_margin``) or abstention.
+    ``max_risk``, when also given, remains a hard constraint in cost mode.
+
+    By default the risk criterion is a one-sided exact binomial upper bound;
+    ``empirical`` is available for exploratory analyses with small samples.
+    Bounds used during threshold search are pointwise diagnostics, not
+    selection-adjusted guarantees. Evaluate the frozen threshold with
+    validate_policy on an independent IID holdout.
+
+    If no threshold is feasible, ``on_infeasible="raise"`` raises
+    InfeasiblePolicyError with a structured report; ``"all_human"`` returns a
+    policy that routes every record to human review and stores the report.
     """
 
-    if not 0 <= max_risk < 1:
+    if max_risk is None and costs is None:
+        raise ValueError("declare max_risk, costs, or both")
+    if max_risk is not None and not 0 <= max_risk < 1:
         raise ValueError("max_risk must be in [0, 1)")
+    if on_infeasible not in ON_INFEASIBLE:
+        raise ValueError(f"on_infeasible must be one of {sorted(ON_INFEASIBLE)}")
     if not 0 < min_coverage <= 1:
         raise ValueError("min_coverage must be in (0, 1]")
     if not 0 <= review_margin <= 1:
@@ -151,49 +214,131 @@ def fit_policy(
     if not rows or any(row.correct is None for row in rows):
         raise ValueError("labeled validation records are required")
     ranked = sorted(rows, key=lambda row: row.confidence, reverse=True)
-    minimum = max(1, int(min_coverage * len(ranked) + 0.999999))
+    total = len(ranked)
+    minimum = max(1, int(min_coverage * total + 0.999999))
+    ascending = sorted(row.confidence for row in ranked)
+
+    def cost_at(kept: int, errors: int, threshold: float) -> float:
+        assert costs is not None
+        review_threshold = max(0.0, threshold - review_margin)
+        at_or_above_review = total - bisect_left(ascending, review_threshold)
+        review = at_or_above_review - kept
+        abstain = total - at_or_above_review
+        return (
+            errors * costs.accept_error
+            + (kept - errors) * costs.accept_correct
+            + review * costs.human_review
+            + abstain * costs.abstain_cost
+        )
+
     errors = 0
-    best: tuple[int, float, float, float] | None = None
+    best: tuple[int, float, float, float | None, float | None] | None = None
+    closest: dict[str, object] | None = None
+    largest_below_minimum: dict[str, object] | None = None
     for kept, row in enumerate(ranked, start=1):
         errors += int(not row.correct)
         # A deployed >= threshold accepts every member of a tie group.
-        if kept < len(ranked) and ranked[kept].confidence == row.confidence:
-            continue
-        if kept < minimum:
+        if kept < total and ranked[kept].confidence == row.confidence:
             continue
         risk = errors / kept
-        upper = (
-            clopper_pearson_upper(errors, kept, confidence_level)
-            if risk_method == "clopper_pearson"
-            else risk
-        )
-        if kept >= minimum and upper <= max_risk:
-            best = kept, row.confidence, risk, upper
+        criterion = None
+        if max_risk is not None:
+            criterion = (
+                clopper_pearson_upper(errors, kept, confidence_level)
+                if risk_method == "clopper_pearson"
+                else risk
+            )
+        risk_ok = criterion is None or criterion <= max_risk
+        point = {
+            "accepted": kept,
+            "coverage": kept / total,
+            "accept_threshold": row.confidence,
+            "observed_risk": risk,
+            "risk_criterion": criterion,
+        }
+        if kept < minimum:
+            if risk_ok and criterion is not None:
+                largest_below_minimum = point
+            continue
+        if criterion is not None and (closest is None or criterion < closest["risk_criterion"]):
+            closest = point
+        if not risk_ok:
+            continue
+        if costs is None:
+            best = kept, row.confidence, risk, criterion, None
+        else:
+            cost = cost_at(kept, errors, row.confidence)
+            # Equal-cost candidates resolve to the higher coverage.
+            if best is None or cost <= best[4]:
+                best = kept, row.confidence, risk, criterion, cost
+
+    all_human_cost = None if costs is None else costs.human_review
+    shared = {
+        "reference_histogram": confidence_histogram(
+            (row.confidence for row in rows), bins=histogram_bins
+        ),
+        "histogram_bins": histogram_bins,
+        "max_js_divergence": max_js_divergence,
+        "declared_risk_limit": max_risk,
+        "risk_method": risk_method,
+        "confidence_level": confidence_level,
+        "shift_confidence_level": shift_confidence_level,
+        "shift_resamples": shift_resamples,
+        "shift_min_batch_size": shift_min_batch_size,
+        "shift_effect_floor": shift_effect_floor,
+        "shift_seed": shift_seed,
+        "costs": None if costs is None else costs.as_dict(),
+        "validation_all_human_cost": all_human_cost,
+    }
+
     if best is None:
-        raise ValueError(
-            "no validation operating point satisfies max_risk and min_coverage; "
-            "improve the model or relax the declared constraints"
+        report = {
+            "status": "no_feasible_policy",
+            "validation_count": total,
+            "validation_errors": sum(not row.correct for row in ranked),
+            "declared_risk_limit": max_risk,
+            "min_coverage": min_coverage,
+            "min_accepted": minimum,
+            "risk_method": risk_method,
+            "confidence_level": confidence_level,
+            "closest_at_or_above_min_coverage": closest,
+            "largest_feasible_below_min_coverage": largest_below_minimum,
+            "options": [
+                "improve the model or its confidence signal",
+                "collect more labeled validation data; bounds tighten with sample size",
+                "relax max_risk or min_coverage explicitly and record the change",
+                "route every record to human review with on_infeasible='all_human'",
+            ],
+        }
+        if on_infeasible == "raise":
+            raise InfeasiblePolicyError(
+                "no validation operating point satisfies max_risk and min_coverage; "
+                "improve the model or relax the declared constraints",
+                report,
+            )
+        return GatePolicy(
+            accept_threshold=1.0,
+            review_threshold=0.0,
+            max_validation_risk=0.0,
+            validation_coverage=0.0,
+            risk_upper_bound=None,
+            objective="all_human_fallback",
+            validation_expected_cost=all_human_cost,
+            accept_disabled=True,
+            infeasibility=report,
+            **shared,
         )
-    kept, threshold, achieved_risk, criterion = best
+
+    kept, threshold, achieved_risk, criterion, cost = best
     return GatePolicy(
         accept_threshold=threshold,
         review_threshold=max(0.0, threshold - review_margin),
         max_validation_risk=achieved_risk,
-        validation_coverage=kept / len(ranked),
-        reference_histogram=confidence_histogram(
-            (row.confidence for row in rows), bins=histogram_bins
-        ),
-        histogram_bins=histogram_bins,
-        max_js_divergence=max_js_divergence,
-        declared_risk_limit=max_risk,
+        validation_coverage=kept / total,
         risk_upper_bound=criterion if risk_method == "clopper_pearson" else None,
-        risk_method=risk_method,
-        confidence_level=confidence_level,
-        shift_confidence_level=shift_confidence_level,
-        shift_resamples=shift_resamples,
-        shift_min_batch_size=shift_min_batch_size,
-        shift_effect_floor=shift_effect_floor,
-        shift_seed=shift_seed,
+        objective="max_coverage" if costs is None else "min_cost",
+        validation_expected_cost=None if cost is None else cost / total,
+        **shared,
     )
 
 
@@ -227,7 +372,10 @@ def route_batch(
     )
     decisions = []
     for row in rows:
-        if severe_shift:
+        if policy.accept_disabled:
+            action = Action.HUMAN_REVIEW
+            reason = "all_human_fallback_no_feasible_policy"
+        elif severe_shift:
             action = Action.HUMAN_REVIEW
             reason = "batch_distribution_shift"
         elif row.confidence >= policy.accept_threshold:

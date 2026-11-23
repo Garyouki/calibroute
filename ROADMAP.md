@@ -34,7 +34,7 @@
 
 - [x] ShiftGuard proposal adapter and offline template-separated confidence example
 - structured-output and tool-call correctness adapters
-- cost-sensitive escalation policies
+- [x] cost-sensitive escalation policies (0.6.0: declared action costs)
 - regression gates for persistent agent updates
 - policy comparison reports
 

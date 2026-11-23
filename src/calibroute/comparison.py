@@ -2,23 +2,32 @@
 
 from collections.abc import Iterable
 
+from .costs import ActionCosts, total_cost
 from .models import Action, PredictionRecord
 from .policy import GatePolicy, route_batch
 
 
 def compare_policies(
-    records: Iterable[PredictionRecord], policy: GatePolicy, *, fixed_threshold: float
+    records: Iterable[PredictionRecord],
+    policy: GatePolicy,
+    *,
+    fixed_threshold: float,
+    costs: ActionCosts | None = None,
 ) -> dict[str, object]:
     """Compare all-accept, fixed-threshold/review, and CalibRoute empirically.
 
     Rules must be chosen before inspecting evaluation labels. Domain rows slice
     the same batch decisions; they do not rerun shift detection per domain.
+    With ``costs`` (or costs stored in the policy) each rule also reports
+    declared cost per record, using the same units for every rule.
     """
     rows = list(records)
     if not rows or any(row.correct is None for row in rows):
         raise ValueError("non-empty labeled evaluation records are required")
     if not 0 <= fixed_threshold <= 1:
         raise ValueError("fixed_threshold must be between 0 and 1")
+    if costs is None and policy.costs is not None:
+        costs = ActionCosts.from_dict(policy.costs)
     decisions, shift = route_batch(rows, policy)
     actions = {
         "accept_all": [Action.ACCEPT] * len(rows),
@@ -45,12 +54,17 @@ def compare_policies(
                 "human_review": review,
                 "abstain": abstain,
             }
+            if costs is not None:
+                result[name]["cost_per_record"] = total_cost(
+                    [rows[i] for i in indices], [rule[i] for i in indices], costs
+                ) / len(indices)
         return result
 
     return {
         "schema_version": "1.0",
         "evaluation": "empirical_frozen_rules",
         "fixed_threshold": fixed_threshold,
+        "costs": None if costs is None else costs.as_dict(),
         "policy": policy.as_dict(),
         "shift": shift,
         "overall": summarize(list(range(len(rows)))),
@@ -65,6 +79,7 @@ def compare_policies(
             "This report does not fit thresholds or certify future risk.",
             "Choose rules on development data; repeated selection on this set invalidates holdout use.",
             "Review counts are not measured review time, reviewer accuracy, or cost savings.",
+            "Cost columns use declared units; they are assumptions, not measured savings.",
         ],
     }
 
@@ -79,6 +94,10 @@ def render_comparison(report: dict[str, object]) -> str:
         f"Batch shift status: {report['shift']['shift_status']}",
         "",
     ]
+    with_cost = report.get("costs") is not None
+    if with_cost:
+        declared = ", ".join(f"{key}={value:g}" for key, value in report["costs"].items())
+        lines[-1:-1] = [f"Declared costs: {declared}"]
     sections = [("Overall", report["overall"])] + [
         (f"Domain: {name}", metrics) for name, metrics in report["domains"].items()
     ]
@@ -87,16 +106,18 @@ def render_comparison(report: dict[str, object]) -> str:
             [
                 f"## {title.replace(chr(10), ' ')}",
                 "",
-                "| Strategy | N | Accepted | Auto coverage | Accepted errors | Accepted risk | Review | Abstain |",
-                "|---|---:|---:|---:|---:|---:|---:|---:|",
+                "| Strategy | N | Accepted | Auto coverage | Accepted errors | Accepted risk | Review | Abstain |"
+                + (" Cost/record |" if with_cost else ""),
+                "|---|---:|---:|---:|---:|---:|---:|---:|" + ("---:|" if with_cost else ""),
             ]
         )
         for name, values in metrics.items():
             risk = "n/a" if values["accepted_risk"] is None else f"{values['accepted_risk']:.2%}"
+            cost = f" {values['cost_per_record']:.4f} |" if with_cost else ""
             lines.append(
                 f"| {name} | {values['count']} | {values['accepted']} | "
                 f"{values['automatic_coverage']:.2%} | {values['accepted_errors']} | "
-                f"{risk} | {values['human_review']} | {values['abstain']} |"
+                f"{risk} | {values['human_review']} | {values['abstain']} |{cost}"
             )
         lines.append("")
     lines.extend(["## Interpretation", ""])

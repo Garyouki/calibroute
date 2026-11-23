@@ -24,6 +24,51 @@ CalibRoute emits one of three explicit actions:
 CalibRoute itself does not execute downstream actions. The calling application
 decides what each action is allowed to do.
 
+Operationally, `human_review` and `abstain` differ in what happens next:
+
+| Action | Automatic output used? | Enters the review queue? | Typical handling |
+|---|---|---|---|
+| `accept` | Yes | No | The output is acted on automatically. |
+| `human_review` | No, but shown to the reviewer as a suggestion | Yes | A reviewer confirms or corrects the model output. |
+| `abstain` | No, discarded | No | The item falls back to the application's default path, such as manual triage from scratch, a slower queue, or a "cannot decide" response. |
+
+An abstained item is not free: if it still has to be resolved, its cost is
+usually at least one review. That is why `ActionCosts.abstain` defaults to the
+review cost. Declare a different abstention cost only when the fallback path
+really costs more or less, and state that assumption with any cost result.
+`review_margin` sets how far below the acceptance threshold the model output
+is still considered useful enough to show a reviewer.
+
+## Objectives: coverage or cost
+
+`fit_policy` supports two declared objectives:
+
+- Coverage (default, `max_risk` only): the largest accepted set whose
+  accepted-error criterion is at or below `max_risk`.
+- Cost (`costs=ActionCosts(...)`): the threshold with the lowest total declared
+  cost on the validation records. `max_risk`, if also given, stays a hard
+  constraint.
+
+A risk limit and a cost ratio are not interchangeable. A 10% risk limit
+accepts every record up to the point where accepted errors would exceed 10%,
+even when each marginal acceptance costs more than a review. With costs of 5
+for a wrong acceptance and 1 for review, accepting a record is only worthwhile
+where its error probability is below 1/5 = 20%; the cost objective picks the
+threshold where that trade-off is best on the validation records, whatever
+accepted error rate results. Choose the objective that matches the decision you need
+to defend, and compare rules on the same declared costs with
+`calibroute compare --cost-accept-error ... --cost-review ...`.
+
+## No feasible policy
+
+When no threshold meets the declared constraints, `fit_policy` raises
+`InfeasiblePolicyError`, a `ValueError` subclass, whose `report` attribute
+records the closest attainable operating point at the required coverage and
+the largest feasible coverage below it. The CLI prints the same report to
+stderr and exits 2. Pass `on_infeasible="all_human"` (CLI:
+`--on-infeasible all-human`) to save an explicit policy that routes every
+record to human review instead. The constraints are never relaxed silently.
+
 ## Observable reasons
 
 Every decision carries a stable reason code and the batch shift score. This is
@@ -53,6 +98,22 @@ on a separate IID holdout. The caller must enforce independence; the software
 cannot establish it from identifiers. Repeated policy selection against the
 holdout also invalidates the interpretation. No accepted examples means no
 evidence and a failed validation, not zero risk.
+
+`validate` reports a `verdict` alongside the original `passed` flag:
+
+- `pass`: the holdout upper bound is at or below the limit (`passed` is true).
+- `inconclusive`: the upper bound is above the limit but the lower bound is
+  not, so the holdout cannot show that the limit is violated.
+- `fail`: the holdout lower bound is above the limit, which is evidence that the
+  accepted error rate exceeds it.
+
+`inconclusive` is common for policies fitted at the edge of the limit. In a
+simulation with 4,784 fitting and 9,567 holdout records and a 10% limit, the
+fitted threshold's true accepted risk exceeded 10% in about 5% of runs, yet
+the holdout upper bound exceeded 10% in about a third of runs. To expect a
+`pass` at limit L, fit with a stricter `max_risk` (for example 0.09 for
+L = 0.10) or use a larger holdout. The CLI exit code is unchanged: 0 only for
+`pass`.
 
 The validation API assesses threshold acceptance before the batch shift gate.
 It does not certify the conditional risk of the full batch-dependent pipeline,

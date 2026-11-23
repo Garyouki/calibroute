@@ -17,6 +17,19 @@ calibroute compare --input evaluation.csv --policy policy.json --fixed-threshold
 calibroute compare --input evaluation.csv --policy policy.json --fixed-threshold 0.90 --output comparison.json
 ```
 
+To add a declared cost per record for each rule (0.6.0 or newer), pass costs.
+Policies fitted with costs reuse them automatically:
+
+```bash
+calibroute compare --input evaluation.csv --policy policy.json --fixed-threshold 0.90 --cost-accept-error 5 --cost-review 1 --output comparison.md
+```
+
+`--cost-abstain` defaults to the review cost because abstained items usually
+still need resolution; set it explicitly if your fallback path differs. Costs
+are declared assumptions, not measured savings. A coverage-objective policy and
+a cost-minimizing baseline optimize different things; compare them on the same
+declared costs before drawing conclusions.
+
 Choose the baseline and policy using development data before examining the
 evaluation labels. `compare` never refits a policy and does not rank a winner.
 Compare accepted error rate alongside coverage, review counts, and abstentions:

@@ -24,8 +24,11 @@
       "empirical_risk": 0.0683453237410072,
       "errors": 19,
       "passed": true,
+      "risk_lower_bound": 0.045214119699657385,
       "risk_upper_bound": 0.09867473238486532,
-      "scope": "fixed_threshold_before_shift_gate"
+      "scope": "fixed_threshold_before_shift_gate",
+      "verdict": "pass",
+      "verdict_explanation": "The holdout upper bound is at or below the declared risk limit."
     }
   },
   "finer_ord_test": {
@@ -53,8 +56,11 @@
       "empirical_risk": 0.40540540540540543,
       "errors": 90,
       "passed": false,
+      "risk_lower_bound": 0.35014792781139836,
       "risk_upper_bound": 0.46256881058942745,
-      "scope": "fixed_threshold_before_shift_gate"
+      "scope": "fixed_threshold_before_shift_gate",
+      "verdict": "fail",
+      "verdict_explanation": "The holdout lower bound exceeds the declared risk limit: the policy's accepted error rate is above the limit at this confidence level."
     }
   },
   "tweetner7_test": {
@@ -82,8 +88,11 @@
       "empirical_risk": 0.90625,
       "errors": 145,
       "passed": false,
+      "risk_lower_bound": 0.8593146766355598,
       "risk_upper_bound": 0.9413205040799242,
-      "scope": "fixed_threshold_before_shift_gate"
+      "scope": "fixed_threshold_before_shift_gate",
+      "verdict": "fail",
+      "verdict_explanation": "The holdout lower bound exceeds the declared risk limit: the policy's accepted error rate is above the limit at this confidence level."
     }
   }
 }

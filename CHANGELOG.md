@@ -1,5 +1,26 @@
 # Changelog
 
+## 0.6.0 - 2026-11-22
+
+- Add declared action costs (`ActionCosts`) and a cost objective to `fit_policy`
+  and `calibroute fit` (`--cost-accept-error`, `--cost-review`, `--cost-abstain`,
+  `--cost-accept-correct`). `max_risk` is optional when costs are declared and
+  remains a hard constraint when both are given.
+- Report declared cost per record in `compare`, and in `validate` for cost policies.
+- Add a `verdict` (`pass`, `inconclusive`, `fail`, `no_accepted`) and a
+  Clopper-Pearson lower bound to holdout validation. `passed` and CLI exit codes
+  are unchanged.
+- Raise `InfeasiblePolicyError` (a `ValueError` subclass) with a structured
+  report when no threshold is feasible; the CLI prints it to stderr. Add an
+  opt-in all-human fallback (`on_infeasible="all_human"`, `--on-infeasible all-human`).
+- Document the fit, validate, route workflow in the quick start, define
+  `human_review` versus `abstain` operationally, and add related work.
+- Policy schema 1.3 adds `objective`, `costs`, `validation_expected_cost`,
+  `validation_all_human_cost`, `accept_disabled`, and `infeasibility`; schema 1.2
+  policies load unchanged.
+- Thanks to Sachin Gupta for an independent trial of 0.5.1 on saved IT-ticket
+  predictions that motivated these changes.
+
 ## 0.5.1 - 2026-11-21
 
 - Add Zenodo metadata so each release is archived with a citable DOI. No code changes.
